@@ -1,5 +1,5 @@
 
-function createSprite(sprite, layer)
+function createProp(sprite, layer)
   prop = MOAIProp2D.new()
   prop:setDeck(sprite)
   layer:insertProp(prop)
@@ -15,28 +15,28 @@ end
 
 function startDuel(sprite, layer)
   layer:clear()
-  createSprite(sprite, layer)
+  createProp(sprite, layer)
   startTimer()
   prop:setLoc(-100,0)
 end
 
 function startChase()
   layer:clear()
-  createSprite(sprite, layer)
+  createProp(sprite, layer)
   startTimer()
   prop:setLoc(-100,0)
 end
 
 function startFlee()
   layer:clear()
-  createSprite(sprite, layer)
+  createProp(sprite, layer)
   startTimer()
   prop:setLoc(100,0)
 end
 
 function startBattle()
   layer:clear()
-  createSprite(sprite, layer)
+  createProp(sprite, layer)
   startTimer()
   prop:setLoc(-100,0)
 end
@@ -71,7 +71,7 @@ function newEnemy ()
     y = math.random(bottomborder + 10, topborder - 10)
   end
   local enemy = MOAIProp2D.new()
-  enemy:setDeck(sprite)
+  enemy:setDeck(esprite)
   enemy:setLoc(x, y)
   epartition:insertProp(enemy)
 end

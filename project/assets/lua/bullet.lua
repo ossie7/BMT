@@ -56,5 +56,3 @@ function Bullet.startThread (self)
   self.prop.thread = MOAICoroutine.new()
   self.prop.thread:run(self.prop.moveBullet, self.prop, self.layer, self)
 end
-
-

@@ -19,9 +19,12 @@ gamemode = DUEL
 texture = MOAIImage.new()
 texture:load("thing.png")
 
+truck = MOAIImage.new()
+truck:load("truck.png")
+
 sprite = MOAIGfxQuad2D.new() -- Player
-sprite:setTexture(texture)
-sprite:setRect(-16,-16,16,16)
+sprite:setTexture(truck)
+sprite:setRect(-32,-32,32,32)
 
 bsprite = MOAIGfxQuad2D.new() -- Bullet
 bsprite:setTexture(texture)
@@ -30,9 +33,6 @@ bsprite:setRect(-8,-8,8,8)
 esprite = MOAIGfxQuad2D.new() -- Enemy
 esprite:setTexture(texture)
 esprite:setRect(-12,-12,12,12)
-
--- Set background colour
-MOAIGfxDevice.getFrameBuffer():setClearColor(100,0,0,0)
 
 function handleClickOrTouch(x,y)
     prop:setLoc(layer:wndToWorld(x,y))

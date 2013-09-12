@@ -27,6 +27,9 @@ rightborder = screenWidthScale / 2
 topborder = screenHeightScale / 2
 bottomborder = (screenHeightScale / 2) * -1
 
+backlayer = MOAILayer2D.new()
+backlayer:setViewport(viewport)
+
 layer = MOAILayer2D.new()
 layer:setViewport(viewport)
 
@@ -39,6 +42,10 @@ elayer:setViewport(viewport)
 epartition = MOAIPartition.new()
 elayer:setPartition(epartition)
 
+-- Set background colour
+MOAIGfxDevice.getFrameBuffer():setClearColor(0,0,0,0)
+
+MOAIRenderMgr.pushRenderPass(backlayer)
 MOAIRenderMgr.pushRenderPass(blayer)
 MOAIRenderMgr.pushRenderPass(elayer)
 MOAIRenderMgr.pushRenderPass(layer)
