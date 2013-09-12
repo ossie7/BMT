@@ -13,49 +13,49 @@ function startTimer()
   intervale = 1    -- Enemy interval
 end
 
-function startDuel(sprite, layer) -- Init DUEL gamemode
+function startDuel(sprite, layer)
   layer:clear()
   createSprite(sprite, layer)
   startTimer()
   prop:setLoc(-100,0)
 end
 
-function startChase() -- Init CHASE gamemode
+function startChase()
   layer:clear()
   createSprite(sprite, layer)
   startTimer()
   prop:setLoc(-100,0)
 end
 
-function startFlee() -- Init FLEE gamemode
+function startFlee()
   layer:clear()
   createSprite(sprite, layer)
   startTimer()
   prop:setLoc(100,0)
 end
 
-function startBattle() -- Init BATTLE gamemode
+function startBattle()
   layer:clear()
   createSprite(sprite, layer)
   startTimer()
   prop:setLoc(-100,0)
 end
 
-function bulletGen(x, y) -- Generate bullet
+function bulletGen(x, y)
   if(last+interval < clock()) then
     newBullet(x,y)
     last = clock()
   end
 end
 
-function enemyGenInterval() -- Generate enemy with interval check
+function enemyGenInterval()
   if(laste+intervale < clock()) then
     newEnemy()
     laste = clock()
   end
 end
 
-function newEnemy () -- Create enemy
+function newEnemy ()
   local x, y = 0,0
   if(gamemode == FLEE) then
     x = -100

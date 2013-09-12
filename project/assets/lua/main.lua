@@ -5,34 +5,33 @@
 -- Time: 19:43
 -- To change this template use File | Settings | File Templates.
 --
-io.output( ):setvbuf("no")
+io.output( ):setvbuf("no") -- Fix for console lag
 
+-- Requires
 require 'bullet'
-require 'helper'
+require 'fight_helper'
 require 'start'
 
+-- TODO: Get gamemode from user choise
 gamemode = DUEL
 
+-- Load main test texture and sprites
 texture = MOAIImage.new()
 texture:load("thing.png")
 
-sprite = MOAIGfxQuad2D.new()
+sprite = MOAIGfxQuad2D.new() -- Player
 sprite:setTexture(texture)
 sprite:setRect(-16,-16,16,16)
 
-msprite = MOAIGfxQuad2D.new()
-msprite:setTexture(texture)
-msprite:setRect(-8,-8,8,8)
+bsprite = MOAIGfxQuad2D.new() -- Bullet
+bsprite:setTexture(texture)
+bsprite:setRect(-8,-8,8,8)
 
-esprite = MOAIGfxQuad2D.new()
+esprite = MOAIGfxQuad2D.new() -- Enemy
 esprite:setTexture(texture)
 esprite:setRect(-12,-12,12,12)
 
-prop = MOAIProp2D.new()
-prop:setDeck(sprite)
---prop:setLoc(0,0)
-layer:insertProp(prop)
-
+-- Set background colour
 MOAIGfxDevice.getFrameBuffer():setClearColor(100,0,0,0)
 
 function handleClickOrTouch(x,y)
@@ -42,72 +41,39 @@ end
 local lastX = 0
 local lastY = 0
 
-function wait ( action )
-    while action:isBusy () do coroutine:yield () end
+function threadDuel () -- DUEL gamemode thread
+  startDuel(sprite, layer)
+  while true do
+    bulletGen(prop:getLoc())
+    enemyGenInterval()
+    coroutine.yield()
+  end
 end
 
-local clock = os.clock
-local last = 0
-local laste = 0
-local interval = 0.2
-local intervale = 1
-function threadDuel ()
-    prop:setLoc(-100,0)
-    while true do
-        local locX,locY = prop:getLoc()
-        if(last+interval < clock()) then
-            newBullet(locX,locY)
-            last = clock()
-        end
-        if(laste+intervale < clock()) then
-          newEnemy()
-          laste = clock()
-        end
-        --MOAISim.forceGarbageCollection()
-        coroutine.yield()
-    end
+function threadChase () -- CHASE gamemode thread
+  startChase(sprite, layer)
+  while true do
+    bulletGen(prop:getLoc())
+    enemyGenInterval()
+    coroutine.yield()
+  end
 end
 
-function threadChase ()
-    prop:setLoc(-100,0)
-    while true do
-        local locX,locY = prop:getLoc()
-        if(last+interval < clock()) then
-            newBullet(locX,locY)
-            last = clock()
-        end
-        if(laste+intervale < clock()) then
-          newEnemy()
-          laste = clock()
-        end
-        coroutine.yield()
-    end
+function threadFlee () -- FLEE gamemode thread
+  startFlee(sprite, layer)
+  newEnemy()
+  while true do
+    coroutine.yield()
+  end
 end
 
-function threadFlee ()
-    prop:setLoc(100,0)
-    newEnemy()
-    while true do
-        --MOAISim.forceGarbageCollection()
-        coroutine.yield()
-    end
-end
-
-function threadBattle ()
-    prop:setLoc(-100,0)
-    while true do
-        local locX,locY = prop:getLoc()
-        if(last+interval < clock()) then
-            newBullet(locX,locY)
-            last = clock()
-        end
-        if(laste+intervale < clock()) then
-          newEnemy()
-          laste = clock()
-        end
-        --MOAISim.forceGarbageCollection()
-        coroutine.yield()
-    end
+function threadBattle () -- BATTLE gamemode thread
+  startBattle(sprite, layer)
+  while true do
+    bulletGen(prop:getLoc())
+    enemyGenInterval()
+    coroutine.yield()
+  end
 end
 
 function checkIfInside(locX,locY)
@@ -119,30 +85,9 @@ function checkIfInside(locX,locY)
 end
 
 function newBullet (origX, origY)
-    local bullet = Bullet.new(msprite, blayer, origX, origY, epartition)
+    local bullet = Bullet.new(bsprite, blayer, origX, origY, epartition)
     blayer:insertProp(bullet.prop)
     bullet:startThread()
-end
-
-function newEnemy ()
-  local x, y = 0,0
-  if(gamemode == FLEE) then
-    x = -100
-    y = math.random(bottomborder + 10, topborder - 10)
-  elseif(gamemode == DUEL) then
-    x = 100
-    y = math.random(bottomborder + 10, topborder - 10)  
-  elseif(gamemode == BATTLE) then
-    x = math.random(10, rightborder - 10)
-    y = math.random(bottomborder + 10, topborder - 10)
-  elseif(gamemode == CHASE) then
-    x = 100
-    y = math.random(bottomborder + 10, topborder - 10)
-  end
-  local enemy = MOAIProp2D.new()
-  enemy:setDeck(sprite)
-  enemy:setLoc(x, y)
-  epartition:insertProp(enemy)
 end
 
 -- Start gameloop
