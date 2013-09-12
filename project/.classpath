@@ -2,8 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="lib" path="libs/crittercism_v1_3_0.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Facebook"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Tapjoy"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
