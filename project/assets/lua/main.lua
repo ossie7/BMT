@@ -22,6 +22,9 @@ texture:load("thing.png")
 truck = MOAIImage.new()
 truck:load("truck.png")
 
+crosstexture = MOAIImage.new()
+crosstexture:load("cross.png")
+
 sprite = MOAIGfxQuad2D.new() -- Player
 sprite:setTexture(truck)
 sprite:setRect(-32,-32,32,32)
@@ -34,12 +37,23 @@ esprite = MOAIGfxQuad2D.new() -- Enemy
 esprite:setTexture(texture)
 esprite:setRect(-12,-12,12,12)
 
+csprite = MOAIGfxQuad2D.new() -- Crosshair
+csprite:setTexture(crosstexture)
+csprite:setRect(-8,-8,8,8)
+
+cross = MOAIProp2D.new()
+cross:setDeck(csprite)
+cross:setLoc(100,0)
+clayer:insertProp(cross)
+
 function handleClickOrTouch(x,y)
     prop:setLoc(layer:wndToWorld(x,y))
 end
 
 local lastX = 0
 local lastY = 0
+local clastX = 0
+local clastY = 0
 
 function threadDuel () -- DUEL gamemode thread
   startDuel(sprite, layer)
@@ -112,26 +126,46 @@ end
 
 function onMove ( x, y )
   ax, ay = layer:wndToWorld(x, y*-1)
-  if ( drag ) then
+  if ( drag and ax <= -100) then
     local deltaX = 0
     local deltaY = ay - lastY
     prop:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
+  elseif(drag and ax >= 100) then
+    local deltaX = 0
+    local deltaY = ay - clastY
+    cross:moveLoc (deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
   end
-  lastX = ax
-  lastY = ay
+  if(ax <= -100) then
+    lastX = ax
+    lastY = ay
+  elseif(ax >= 100) then
+    clastX = ax
+    clastY = ay
+  end
 end
 
 local touchX = 0
 local touchY = 0
+local ctouchX = 0
+local ctouchY = 0
 function touchMove( x, y, event)
   ax, ay = layer:wndToWorld(x, y*-1)
-	if (event == 1) then
+	if (event == 1 and ax <= -100) then
 		local deltaX = 0
     local deltaY = ay - touchY
     prop:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
-	end
-	touchX = ax
-	touchY = ay
+	elseif(event == 1 and ax >= 100) then
+    local deltaX = 0
+    local deltaY = ay - ctouchY
+    cross:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
+  end
+	if(ax <= -100) then
+    touchX = ax
+    touchY = ay
+  elseif(ax >= 100) then
+    ctouchX = ax
+    ctouchY = ay
+  end
 end
 
 if MOAIInputMgr.device.pointer then

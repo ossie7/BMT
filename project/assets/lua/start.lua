@@ -42,10 +42,14 @@ elayer:setViewport(viewport)
 epartition = MOAIPartition.new()
 elayer:setPartition(epartition)
 
+clayer = MOAILayer2D.new()
+clayer:setViewport(viewport)
+
 -- Set background colour
-MOAIGfxDevice.getFrameBuffer():setClearColor(0,0,0,0)
+MOAIGfxDevice.getFrameBuffer():setClearColor(120,45,0,0)
 
 MOAIRenderMgr.pushRenderPass(backlayer)
 MOAIRenderMgr.pushRenderPass(blayer)
 MOAIRenderMgr.pushRenderPass(elayer)
 MOAIRenderMgr.pushRenderPass(layer)
+MOAIRenderMgr.pushRenderPass(clayer)
