@@ -25,6 +25,9 @@ truck:load("truck.png")
 crosstexture = MOAIImage.new()
 crosstexture:load("cross.png")
 
+guntexture = MOAIImage.new()
+guntexture:load("gun.png")
+
 sprite = MOAIGfxQuad2D.new() -- Player
 sprite:setTexture(truck)
 sprite:setRect(-32,-32,32,32)
@@ -41,10 +44,19 @@ csprite = MOAIGfxQuad2D.new() -- Crosshair
 csprite:setTexture(crosstexture)
 csprite:setRect(-8,-8,8,8)
 
+gunsprite = MOAIGfxQuad2D.new()
+gunsprite:setTexture(guntexture)
+gunsprite:setRect(-8,-8,8,8)
+
 cross = MOAIProp2D.new()
 cross:setDeck(csprite)
 cross:setLoc(100,0)
 clayer:insertProp(cross)
+
+gun = MOAIProp2D.new()
+gun:setDeck(gunsprite)
+gun:setLoc(-86,0)
+clayer:insertProp(gun)
 
 function handleClickOrTouch(x,y)
     prop:setLoc(layer:wndToWorld(x,y))
@@ -130,10 +142,17 @@ function onMove ( x, y )
     local deltaX = 0
     local deltaY = ay - lastY
     prop:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
+    local gx, gy = prop:getLoc()
+    gun:setLoc(gx+14,gy)
+    local cx, cy = cross:getLoc()
+    gun:setRot(angle(gx+14,gy,cx,cy))
   elseif(drag and ax >= 100) then
     local deltaX = 0
     local deltaY = ay - clastY
     cross:moveLoc (deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
+    local gx, gy = gun:getLoc()
+    local cx, cy = cross:getLoc()
+    gun:setRot(angle(gx,gy,cx,cy))
   end
   if(ax <= -100) then
     lastX = ax
@@ -154,10 +173,17 @@ function touchMove( x, y, event)
 		local deltaX = 0
     local deltaY = ay - touchY
     prop:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
+    local gx, gy = prop:getLoc()
+    gun:setLoc(gx+14,gy)
+    local cx, cy = cross:getLoc()
+    gun:setRot(angle(gx+14,gy,cx,cy))
 	elseif(event == 1 and ax >= 100) then
     local deltaX = 0
     local deltaY = ay - ctouchY
     cross:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
+    local gx, gy = gun:getLoc()
+    local cx, cy = cross:getLoc()
+    gun:setRot(angle(gx,gy,cx,cy))
   end
 	if(ax <= -100) then
     touchX = ax
