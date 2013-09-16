@@ -68,6 +68,10 @@ local clastY = 0
 function threadDuel () -- DUEL gamemode thread
   startDuel(sprite, layer)
   while true do
+    if(gamestate == "pause") then
+      break
+    end
+    
     bulletGen(prop:getLoc())
     enemyGenInterval()
     coroutine.yield()
@@ -130,16 +134,14 @@ end
 function onTouch(x,y)
   
   local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
-  
-   if(gamestate == "pause") then
+  if(gamestate == "pause") then
      print(gamestate)
      if hitButton then 
         print(hitButton.name)
         if (hitButton.name == "playing") then
           
           menuLayer:clear()
-          
-          
+
           gamemode = DUEL
           thread:run(threadDuel)
           
@@ -153,23 +155,36 @@ function onTouch(x,y)
         end
      end
    end
+   
+  local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
+   if(gamestate == "playing") then
+     print(gamestate)
+     if gameButton then 
+        print(gameButton.name)
+        if (gameButton.name == "pause") then
+          
+          menuLayer:clear()
+          backgroundLayer1:clear()
+          backgroundLayer2:clear()
+          buttonlayer:clear()
+          gamemode = NONE
+          
+          loadMenuLayers()
+          gamestate = "pause"
+          
+        end
+     end
+   end
 end
 --------------------
 
 function onMouseLeftEvent ( down )
     if ( down ) then
         drag = true
+        onTouch(MOAIInputMgr.device.pointer:getLoc())
     else
         drag = false
     end
-    ----
-    if (gamestate == "pause") then
-      if down then
-          
-          onTouch(MOAIInputMgr.device.pointer:getLoc())  
-      end
-    end
-    -------
 end
 
 function onMove ( x, y )
