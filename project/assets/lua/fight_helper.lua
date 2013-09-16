@@ -1,4 +1,3 @@
-
 function createProp(sprite, layer)
   prop = MOAIProp2D.new()
   prop:setDeck(sprite)
@@ -7,10 +6,10 @@ end
 
 function startTimer()
   clock = os.clock -- Create clock
-  last = 0         -- Last bullet spawn
-  laste = 0        -- Last enemy spawn
-  interval = 0.2   -- Bullet interval
-  intervale = 1    -- Enemy interval
+  last = 0 -- Last bullet spawn
+  laste = 0 -- Last enemy spawn
+  interval = 0.2 -- Bullet interval
+  intervale = 1 -- Enemy interval
 end
 
 function startDuel(sprite, layer)
@@ -62,7 +61,7 @@ function newEnemy ()
     y = math.random(bottomborder + 10, topborder - 10)
   elseif(gamemode == DUEL) then
     x = 100
-    y = math.random(bottomborder + 10, topborder - 10)  
+    y = math.random(bottomborder + 10, topborder - 10)
   elseif(gamemode == BATTLE) then
     x = math.random(10, rightborder - 10)
     y = math.random(bottomborder + 10, topborder - 10)
@@ -79,4 +78,3 @@ end
 function angle ( x1, y1, x2, y2 )
   return math.atan2 ( y2 - y1, x2 - x1 ) * ( 180 / math.pi )
 end
-

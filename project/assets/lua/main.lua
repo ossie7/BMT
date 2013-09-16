@@ -13,14 +13,20 @@ require 'fight_helper'
 require 'start'
 
 -- TODO: Get gamemode from user choise
-gamemode = DUEL
+loadFightLayers()
+loadMenuLayers()
+
+gamemode = NONE
+if(gamestate ~= "pause") then
+  gamemode = DUEL
+end
 
 -- Load main test texture and sprites
 texture = MOAIImage.new()
-texture:load("thing.png")
+texture:load("resources/thing.png")
 
 truck = MOAIImage.new()
-truck:load("truck.png")
+truck:load("resources/truck.png")
 
 crosstexture = MOAIImage.new()
 crosstexture:load("cross.png")
@@ -128,12 +134,51 @@ elseif(gamemode == BATTLE) then
   thread:run(threadBattle)
 end
 
+-----------------
+function onTouch(x,y)
+  
+  local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
+  
+   if(gamestate == "pause") then
+     print(gamestate)
+     if hitButton then 
+        print(hitButton.name)
+        if (hitButton.name == "playing") then
+          
+          menuLayer:clear()
+          
+          
+          gamemode = DUEL
+          thread:run(threadDuel)
+          
+          lastX = 0
+          lastY = 0
+          
+          loadFightLayers()
+          gamestate = "playing"
+          boolean = WAIT
+          playInput()
+          
+        end
+     end
+   end
+end
+--------------------
+
 function onMouseLeftEvent ( down )
-    if ( down ) or ( isDown ) then
+    if ( down ) then
         drag = true
     else
         drag = false
     end
+    ----
+    if (gamestate == "pause") then
+      if down then
+          
+          onTouch(MOAIInputMgr.device.pointer:getLoc())  
+      end
+    end
+    -------
 end
 
 function onMove ( x, y )
@@ -169,15 +214,15 @@ local ctouchX = 0
 local ctouchY = 0
 function touchMove( x, y, event)
   ax, ay = layer:wndToWorld(x, y*-1)
-	if (event == 1 and ax <= -100) then
-		local deltaX = 0
+if (event == 1 and ax <= -100) then
+local deltaX = 0
     local deltaY = ay - touchY
     prop:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
     local gx, gy = prop:getLoc()
     gun:setLoc(gx+14,gy)
     local cx, cy = cross:getLoc()
     gun:setRot(angle(gx+14,gy,cx,cy))
-	elseif(event == 1 and ax >= 100) then
+elseif(event == 1 and ax >= 100) then
     local deltaX = 0
     local deltaY = ay - ctouchY
     cross:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
@@ -185,7 +230,7 @@ function touchMove( x, y, event)
     local cx, cy = cross:getLoc()
     gun:setRot(angle(gx,gy,cx,cy))
   end
-	if(ax <= -100) then
+if(ax <= -100) then
     touchX = ax
     touchY = ay
   elseif(ax >= 100) then
@@ -196,7 +241,6 @@ end
 
 if MOAIInputMgr.device.pointer then
     MOAIInputMgr.device.mouseLeft:setCallback ( onMouseLeftEvent )
-    MOAIInputMgr.device.pointer:setCallback ( onMove )
 else
     MOAIInputMgr.device.touch:setCallback (
         function ( eventType, idx, x, y, tapCount )
@@ -204,4 +248,14 @@ else
         end
     )
 end
+
+function playInput()
+  if MOAIInputMgr.device.pointer then
+    MOAIInputMgr.device.mouseLeft:setCallback ( onMouseLeftEvent )
+    if(gamestate == "playing") then
+      MOAIInputMgr.device.pointer:setCallback ( onMove )
+    end
+  end  
+end
+
 

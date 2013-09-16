@@ -16,7 +16,7 @@ print("Starting up on:" .. MOAIEnvironment.osBrand  .. " version:" .. MOAIEnviro
 if screenWidth  == nil or screenWidth  == 0 then screenWidth  = 320 end
 if screenHeight == nil or screenHeight == 0 then screenHeight = 180 end
 
-MOAISim.openWindow("Window",screenWidth,screenHeight)
+MOAISim.openWindow("BAD MOTHER TRUCKER",screenWidth,screenHeight)
 
 viewport = MOAIViewport.new()
 viewport:setSize(screenWidth, screenHeight)
@@ -26,6 +26,9 @@ leftborder = (screenWidthScale / 2) * -1
 rightborder = screenWidthScale / 2
 topborder = screenHeightScale / 2
 bottomborder = (screenHeightScale / 2) * -1
+
+backgroundLayer = MOAILayer2D.new()
+backgroundLayer:setViewport(viewport)
 
 backlayer = MOAILayer2D.new()
 backlayer:setViewport(viewport)
@@ -45,11 +48,72 @@ elayer:setPartition(epartition)
 clayer = MOAILayer2D.new()
 clayer:setViewport(viewport)
 
--- Set background colour
-MOAIGfxDevice.getFrameBuffer():setClearColor(120,45,0,0)
+menuLayer = MOAILayer2D.new()
+menuLayer:setViewport(viewport)
+MOAIRenderMgr.pushRenderPass(menuLayer)
 
-MOAIRenderMgr.pushRenderPass(backlayer)
-MOAIRenderMgr.pushRenderPass(blayer)
-MOAIRenderMgr.pushRenderPass(elayer)
-MOAIRenderMgr.pushRenderPass(layer)
-MOAIRenderMgr.pushRenderPass(clayer)
+-- Set background colour
+MOAIGfxDevice.getFrameBuffer():setClearColor(0,0,0,0)
+
+function loadFightLayers()
+  backgroundImage = MOAIImage.new()
+  backgroundImage:load("resources/BG_space.png")
+
+  gfxQuad = MOAIGfxQuad2D.new ()
+  gfxQuad:setTexture ( backgroundImage )
+  gfxQuad:setRect ( -160, -90, 160, 90 )
+
+  backgroundProp = MOAIProp2D.new()
+  backgroundProp:setDeck(gfxQuad)
+  backgroundLayer:insertProp(backgroundProp)
+
+  MOAIRenderMgr.pushRenderPass(backgroundLayer)
+	MOAIRenderMgr.pushRenderPass(blayer)
+	MOAIRenderMgr.pushRenderPass(elayer)
+	MOAIRenderMgr.pushRenderPass(layer)
+  MOAIRenderMgr.pushRenderPass(clayer)
+
+end
+
+function loadMenuLayers()
+  
+  backgroundLayer:clear()
+  MOAIRenderMgr.pushRenderPass(menuLayer)
+	
+	textureSuperman = MOAIImage.new()
+  textureSuperman:load("resources/model.png")
+  
+	spriteStartButton = MOAIGfxQuad2D.new()
+	spriteStartButton:setTexture(textureSuperman)
+	spriteStartButton:setRect(-32, -32, 32, 32);
+	  
+	propStartButton = MOAIProp2D.new()
+	propStartButton:setDeck(spriteStartButton)
+	propStartButton:setLoc(-120,80)
+	  
+	propButton = MOAIProp2D.new()
+	propButton:setDeck(spriteStartButton)
+	propButton:setLoc(-120,0)
+	
+	menuLayer:insertProp(propStartButton)
+	menuLayer:insertProp(propButton)
+	
+	partition = MOAIPartition.new()
+	partition:insertProp(propStartButton)
+	partition:insertProp(propButton)
+	menuLayer:setPartition(partition)
+	  
+	gamestate = "pause"
+	
+	textboxGameMode = MOAITextBox.new()
+	textboxGameMode:setStyle(style)
+	textboxGameMode:setString("<c:f70>Game mode = <c>"..gamestate)
+	textboxGameMode:setRect(-320, -80, 50, 49)
+	textboxGameMode:setAlignment( MOAITextBox.RIGHT_JUSTIFY , MOAITextBox.RIGHT_JUSTIFY )
+	textboxGameMode:setYFlip ( true )
+	menuLayer:insertProp(textboxGameMode)
+	
+	propStartButton.name = "playing"
+	propButton.name = "pause"
+
+end
