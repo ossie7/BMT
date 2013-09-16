@@ -27,8 +27,11 @@ rightborder = screenWidthScale / 2
 topborder = screenHeightScale / 2
 bottomborder = (screenHeightScale / 2) * -1
 
-backgroundLayer = MOAILayer2D.new()
-backgroundLayer:setViewport(viewport)
+backgroundLayer1 = MOAILayer2D.new()
+backgroundLayer1:setViewport(viewport)
+
+backgroundLayer2 = MOAILayer2D.new()
+backgroundLayer2:setViewport(viewport)
 
 backlayer = MOAILayer2D.new()
 backlayer:setViewport(viewport)
@@ -53,32 +56,21 @@ menuLayer:setViewport(viewport)
 MOAIRenderMgr.pushRenderPass(menuLayer)
 
 -- Set background colour
-MOAIGfxDevice.getFrameBuffer():setClearColor(0,0,0,0)
+--MOAIGfxDevice.getFrameBuffer():setClearColor(0,0,0,0)
 
 function loadFightLayers()
-  backgroundImage = MOAIImage.new()
-  backgroundImage:load("resources/BG_space.png")
-
-  gfxQuad = MOAIGfxQuad2D.new ()
-  gfxQuad:setTexture ( backgroundImage )
-  gfxQuad:setRect ( -160, -90, 160, 90 )
-
-  backgroundProp = MOAIProp2D.new()
-  backgroundProp:setDeck(gfxQuad)
-  backgroundProp:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  backgroundLayer:insertProp(backgroundProp)
-
-  MOAIRenderMgr.pushRenderPass(backgroundLayer)
+  MOAIRenderMgr.pushRenderPass(backgroundLayer1)
+  MOAIRenderMgr.pushRenderPass(backgroundLayer2)
 	MOAIRenderMgr.pushRenderPass(blayer)
 	MOAIRenderMgr.pushRenderPass(elayer)
 	MOAIRenderMgr.pushRenderPass(layer)
   MOAIRenderMgr.pushRenderPass(clayer)
-
 end
 
 function loadMenuLayers()
   
-  backgroundLayer:clear()
+  backgroundLayer1:clear()
+  backgroundLayer2:clear()
   MOAIRenderMgr.pushRenderPass(menuLayer)
 	
 	textureSuperman = MOAIImage.new()

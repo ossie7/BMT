@@ -11,6 +11,7 @@ io.output( ):setvbuf("no") -- Fix for console lag
 require 'bullet'
 require 'fight_helper'
 require 'start'
+require 'background'
 
 -- TODO: Get gamemode from user choise
 loadFightLayers()
@@ -174,9 +175,8 @@ end
 function onMove ( x, y )
   ax, ay = layer:wndToWorld(x, y*-1)
   if ( drag and ax <= -100) then
-    local deltaX = 0
-    local deltaY = ay - lastY
-    prop:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
+    local deltaY = (ay - lastY) * -1
+    prop:moveLoc (0, deltaY, 0, 0, MOAIEaseType.FLAT )
   elseif(drag and ax >= 100) then
   end
   if(ax <= -100) then
@@ -221,12 +221,16 @@ if(ax <= -100) then
 end
 
 if MOAIInputMgr.device.pointer then
-    MOAIInputMgr.device.mouseLeft:setCallback ( onMouseLeftEvent )
+  MOAIInputMgr.device.mouseLeft:setCallback ( onMouseLeftEvent )
 else
-    MOAIInputMgr.device.touch:setCallback (
-        function ( eventType, idx, x, y, tapCount )
-            touchMove ( x, y, eventType )
-        end
+  MOAIInputMgr.device.touch:setCallback (
+    function ( eventType, idx, x, y, tapCount )
+      if (gamestate == "pause") then
+        onTouch(x, y)
+      else
+        touchMove ( x, y, eventType )
+      end
+    end
     )
 end
 

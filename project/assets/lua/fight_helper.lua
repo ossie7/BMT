@@ -19,6 +19,10 @@ function createGunTools()
   clayer:insertProp(gun)
 end
 
+function createBackground()
+  backgroundThread(backgroundLayer1, backgroundLayer2)
+end
+
 
 function startTimer()
   clock = os.clock -- Create clock
@@ -32,6 +36,7 @@ function startDuel(sprite, layer)
   layer:clear()
   createProp(sprite, layer)
   createGunTools()
+  createBackground()
   startTimer()
   prop:setLoc(-100,0)
 end
@@ -40,6 +45,7 @@ function startChase()
   layer:clear()
   createProp(sprite, layer)
   createGunTools()
+  createBackground()
   startTimer()
   prop:setLoc(-100,0)
 end
@@ -48,6 +54,7 @@ function startFlee()
   layer:clear()
   createProp(sprite, layer)
   createGunTools()
+  createBackground()
   startTimer()
   prop:setLoc(100,0)
 end
@@ -56,6 +63,7 @@ function startBattle()
   layer:clear()
   createProp(sprite, layer)
   createGunTools()
+  createBackground()
   startTimer()
   prop:setLoc(-100,0)
 end
