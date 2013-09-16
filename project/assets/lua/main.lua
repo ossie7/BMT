@@ -54,15 +54,6 @@ gunsprite = MOAIGfxQuad2D.new()
 gunsprite:setTexture(guntexture)
 gunsprite:setRect(-8,-8,8,8)
 
-cross = MOAIProp2D.new()
-cross:setDeck(csprite)
-cross:setLoc(100,0)
-clayer:insertProp(cross)
-
-gun = MOAIProp2D.new()
-gun:setDeck(gunsprite)
-gun:setLoc(-86,0)
-clayer:insertProp(gun)
 
 function handleClickOrTouch(x,y)
     prop:setLoc(layer:wndToWorld(x,y))
@@ -151,8 +142,7 @@ function onTouch(x,y)
           gamemode = DUEL
           thread:run(threadDuel)
           
-          lastX = 0
-          lastY = 0
+          lastX, lastY = layer:wndToWorld(x, y*-1)
           
           loadFightLayers()
           gamestate = "playing"
@@ -187,17 +177,7 @@ function onMove ( x, y )
     local deltaX = 0
     local deltaY = ay - lastY
     prop:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
-    local gx, gy = prop:getLoc()
-    gun:setLoc(gx+14,gy)
-    local cx, cy = cross:getLoc()
-    gun:setRot(angle(gx+14,gy,cx,cy))
   elseif(drag and ax >= 100) then
-    local deltaX = 0
-    local deltaY = ay - clastY
-    cross:moveLoc (deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
-    local gx, gy = gun:getLoc()
-    local cx, cy = cross:getLoc()
-    gun:setRot(angle(gx,gy,cx,cy))
   end
   if(ax <= -100) then
     lastX = ax
@@ -206,6 +186,7 @@ function onMove ( x, y )
     clastX = ax
     clastY = ay
   end
+  moveGun(gun, prop, cross)
 end
 
 local touchX = 0

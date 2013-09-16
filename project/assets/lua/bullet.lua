@@ -10,6 +10,7 @@ function Bullet.new(sprite, layer, x, y, partition)
     self.layer = layer
     self.prop:setDeck(sprite)
     self.prop:setLoc(x, y)
+    self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   end
   return self
 end

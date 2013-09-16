@@ -65,6 +65,7 @@ function loadFightLayers()
 
   backgroundProp = MOAIProp2D.new()
   backgroundProp:setDeck(gfxQuad)
+  backgroundProp:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   backgroundLayer:insertProp(backgroundProp)
 
   MOAIRenderMgr.pushRenderPass(backgroundLayer)
@@ -90,10 +91,12 @@ function loadMenuLayers()
 	propStartButton = MOAIProp2D.new()
 	propStartButton:setDeck(spriteStartButton)
 	propStartButton:setLoc(-120,80)
+  propStartButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
 	  
 	propButton = MOAIProp2D.new()
 	propButton:setDeck(spriteStartButton)
 	propButton:setLoc(-120,0)
+  propButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
 	
 	menuLayer:insertProp(propStartButton)
 	menuLayer:insertProp(propButton)
