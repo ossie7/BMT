@@ -36,6 +36,8 @@ function Bullet.checkCollision(self)
   local obj = self.partition:propForPoint( self.prop:getLoc() )
   if obj then
     self.partition:removeProp(obj)
+    coins = coins + 1
+    textboxGameMode:setString("Coins = "..coins)
     self.layer:removeProp(self.prop)
   end
 end

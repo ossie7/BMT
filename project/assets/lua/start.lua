@@ -54,9 +54,14 @@ clayer:setViewport(viewport)
 buttonlayer = MOAILayer2D.new()
 buttonlayer:setViewport(viewport)
 
+textLayer = MOAILayer2D.new()
+textLayer:setViewport(viewport)
+
 menuLayer = MOAILayer2D.new()
 menuLayer:setViewport(viewport)
 MOAIRenderMgr.pushRenderPass(menuLayer)
+
+coins = 0
 
 -- Set background colour
 --MOAIGfxDevice.getFrameBuffer():setClearColor(0,0,0,0)
@@ -70,6 +75,7 @@ function loadFightLayers()
 	MOAIRenderMgr.pushRenderPass(elayer)
 	MOAIRenderMgr.pushRenderPass(layer)
   MOAIRenderMgr.pushRenderPass(clayer)
+  MOAIRenderMgr.pushRenderPass(textLayer)
   
   texturePause = MOAIImage.new()
   texturePause:load("resources/wm_pause.png")
@@ -86,6 +92,15 @@ function loadFightLayers()
   
   buttonlayer:insertProp(propButton)
   buttonlayer:setPriority(1000)
+  
+  textboxGameMode = MOAITextBox.new()
+	textboxGameMode:setStyle(style)
+	textboxGameMode:setString("Coins ="..coins)
+	textboxGameMode:setRect(-50,-50,50,50)
+  textboxGameMode:setLoc(-100,30)
+	textboxGameMode:setYFlip ( true )
+	textLayer:insertProp(textboxGameMode)
+  textLayer:setPriority(1001)
     
   pausePartition = MOAIPartition.new()
 	pausePartition:insertProp(propButton)
@@ -104,6 +119,7 @@ function loadMenuLayers()
   layer:clear()
   clayer:clear()
   buttonlayer:clear()
+  textLayer:clear()
   
   MOAIRenderMgr.pushRenderPass(menuLayer)
 	
@@ -129,14 +145,6 @@ function loadMenuLayers()
 	menuLayer:setPartition(partition)
 	  
 	gamestate = "pause"
-	
-	textboxGameMode = MOAITextBox.new()
-	textboxGameMode:setStyle(style)
-	textboxGameMode:setString("<c:f70>Game mode = <c>"..gamestate)
-	textboxGameMode:setRect(-320, -80, 50, 49)
-	textboxGameMode:setAlignment( MOAITextBox.RIGHT_JUSTIFY , MOAITextBox.RIGHT_JUSTIFY )
-	textboxGameMode:setYFlip ( true )
-	menuLayer:insertProp(textboxGameMode)
 	
 	propStartButton.name = "playing"
 

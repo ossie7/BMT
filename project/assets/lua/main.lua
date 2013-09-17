@@ -12,6 +12,7 @@ require 'bullet'
 require 'fight_helper'
 require 'start'
 require 'background'
+require 'styles'
 
 -- TODO: Get gamemode from user choise
 loadFightLayers()
