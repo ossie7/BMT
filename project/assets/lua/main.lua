@@ -35,12 +35,12 @@ function threadDuel () -- DUEL gamemode thread
     if(gamestate == "pause") then
       break
     end
-    
-    bulletGen(prop:getLoc())
     enemyGenInterval()
     coroutine.yield()
   end
 end
+
+
 
 function checkIfInside(locX,locY)
     if (locX < rightborder and locX > leftborder) and (locY < topborder and locY > bottomborder) then

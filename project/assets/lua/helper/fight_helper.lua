@@ -37,14 +37,8 @@ function startDuel(sprite, layer)
   createGunTools()
   createBackground()
   startTimer()
-  prop:setLoc(-100,0)
-end
-
-function bulletGen(x, y)
-  if(last+interval < clock()) then
-    newBullet(x,y)
-    last = clock()
-  end
+  prop:setLoc(0,0)
+  startShipThread()
 end
 
 function enemyGenInterval()
