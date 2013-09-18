@@ -31,7 +31,8 @@ function initLayers()
 
   menuLayer = MOAILayer2D.new()
   menuLayer:setViewport(viewport)
-  MOAIRenderMgr.pushRenderPass(menuLayer)
+  
+  loadMenuLayers()
 end
 
 function loadFightLayers()

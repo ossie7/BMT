@@ -9,13 +9,10 @@ local touchY = 0
 local ctouchX = 0
 local ctouchY = 0
 
-
 function onTouch(x,y)
   local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
   if(gamestate == "pause") then
-    print(gamestate)
     if hitButton then 
-      print(hitButton.name)
       if (hitButton.name == "playing") then
         thread:run(threadDuel)
           
@@ -31,9 +28,7 @@ function onTouch(x,y)
    
   local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
   if(gamestate == "playing") then
-    print(gamestate)
     if gameButton then 
-      print(gameButton.name)
       if (gameButton.name == "pause") then
         loadMenuLayers()
         MOAISim.forceGarbageCollection()  
@@ -42,7 +37,6 @@ function onTouch(x,y)
      end
    end
 end
---------------------
 
 function onMouseLeftEvent ( down )
     if ( down ) then
@@ -73,22 +67,14 @@ function onMove ( x, y )
 end
 
 function touchMove( x, y, event)
-  ax, ay = layer:wndToWorld(x, y*-1)
+  local ax, ay = layer:wndToWorld(x, y*-1)
 if (event == 1 and ax <= -100) then
 local deltaX = 0
-    local deltaY = ay - touchY
-    prop:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
-    local gx, gy = prop:getLoc()
-    gun:setLoc(gx+14,gy)
-    local cx, cy = cross:getLoc()
-    gun:setRot(angle(gx+14,gy,cx,cy))
+    local deltaY = (ay - touchY) * -1
+    prop:moveLoc ( deltaX, deltaY, 0, 0, MOAIEaseType.FLAT )
 elseif(event == 1 and ax >= 100) then
-    local deltaX = 0
-    local deltaY = ay - ctouchY
-    cross:moveLoc ( deltaX, deltaY*-1, 0, 0, MOAIEaseType.FLAT )
-    local gx, gy = gun:getLoc()
-    local cx, cy = cross:getLoc()
-    gun:setRot(angle(gx,gy,cx,cy))
+    local deltaY = (ay - ctouchY) * -1
+    cross:moveLoc ( deltaX, deltaY, 0, 0, MOAIEaseType.FLAT )
   end
 if(ax <= -100) then
     touchX = ax
@@ -97,6 +83,7 @@ if(ax <= -100) then
     ctouchX = ax
     ctouchY = ay
   end
+  moveGun(gun, prop, cross)
 end
 
 if MOAIInputMgr.device.pointer then

@@ -2,23 +2,14 @@ Enemy = {}
 Enemy.__index = Enemy
 
 -- syntax equivalent to "MyClass.new = function..."
-function Enemy.new(sprite, x, y)
+function Enemy.new(sprite, x, y, team)
   self = setmetatable({}, Enemy)
   self.prop = MOAIProp2D.new()
-  if(sprite ~= nil and layer ~= nil and x ~= nil and y ~= nil) then
-    self.prop:setDeck(sprite)
-    self.prop:setLoc(x, y)
-    self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  end
-  return self
-end
-
-function Enemy.setDeck(self, sprite)
+  self.team = team
   self.prop:setDeck(sprite)
-end
-
-function Enemy.setLoc(self, x, y)
   self.prop:setLoc(x, y)
+  self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  return self
 end
 
 

@@ -23,12 +23,6 @@ require 'enemy_bullet'
 require 'ship'
 
 
-
--- TODO: Get gamemode from user choise
-loadFightLayers()
-loadMenuLayers()
-
-
 function threadDuel () -- DUEL gamemode thread
   startDuel(sprite, layer)
   while true do
@@ -48,12 +42,6 @@ function checkIfInside(locX,locY)
     else
         return false
     end
-end
-
-function newBullet (origX, origY)
-    local bullet = Bullet.new(bsprite, blayer, origX, origY, epartition)
-    blayer:insertProp(bullet.prop)
-    bullet:startThread()
 end
 
 -- Start gameloop
