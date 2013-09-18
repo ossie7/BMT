@@ -168,6 +168,7 @@ function onTouch(x,y)
           backgroundLayer1:clear()
           backgroundLayer2:clear()
           buttonlayer:clear()
+          MOAISim.forceGarbageCollection()
           gamemode = NONE
           
           loadMenuLayers()
@@ -194,6 +195,8 @@ function onMove ( x, y )
     local deltaY = (ay - lastY) * -1
     prop:moveLoc (0, deltaY, 0, 0, MOAIEaseType.FLAT )
   elseif(drag and ax >= 100) then
+    local deltaY = (ay - clastY) * -1
+    cross:moveLoc (0, deltaY, 0, 0, MOAIEaseType.FLAT )
   end
   if(ax <= -100) then
     lastX = ax
