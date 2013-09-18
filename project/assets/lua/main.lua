@@ -9,8 +9,8 @@ io.output( ):setvbuf("no") -- Fix for console lag
 
 -- Requires
 require 'bullet'
-require 'fight_helper'
-require 'start'
+require 'helper/fight_helper'
+require 'loader/start'
 require 'background'
 require 'styles'
 
@@ -31,10 +31,10 @@ truck = MOAIImage.new()
 truck:load("resources/truck.png")
 
 crosstexture = MOAIImage.new()
-crosstexture:load("cross.png")
+crosstexture:load("resources/cross.png")
 
 guntexture = MOAIImage.new()
-guntexture:load("gun.png")
+guntexture:load("resources/gun.png")
 
 sprite = MOAIGfxQuad2D.new() -- Player
 sprite:setTexture(truck)
