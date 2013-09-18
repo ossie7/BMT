@@ -9,10 +9,20 @@ io.output( ):setvbuf("no") -- Fix for console lag
 
 -- Requires
 require 'loader/start'
-require 'bullet'
+
+require 'helper/base_helper'
+require 'helper/data_helper'
 require 'helper/fight_helper'
-require 'background'
 require 'helper/input_helper'
+require 'helper/upgrade_helper'
+
+require 'background'
+require 'bullet'
+require 'enemy'
+require 'enemy_bullet'
+require 'ship'
+
+
 
 -- TODO: Get gamemode from user choise
 loadFightLayers()
@@ -51,6 +61,3 @@ thread = MOAIThread.new ()
 if(gamestate == 'playing') then
   thread:run(threadDuel)
 end
-
------------------
-

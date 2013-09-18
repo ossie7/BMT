@@ -33,7 +33,6 @@ function startTimer()
 end
 
 function startDuel(sprite, layer)
-  layer:clear()
   createProp(sprite, layer)
   createGunTools()
   createBackground()
@@ -56,14 +55,10 @@ function enemyGenInterval()
 end
 
 function newEnemy ()
-  local x, y = 0,0
-  x = 100
-  y = math.random(bottomborder + 10, topborder - 10)
-  local enemy = MOAIProp2D.new()
-  enemy:setDeck(esprite)
-  enemy:setLoc(x, y)
-  enemy:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  epartition:insertProp(enemy)
+  local y = math.random(bottomborder + 10, topborder - 10)
+  local newEnemy = Enemy.new(esprite, 100, y)
+  epartition:insertProp(newEnemy.prop)
+  newEnemy:startThread()
 end
 
 function angle ( x1, y1, x2, y2 )

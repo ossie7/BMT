@@ -35,6 +35,7 @@ function initLayers()
 end
 
 function loadFightLayers()
+  clearLayers()
   MOAIRenderMgr.pushRenderPass(backgroundLayer1)
   MOAIRenderMgr.pushRenderPass(backgroundLayer2)
   MOAIRenderMgr.pushRenderPass(buttonlayer)
@@ -77,16 +78,7 @@ function loadFightLayers()
 end
 
 function loadMenuLayers()
-  menuLayer:clear()
-  backgroundLayer1:clear()
-  backgroundLayer2:clear()
-  buttonlayer:clear()
-  blayer:clear()
-  elayer:clear()
-  layer:clear()
-  clayer:clear()
-  buttonlayer:clear()
-  textLayer:clear()
+  clearLayers()
   
   MOAIRenderMgr.pushRenderPass(menuLayer)
 	
@@ -112,4 +104,17 @@ function loadMenuLayers()
 	
 	propStartButton.name = "playing"
 
+end
+
+function clearLayers()
+  menuLayer:clear()
+  backgroundLayer1:clear()
+  backgroundLayer2:clear()
+  buttonlayer:clear()
+  blayer:clear()
+  elayer:clear()
+  layer:clear()
+  clayer:clear()
+  buttonlayer:clear()
+  textLayer:clear()
 end
