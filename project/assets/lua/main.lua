@@ -8,20 +8,15 @@
 io.output( ):setvbuf("no") -- Fix for console lag
 
 -- Requires
+require 'loader/start'
 require 'bullet'
 require 'helper/fight_helper'
-require 'loader/start'
 require 'background'
-require 'styles'
 
 -- TODO: Get gamemode from user choise
 loadFightLayers()
 loadMenuLayers()
 
-gamemode = NONE
-if(gamestate ~= "pause") then
-  gamemode = DUEL
-end
 
 -- Load main test texture and sprites
 texture = MOAIImage.new()
@@ -79,32 +74,6 @@ function threadDuel () -- DUEL gamemode thread
   end
 end
 
-function threadChase () -- CHASE gamemode thread
-  startChase(sprite, layer)
-  while true do
-    bulletGen(prop:getLoc())
-    enemyGenInterval()
-    coroutine.yield()
-  end
-end
-
-function threadFlee () -- FLEE gamemode thread
-  startFlee(sprite, layer)
-  newEnemy()
-  while true do
-    coroutine.yield()
-  end
-end
-
-function threadBattle () -- BATTLE gamemode thread
-  startBattle(sprite, layer)
-  while true do
-    bulletGen(prop:getLoc())
-    enemyGenInterval()
-    coroutine.yield()
-  end
-end
-
 function checkIfInside(locX,locY)
     if (locX < rightborder and locX > leftborder) and (locY < topborder and locY > bottomborder) then
         return true
@@ -121,59 +90,39 @@ end
 
 -- Start gameloop
 thread = MOAIThread.new ()
-if(gamemode == DUEL) then
+if(gamestate == 'playing') then
   thread:run(threadDuel)
-elseif(gamemode == CHASE) then
-  thread:run(threadChase)
-elseif(gamemode == FLEE) then
-  thread:run(threadFlee)
-elseif(gamemode == BATTLE) then
-  thread:run(threadBattle)
 end
 
 -----------------
 function onTouch(x,y)
-  
   local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
   if(gamestate == "pause") then
-     print(gamestate)
-     if hitButton then 
-        print(hitButton.name)
-        if (hitButton.name == "playing") then
+    print(gamestate)
+    if hitButton then 
+      print(hitButton.name)
+      if (hitButton.name == "playing") then
+        thread:run(threadDuel)
           
-          menuLayer:clear()
-
-          gamemode = DUEL
-          thread:run(threadDuel)
+        lastX, lastY = layer:wndToWorld(x, y*-1)
           
-          lastX, lastY = layer:wndToWorld(x, y*-1)
-          
-          loadFightLayers()
-          gamestate = "playing"
-          boolean = WAIT
-          playInput()
-          
+        loadFightLayers()
+        gamestate = "playing"
+        boolean = WAIT
+        playInput()
         end
      end
    end
    
   local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
-   if(gamestate == "playing") then
-     print(gamestate)
-     if gameButton then 
-        print(gameButton.name)
-        if (gameButton.name == "pause") then
-          
-          menuLayer:clear()
-          backgroundLayer1:clear()
-          backgroundLayer2:clear()
-          buttonlayer:clear()
-          MOAISim.forceGarbageCollection()
-          gamemode = NONE
-          
-          loadMenuLayers()
-          gamestate = "pause"
-          
+  if(gamestate == "playing") then
+    print(gamestate)
+    if gameButton then 
+      print(gameButton.name)
+      if (gameButton.name == "pause") then
+        loadMenuLayers()
+        MOAISim.forceGarbageCollection()  
+        gamestate = "pause"  
         end
      end
    end

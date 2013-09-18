@@ -41,33 +41,6 @@ function startDuel(sprite, layer)
   prop:setLoc(-100,0)
 end
 
-function startChase()
-  layer:clear()
-  createProp(sprite, layer)
-  createGunTools()
-  createBackground()
-  startTimer()
-  prop:setLoc(-100,0)
-end
-
-function startFlee()
-  layer:clear()
-  createProp(sprite, layer)
-  createGunTools()
-  createBackground()
-  startTimer()
-  prop:setLoc(100,0)
-end
-
-function startBattle()
-  layer:clear()
-  createProp(sprite, layer)
-  createGunTools()
-  createBackground()
-  startTimer()
-  prop:setLoc(-100,0)
-end
-
 function bulletGen(x, y)
   if(last+interval < clock()) then
     newBullet(x,y)
@@ -84,19 +57,8 @@ end
 
 function newEnemy ()
   local x, y = 0,0
-  if(gamemode == FLEE) then
-    x = -100
-    y = math.random(bottomborder + 10, topborder - 10)
-  elseif(gamemode == DUEL) then
-    x = 100
-    y = math.random(bottomborder + 10, topborder - 10)
-  elseif(gamemode == BATTLE) then
-    x = math.random(10, rightborder - 10)
-    y = math.random(bottomborder + 10, topborder - 10)
-  elseif(gamemode == CHASE) then
-    x = 100
-    y = math.random(bottomborder + 10, topborder - 10)
-  end
+  x = 100
+  y = math.random(bottomborder + 10, topborder - 10)
   local enemy = MOAIProp2D.new()
   enemy:setDeck(esprite)
   enemy:setLoc(x, y)

@@ -1,8 +1,7 @@
--- Gamemodes
-DUEL   = 1
-CHASE  = 2
-FLEE   = 3
-BATTLE = 4
+require 'loader/layermgr'
+require 'loader/texturemgr'
+require 'loader/soundmgr'
+require 'loader/styles'
 
 screenWidth  = nil
 screenHeight = nil
@@ -27,39 +26,7 @@ rightborder = screenWidthScale / 2
 topborder = screenHeightScale / 2
 bottomborder = (screenHeightScale / 2) * -1
 
-backgroundLayer1 = MOAILayer2D.new()
-backgroundLayer1:setViewport(viewport)
-
-backgroundLayer2 = MOAILayer2D.new()
-backgroundLayer2:setViewport(viewport)
-
-backlayer = MOAILayer2D.new()
-backlayer:setViewport(viewport)
-
-layer = MOAILayer2D.new()
-layer:setViewport(viewport)
-
-blayer = MOAILayer2D.new()
-blayer:setViewport(viewport)
-
-elayer = MOAILayer2D.new()
-elayer:setViewport(viewport)
-
-epartition = MOAIPartition.new()
-elayer:setPartition(epartition)
-
-clayer = MOAILayer2D.new()
-clayer:setViewport(viewport)
-
-buttonlayer = MOAILayer2D.new()
-buttonlayer:setViewport(viewport)
-
-textLayer = MOAILayer2D.new()
-textLayer:setViewport(viewport)
-
-menuLayer = MOAILayer2D.new()
-menuLayer:setViewport(viewport)
-MOAIRenderMgr.pushRenderPass(menuLayer)
+initLayers()
 
 coins = 0
 
@@ -67,7 +34,6 @@ coins = 0
 --MOAIGfxDevice.getFrameBuffer():setClearColor(0,0,0,0)
 
 function loadFightLayers()
-  
   MOAIRenderMgr.pushRenderPass(backgroundLayer1)
   MOAIRenderMgr.pushRenderPass(backgroundLayer2)
   MOAIRenderMgr.pushRenderPass(buttonlayer)
@@ -110,7 +76,7 @@ function loadFightLayers()
 end
 
 function loadMenuLayers()
-  
+  menuLayer:clear()
   backgroundLayer1:clear()
   backgroundLayer2:clear()
   buttonlayer:clear()
