@@ -52,7 +52,7 @@ function newEnemy ()
   local speed = 1
   local x, y = 0, math.random(bottomborder + 10, topborder - 10)
   local r = math.random(1,2)
-  if(r==1) then x = -200 else x = 200 end
+  if(r==1) then x = -160 else x = 160 end
   local newEnemy = Enemy.new(esprite, x, y, r)
   epartition:insertProp(newEnemy.prop)
   newEnemy:startThread()

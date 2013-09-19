@@ -20,22 +20,19 @@ function Enemy.startThread (self)
   function self.prop:moveEnemy(parent)
     while true do
       locX,locY = self:getLoc()
-      newY = locY + math.random(-2,2)
-      if(parent.team == 1 and locX < -100) then
-        newX = locX + 2
-        self:setLoc(newX, newY)
-      elseif (parent.team == 2 and locX > 100) then
-        newX = locX - 2
-        self:setLoc(newX, newY)
-      else
-        self:setLoc(locX, newY)
-        end
-      -----
+      locY = locY + math.random(-2,2)
+      if(parent.team == 1 and locX < -120) then
+        locX = locX + 1
+      elseif (parent.team == 2 and locX > 120) then
+        locX = locX - 1
+      end
+      self:setLoc(locX, locY)
+      
       local gx, gy = self:getLoc()
       local cx, cy = prop:getLoc()
       local angle = calcAngle(gx,gy,cx,cy)
       parent.enemyBulletGen(parent, gx, gy, angle)
-    ---------
+
       coroutine.yield()
     end
   end
