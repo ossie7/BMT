@@ -43,7 +43,7 @@ end
 
 function EnemyBullet.startThread (self)
   
-  function self.prop:moveBullet(parent)
+  function self.prop:moveEnemyBullet(parent)
     local locX,locY = self:getLoc()
     
     while parent:checkIfInside(locX,locY) do
@@ -56,5 +56,5 @@ function EnemyBullet.startThread (self)
   end
 
   self.prop.thread = MOAICoroutine.new()
-  self.prop.thread:run(self.prop.moveBullet, self.prop, self)
+  self.prop.thread:run(self.prop.moveEnemyBullet, self.prop, self)
 end

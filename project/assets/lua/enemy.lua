@@ -26,7 +26,7 @@ function Enemy.startThread (self)
       local gx, gy = self:getLoc()
       local cx, cy = prop:getLoc()
       local angle = calcAngle(gx,gy,cx,cy)
-      parent:enemyBulletGen(parent, gx, gy, angle)
+      parent.enemyBulletGen(parent, gx, gy, angle)
     ---------
       coroutine.yield()
     end
