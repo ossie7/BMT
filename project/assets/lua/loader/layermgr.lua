@@ -39,6 +39,10 @@ function initLayers()
   menuLayer = MOAILayer2D.new()
   menuLayer:setViewport(viewport)
   
+  --upgrade layers
+  upgradeLayer = MOAILayer2D.new()
+  upgradeLayer:setViewport(viewport)
+  
   loadMenuLayers()
 end
 
@@ -110,17 +114,49 @@ function loadMenuLayers()
 	propStartButton:setDeck(spriteStartButton)
 	propStartButton:setLoc(-120,80)
   propStartButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-	
-	menuLayer:insertProp(propStartButton)
+  
+  propShipUpgradesButton = MOAIProp2D.new()
+	propShipUpgradesButton:setDeck(spriteStartButton)
+	propShipUpgradesButton:setLoc(120,80)
+  propShipUpgradesButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
 
 	partition = MOAIPartition.new()
 	partition:insertProp(propStartButton)
+  partition:insertProp(propShipUpgradesButton)
 	menuLayer:setPartition(partition)
 	  
 	gamestate = "pause"
 	
 	propStartButton.name = "playing"
+  propShipUpgradesButton.name = "shipUpgrades"
 
+end
+
+function loadShipUpgradesLayers()
+  clearLayers()
+   
+  MOAIRenderMgr.pushRenderPass(upgradeLayer)
+  
+  texturePlay = MOAIImage.new()
+  texturePlay:load("resources/play_button.png")
+  
+	spriteBackButton = MOAIGfxQuad2D.new()
+	spriteBackButton:setTexture(texturePlay)
+	spriteBackButton:setRect(-32, -32, 32, 32);
+  
+  propBackButton = MOAIProp2D.new()
+	propBackButton:setDeck(spriteBackButton)
+	propBackButton:setLoc(-130,-60)
+  propBackButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  
+  upgradePartition = MOAIPartition.new()
+	upgradePartition:insertProp(propBackButton)
+	upgradeLayer:setPartition(upgradePartition)
+  
+  SetupShipUpgradesList()
+  
+  propBackButton.name = "leaveUpgradeScreen"
+  gamestate = "upgrading"
 end
 
 function clearLayers()
@@ -134,4 +170,5 @@ function clearLayers()
   clayer:clear()
   buttonlayer:clear()
   textLayer:clear()
+  upgradeLayer:clear()
 end

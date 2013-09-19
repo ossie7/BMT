@@ -10,8 +10,8 @@ local ctouchX = 0
 local ctouchY = 0
 
 function onTouch(x,y)
-  local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
   if(gamestate == "pause") then
+    local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
     if hitButton then 
       if (hitButton.name == "playing") then
         thread:run(threadDuel)
@@ -22,12 +22,35 @@ function onTouch(x,y)
         gamestate = "playing"
         boolean = WAIT
         playInput()
+      elseif (hitButton.name == "shipUpgrades") then
+        loadShipUpgradesLayers()
+      end
+    end
+  end
+  
+  if(gamestate == "upgrading") then
+    local pickedProp = upgradePartition:propForPoint( upgradeLayer:wndToWorld(x,y) )
+    if pickedProp then 
+      if (pickedProp.name == "leaveUpgradeScreen") then
+        loadMenuLayers()
+      else
+        for i = 1, table.getn(shipUpgradesList), 1 do
+          local upgrade = shipUpgradesList[i]
+          if pickedProp == upgrade:GetProp() then
+            local deltaX, deltaY
+            local propX, propY = pickedProp:getLoc()
+            deltaX = 0 - propX
+            deltaY = 0 - propY
+            
+            UpdateShipUpgradesPositions(deltaX, deltaY)
+          end
         end
-     end
-   end
+      end
+    end
+  end
    
-  local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
   if(gamestate == "playing") then
+    local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
     if gameButton then 
       if (gameButton.name == "pause") then
         loadMenuLayers()

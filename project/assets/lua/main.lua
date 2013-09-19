@@ -21,12 +21,14 @@ require 'bullet'
 require 'enemy'
 require 'ship'
 require 'enemy_bullet'
+require 'upgradeItem'
+require 'shipUpgradeScreen'
 
 
 function threadDuel () -- DUEL gamemode thread
   startDuel(sprite, layer)
   while true do
-    if(gamestate == "pause") then
+    if(gamestate == "pause" or gamestate == "upgrading") then
       break
     end
     enemyGenInterval()
