@@ -19,7 +19,14 @@ function initLayers()
 
   epartition = MOAIPartition.new()
   elayer:setPartition(epartition)
+  
+  --enemy bullet
+  eblayer = MOAILayer2D.new()
+  eblayer:setViewport(viewport)
 
+  ebpartition = MOAIPartition.new()
+  eblayer:setPartition(ebpartition)
+  
   clayer = MOAILayer2D.new()
   clayer:setViewport(viewport)
 
@@ -45,6 +52,7 @@ function loadFightLayers()
 	MOAIRenderMgr.pushRenderPass(layer)
   MOAIRenderMgr.pushRenderPass(clayer)
   MOAIRenderMgr.pushRenderPass(textLayer)
+  MOAIRenderMgr.pushRenderPass(eblayer)
   
   texturePause = MOAIImage.new()
   texturePause:load("resources/wm_pause.png")
