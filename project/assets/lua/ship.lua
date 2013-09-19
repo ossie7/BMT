@@ -1,4 +1,4 @@
-health = 10
+health = 100
 
 function checkHealth() 
     return health
@@ -41,6 +41,7 @@ function checkBulletCollision()
   if obj then
     ebpartition:removeProp(obj)
     health = health - 1
+    textboxHealth:setString("Health = "..health)
     if (health <= 0 ) then
         layer:removeProp(prop)
         print("ouch, hp is now "..health)

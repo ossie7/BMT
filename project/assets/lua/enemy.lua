@@ -21,7 +21,15 @@ function Enemy.startThread (self)
     while true do
       locX,locY = self:getLoc()
       newY = locY + math.random(-2,2)
-      self:setLoc(locX, newY)
+      if(parent.team == 1 and locX < -100) then
+        newX = locX + 2
+        self:setLoc(newX, newY)
+      elseif (parent.team == 2 and locX > 100) then
+        newX = locX - 2
+        self:setLoc(newX, newY)
+      else
+        self:setLoc(locX, newY)
+        end
       -----
       local gx, gy = self:getLoc()
       local cx, cy = prop:getLoc()
