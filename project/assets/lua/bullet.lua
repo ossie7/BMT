@@ -29,9 +29,13 @@ function Bullet.checkCollision(self)
   local obj = self.partition:propForPoint( self.prop:getLoc() )
   if obj then
     self.partition:removeProp(obj)
+    obj.thread:stop()
+    obj = nil
     coins = coins + 1
     textboxGameMode:setString("Coins = "..coins)
     self.layer:removeProp(self.prop)
+    MOAISim.forceGarbageCollection()
+    self.prop.thread:stop()
   end
 end
 
@@ -54,6 +58,7 @@ function Bullet.startThread (self)
       coroutine.yield()
     end
     self.thread:stop()
+    parent = nil
   end
 
   self.prop.thread = MOAICoroutine.new()
