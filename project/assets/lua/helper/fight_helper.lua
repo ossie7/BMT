@@ -19,8 +19,9 @@ function createGunTools()
   clayer:insertProp(gun)
 end
 
-function createBackground()
-  backgroundThread(backgroundLayer1, backgroundLayer2)
+
+function createUniverseBackground()
+  universeThread(universeLayer)
 end
 
 
@@ -35,7 +36,8 @@ end
 function startDuel(sprite, layer)
   createProp(sprite, layer)
   createGunTools()
-  createBackground()
+  createUniverseBackground()
+  --createBackground()
   startTimer()
   prop:setLoc(0,0)
   startShipThread()

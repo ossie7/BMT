@@ -7,6 +7,9 @@ function initLayers()
 
   backlayer = MOAILayer2D.new()
   backlayer:setViewport(viewport)
+  
+  universeLayer = MOAILayer2D.new()
+  universeLayer:setViewport(viewport)
 
   layer = MOAILayer2D.new()
   layer:setViewport(viewport)
@@ -50,6 +53,7 @@ function loadFightLayers()
   clearLayers()
   MOAIRenderMgr.pushRenderPass(backgroundLayer1)
   MOAIRenderMgr.pushRenderPass(backgroundLayer2)
+  MOAIRenderMgr.pushRenderPass(universeLayer)
   MOAIRenderMgr.pushRenderPass(buttonlayer)
 	MOAIRenderMgr.pushRenderPass(blayer)
 	MOAIRenderMgr.pushRenderPass(elayer)
