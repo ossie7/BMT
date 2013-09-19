@@ -49,6 +49,7 @@ function enemyGenInterval()
 end
 
 function newEnemy ()
+  local speed = 1
   local x, y = 0, math.random(bottomborder + 10, topborder - 10)
   local r = math.random(1,2)
   if(r==1) then x = -100 else x = 100 end
@@ -66,4 +67,12 @@ function moveGun(gun, ship, cross)
   local cx, cy = cross:getLoc()
   gun:setRot(calcAngle(gx+14,gy,cx,cy))
   gun:setLoc(gx+14,gy)
+end
+
+function checkCollision()
+  local obj = ebpartition:propForPoint( prop:getLoc() )
+  if obj then
+    eblayer:removeProp(obj)
+    layer:removeProp(obj)
+  end
 end

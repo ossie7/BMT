@@ -38,7 +38,8 @@ end
 
 function Enemy.newEnemyBullet (origX, origY, angle)
     local enemyBullet = EnemyBullet.new(bsprite, origX, origY, angle)
-    eblayer:insertProp(enemyBullet.prop)
+
+    ebpartition:insertProp(enemyBullet.prop)
     enemyBullet:startThread()
 end
 

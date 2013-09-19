@@ -5,8 +5,8 @@ EnemyBullet.__index = EnemyBullet
 function EnemyBullet.new(sprite, x, y, angle)
   self = setmetatable({}, EnemyBullet)
   self.prop = MOAIProp2D.new()
-  self.partition = partition
-  self.layer = layer
+  self.partition = ebpartition
+  self.layer = eblayer
   self.angle = angle
   self.speed = 5
   self.prop:setDeck(sprite)
@@ -25,15 +25,6 @@ function EnemyBullet.checkIfInside(self, locX,locY)
     end
 end
 
-function EnemyBullet.checkCollision(self)
-  local obj = self.partition:propForPoint( self.prop:getLoc() )
-  if obj then
-    self.partition:removeProp(obj)
-    ---------------
-    self.layer:removeProp(self.prop)
-  end
-end
-
 function EnemyBullet.bulletMovement(self, x, y)
   nx = x + math.cos(math.rad(self.angle)) * self.speed
   ny = y + math.sin(math.rad(self.angle)) * self.speed
@@ -47,7 +38,7 @@ function EnemyBullet.startThread (self)
     local locX,locY = self:getLoc()
     
     while parent:checkIfInside(locX,locY) do
-      parent:checkCollision()
+      checkBulletCollision()
       locX,locY = parent:bulletMovement(locX, locY)
       self:setLoc(locX,locY)
       coroutine.yield()

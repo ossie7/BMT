@@ -1,3 +1,10 @@
+health = 10
+
+function checkHealth() 
+    return health
+end
+
+
 function newBullet (origX, origY, angle)
     local bullet = Bullet.new(bsprite, blayer, origX, origY, epartition, angle)
     blayer:insertProp(bullet.prop)
@@ -27,4 +34,17 @@ end
 function startShipThread ()
   shipthread = MOAICoroutine.new()
   shipthread:run(shipThread)
+end
+
+function checkBulletCollision()
+  local obj = ebpartition:propForPoint(prop:getLoc() )
+  if obj then
+    ebpartition:removeProp(obj)
+    health = health - 1
+    if (health <= 0 ) then
+        layer:removeProp(prop)
+        print("ouch, hp is now "..health)
+    end
+    
+  end
 end

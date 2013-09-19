@@ -19,8 +19,8 @@ require 'helper/upgrade_helper'
 require 'background'
 require 'bullet'
 require 'enemy'
-require 'enemy_bullet'
 require 'ship'
+require 'enemy_bullet'
 
 
 function threadDuel () -- DUEL gamemode thread
