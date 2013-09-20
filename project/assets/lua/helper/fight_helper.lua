@@ -37,7 +37,7 @@ function startTimer()
   clock = os.clock -- Create clock
   last = 0 -- Last bullet spawn
   laste = 0 -- Last enemy spawn
-  interval = 0.2 -- Bullet interval
+  interval = 0.5 -- Bullet interval
   intervale = 1 -- Enemy interval
 end
 
@@ -52,7 +52,8 @@ function startDuel(sprite, layer)
 end
 
 function enemyGenInterval()
-  totalWaves = math.random(week , week+2)
+  --totalWaves = math.random(week , week+2)
+  totalWaves = 100
   if (currentWave < totalWaves) then
     amountEnemies = math.random(3 , 10 )
     for x=1, amountEnemies do
@@ -86,7 +87,7 @@ function newEnemy ()
   local speed = 1
   local x, y = 0, math.random(bottomborder + 10, topborder - 10)
   local r = math.random(1,2)
-  if(r==1) then x = -160 else x = 160 end
+  if(r==1) then x = -180 else x = 180 end
   local newEnemy = Enemy.new(esprite, x, y, r)
   epartition:insertProp(newEnemy.prop)
   newEnemy:startThread()
