@@ -31,6 +31,7 @@ function threadDuel () -- DUEL gamemode thread
   startWaves()
   while true do
     if(gamestate == "pause" or gamestate == "upgrading") then
+      timer:stop()
       break
     end
     coroutine.yield()
