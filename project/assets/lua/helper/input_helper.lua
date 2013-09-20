@@ -40,12 +40,13 @@ function onTouch(x,y)
             local deltaX, deltaY
             local propX, propY = pickedProp:getLoc()
             deltaX = 0 - propX
-            deltaY = 0 - propY
+            deltaY = 10 - propY
             
             UpdateShipUpgradesPositions(deltaX, deltaY, i)
+            textboxNameValue:setString(""..upgrade:GetName())
             textboxLeftFactionResourceValue:setString(""..upgrade:GetResourcesLeftFaction())
             textboxRightFactionResourceValue:setString(""..upgrade:GetResourcesRightFaction())
-            textboxTimeFactionResourceValue:setString(""..upgrade:GetRequiredTime())
+            textboxTimeValue:setString(""..upgrade:GetRequiredTime())
           end
         end
       end
