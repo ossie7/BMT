@@ -52,6 +52,11 @@ function Bullet.startThread (self)
     local locX,locY = self:getLoc()
     
     while parent:checkIfInside(locX,locY) do
+      
+      if(gamestate == "pause" or gamestate == "upgrading") then
+        break
+      end
+    
       parent:checkCollision()
       locX,locY = parent:bulletMovement(locX, locY)
       self:setLoc(locX,locY)

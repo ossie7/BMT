@@ -20,7 +20,7 @@ end
 
 function shipThread()
   while true do
-    if(gamestate == "pause") then
+    if(gamestate == "pause" or gamestate == "upgrading") then
       break
     end
     local gx, gy = gun:getLoc()
