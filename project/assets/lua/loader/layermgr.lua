@@ -159,7 +159,7 @@ function loadShipUpgradesLayers()
   
   propBackButton = MOAIProp2D.new()
 	propBackButton:setDeck(spriteBackButton)
-	propBackButton:setLoc(130,-60)
+	propBackButton:setLoc(-130,-60)
   propBackButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
   upgradePartition = MOAIPartition.new()
@@ -168,6 +168,7 @@ function loadShipUpgradesLayers()
   
   SetupShipUpgradesList()
   
+  -- name textboxes
   textboxLeftFactionResource = MOAITextBox.new()
 	textboxLeftFactionResource:setStyle(style)
 	textboxLeftFactionResource:setString("LFRes: ")
@@ -181,7 +182,7 @@ function loadShipUpgradesLayers()
 	textboxRightFactionResource:setRect(-50,-50,50,50)
   textboxRightFactionResource:setLoc(0,-90)
 	textboxRightFactionResource:setYFlip(true)
-  
+
   textboxTimeFactionResource = MOAITextBox.new()
 	textboxTimeFactionResource:setStyle(style)
 	textboxTimeFactionResource:setString("Time: ")
@@ -189,34 +190,46 @@ function loadShipUpgradesLayers()
   textboxTimeFactionResource:setLoc(0,-100)
 	textboxTimeFactionResource:setYFlip(true)
   
+  --Value textboxes
   textboxLeftFactionResourceValue = MOAITextBox.new()
 	textboxLeftFactionResourceValue:setStyle(style)
 	textboxLeftFactionResourceValue:setRect(-50,-50,50,50)
-  textboxLeftFactionResourceValue:setLoc(50,-80)
+  textboxLeftFactionResourceValue:setLoc(90,-80)
 	textboxLeftFactionResourceValue:setYFlip(true)
+  
   textboxRightFactionResourceValue = MOAITextBox.new()
 	textboxRightFactionResourceValue:setStyle(style)
 	textboxRightFactionResourceValue:setRect(-50,-50,50,50)
-  textboxRightFactionResourceValue:setLoc(50,-90)
+  textboxRightFactionResourceValue:setLoc(90,-90)
 	textboxRightFactionResourceValue:setYFlip(true)
-  textboxTimeFactionResourceValue = MOAITextBox.new()
-	textboxTimeFactionResourceValue:setStyle(style)
-	textboxTimeFactionResourceValue:setRect(-50,-50,50,50)
-  textboxTimeFactionResourceValue:setLoc(50,-100)
-	textboxTimeFactionResourceValue:setYFlip(true)
+  
+  textboxTimeValue = MOAITextBox.new()
+	textboxTimeValue:setStyle(style)
+	textboxTimeValue:setRect(-50,-50,50,50)
+  textboxTimeValue:setLoc(90,-100)
+	textboxTimeValue:setYFlip(true)
+  
+  textboxNameValue = MOAITextBox.new()
+	textboxNameValue:setStyle(style)
+	textboxNameValue:setRect(-80,-20,80,20)
+  textboxNameValue:setLoc(0,70)
+  textboxNameValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+	textboxNameValue:setYFlip(true)
   
 	textLayer:insertProp(textboxLeftFactionResource)
   textLayer:insertProp(textboxRightFactionResource)
   textLayer:insertProp(textboxTimeFactionResource)
   textLayer:insertProp(textboxLeftFactionResourceValue)
   textLayer:insertProp(textboxRightFactionResourceValue)
-  textLayer:insertProp(textboxTimeFactionResourceValue)
+  textLayer:insertProp(textboxTimeValue)
+  textLayer:insertProp(textboxNameValue)
   textLayer:setPriority(1001)
   
   local upgrade = shipUpgradesList[1]
+  textboxNameValue:setString(""..upgrade:GetName())
   textboxLeftFactionResourceValue:setString(""..upgrade:GetResourcesLeftFaction())
   textboxRightFactionResourceValue:setString(""..upgrade:GetResourcesRightFaction())
-  textboxTimeFactionResourceValue:setString(""..upgrade:GetRequiredTime())
+  textboxTimeValue:setString(""..upgrade:GetRequiredTime())
   
   propBackButton.name = "leaveUpgradeScreen"
   gamestate = "upgrading"

@@ -1,4 +1,4 @@
-health = 100
+health = 1000
 
 function checkHealth() 
     return health
@@ -67,7 +67,9 @@ function checkBulletCollision()
 end
 
 function damage(obj)
+  obj.thread:stop()
   ebpartition:removeProp(obj)
+  ebrpartition:removeProp(obj)
   health = health - 1
   textboxHealth:setString("Health = "..health)
   if (health <= 0 ) then

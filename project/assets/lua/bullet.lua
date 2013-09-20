@@ -8,7 +8,7 @@ function Bullet.new(sprite, layer, x, y, partition, angle)
   self.partition = partition
   self.layer = layer
   self.angle = angle
-  self.speed = 5
+  self.speed = 3
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
   self.prop:setRot(angle)

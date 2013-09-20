@@ -9,8 +9,10 @@ function Enemy.new(sprite, x, y, team)
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
   self.enemyLast = 0
-  self.enemyInterval = 1
+  self.enemyInterval = 2
   self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  self.prop.owner = self
+  self.health = 100
   return self
 end
 
@@ -24,13 +26,13 @@ function Enemy.startThread (self)
       end
       locX,locY = self:getLoc()
       locY = locY + math.random(-2,2)
-      if(parent.team == 1 and locX < -120) then
+      if(parent.team == 1 and locX < -130) then
         locX = locX + 1
-      elseif (parent.team == 2 and locX > 120) then
+      elseif (parent.team == 2 and locX > 130) then
         locX = locX - 1
       end
       self:setLoc(locX, locY)
-      
+      self.owner.checkReflect(self.owner)
       local gx, gy = self:getLoc()
       local cx, cy = prop:getLoc()
       local angle = calcAngle(gx,gy,cx,cy)
@@ -58,4 +60,27 @@ function Enemy.enemyBulletGen(self, x, y, angle)
   end
 end
 
+function Enemy.checkReflect(self)
+  local x, y = self.prop:getLoc()
+  local objs = ebrpartition:propListForRect(x-6, y-5, x+6, y+5)
+  if(objs) then
+    if(type(objs)=="table") then
+      for i, hit in ipairs(objs) do
+        self:damage(hit)
+      end
+    else
+      self:damage(objs)
+    end
+  end
+end
+
+function Enemy.damage(self, obj)
+  ebrpartition:removeProp(obj)
+  obj.thread:stop()
+  self.health = self.health - 100
+  if (self.health <= 0 ) then
+    elayer:removeProp(self.prop)
+    self.prop.thread:stop()
+  end
+end
 
