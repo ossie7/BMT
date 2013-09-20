@@ -8,7 +8,7 @@ function EnemyBullet.new(sprite, x, y, angle)
   self.partition = ebpartition
   self.layer = eblayer
   self.angle = angle
-  self.speed = 5
+  self.speed = 2
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
   self.prop:setRot(angle)
