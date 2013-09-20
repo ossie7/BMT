@@ -48,8 +48,13 @@ function UpgradeItem:GetRequiredTime()
 end
 
 function UpgradeItem:UpdateLocation(deltaX, deltaY)
-  local x, y = self.prop:getLoc()
-  self.prop:setLoc(x + deltaX, y + deltaY)
+  local animSpeed = 1
+  self.prop:moveLoc(deltaX, deltaY, animSpeed)
+end
+
+function UpgradeItem:UpdateScale(scale)
+  local animSpeed = 1
+  self.prop:moveScl(scale, scale, animSpeed)
 end
 
 function UpgradeItem:GetProp()
