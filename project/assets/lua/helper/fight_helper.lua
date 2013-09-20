@@ -1,9 +1,7 @@
 week = 1
-waveCounter = 1
+waveCounter = 0
 
---totalWaves = math.random(week , week+2)
-totalWaves = 4
-currentWave = 1
+currentWave = 0
 
 
 
@@ -54,29 +52,33 @@ function startDuel(sprite, layer)
 end
 
 function enemyGenInterval()
+  totalWaves = math.random(week , week+2)
   if (currentWave < totalWaves) then
-    print("current wave = "..currentWave)
     amountEnemies = math.random(3 , 10 )
     for x=1, amountEnemies do
         newEnemy()
         print(x)
     end
     currentWave = currentWave + 1
-    print("current wave = "..currentWave)
   else
     print("current wave = "..currentWave)
+    print("times executed "..timer:getTimesExecuted())
     timer:stop()
+    
+    loadMenuLayers()
+    currentWave = 1
+    week = week + 1
   end
   
 end
 
 function startWaves() 
-  enemyGenInterval()
   timer = MOAITimer.new()
   timer:setMode(MOAITimer.LOOP)
   timer:setSpan(10)
   timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() enemyGenInterval() end)
   timer:start()
+  enemyGenInterval()
 end
 
 
