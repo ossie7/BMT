@@ -1,3 +1,13 @@
+week = 1
+waveCounter = 1
+
+--totalWaves = math.random(week , week+2)
+totalWaves = 4
+currentWave = 1
+
+
+
+
 function createProp(sprite, layer)
   prop = MOAIProp2D.new()
   prop:setDeck(sprite)
@@ -37,18 +47,38 @@ function startDuel(sprite, layer)
   createProp(sprite, layer)
   createGunTools()
   createUniverseBackground()
-  --createBackground()
+  --createBackground() Oude sidescrolling background
   startTimer()
   prop:setLoc(0,0)
   startShipThread()
 end
 
 function enemyGenInterval()
-  if(laste+intervale < clock()) then
-    newEnemy()
-    laste = clock()
+  if (currentWave < totalWaves) then
+    print("current wave = "..currentWave)
+    amountEnemies = math.random(3 , 10 )
+    for x=1, amountEnemies do
+        newEnemy()
+        print(x)
+    end
+    currentWave = currentWave + 1
+    print("current wave = "..currentWave)
+  else
+    print("current wave = "..currentWave)
+    timer:stop()
   end
+  
 end
+
+function startWaves() 
+  enemyGenInterval()
+  timer = MOAITimer.new()
+  timer:setMode(MOAITimer.LOOP)
+  timer:setSpan(10)
+  timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() enemyGenInterval() end)
+  timer:start()
+end
+
 
 function newEnemy ()
   local speed = 1

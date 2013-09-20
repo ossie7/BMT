@@ -28,11 +28,11 @@ require 'shipUpgradeScreen'
 
 function threadDuel () -- DUEL gamemode thread
   startDuel(sprite, layer)
+  startWaves()
   while true do
     if(gamestate == "pause" or gamestate == "upgrading") then
       break
     end
-    enemyGenInterval()
     coroutine.yield()
   end
 end
