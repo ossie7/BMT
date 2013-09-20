@@ -19,6 +19,9 @@ function Enemy.startThread (self)
   
   function self.prop:moveEnemy(parent)
     while true do
+      if(gamestate == "pause" or gamestate == "upgrading") then
+        break
+      end
       locX,locY = self:getLoc()
       locY = locY + math.random(-2,2)
       if(parent.team == 1 and locX < -120) then

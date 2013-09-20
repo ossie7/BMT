@@ -10,9 +10,16 @@ function initTextures()
   bsprite = MOAIGfxQuad2D.new() -- Bullet
   bsprite:setTexture(texture)
   bsprite:setRect(-8,-8,8,8)
+  
+  pirateTexture = MOAIImage.new()
+  pirateTexture:load("resources/pirate_small.png")
+  pirateSprite = MOAIGfxQuad2D.new() -- Pirate
+  pirateSprite:setTexture(pirateTexture)
+  pirateSprite:setRect(-12,-12,12,12)
+
 
   esprite = MOAIGfxQuad2D.new() -- Enemy
-  esprite:setTexture(texture)
+  esprite:setTexture(pirateTexture)
   esprite:setRect(-12,-12,12,12)
 
   crosstexture = MOAIImage.new()

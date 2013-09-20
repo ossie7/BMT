@@ -94,15 +94,15 @@ end
 
 function touchMove( x, y, event)
   local ax, ay = layer:wndToWorld(x, y*-1)
-if (event == 1 and ax <= -100) then
-local deltaX = 0
+  if (event == 1 and ax <= -100) then
+  local deltaX = 0
     local deltaY = (ay - touchY) * -1
     prop:moveLoc ( deltaX, deltaY, 0, 0, MOAIEaseType.FLAT )
-elseif(event == 1 and ax >= 100) then
+  elseif(event == 1 and ax >= 100) then
     local deltaY = (ay - ctouchY) * -1
     cross:moveLoc ( deltaX, deltaY, 0, 0, MOAIEaseType.FLAT )
   end
-if(ax <= -100) then
+  if(ax <= -100) then
     touchX = ax
     touchY = ay
   elseif(ax >= 100) then
@@ -117,11 +117,8 @@ if MOAIInputMgr.device.pointer then
 else
   MOAIInputMgr.device.touch:setCallback (
     function ( eventType, idx, x, y, tapCount )
-      if (gamestate == "pause") then
-        onTouch(x, y)
-      else
-        touchMove ( x, y, eventType )
-      end
+      onTouch(x, y)
+      touchMove ( x, y, eventType )
     end
     )
 end
