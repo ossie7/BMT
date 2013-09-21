@@ -11,3 +11,7 @@ font:preloadGlyphs(charcodes, 16)
 style = MOAITextStyle.new()
 style:setFont(font)
 style:setSize(16)
+
+upgradeMenuStyle = MOAITextStyle.new()
+upgradeMenuStyle:setFont(font)
+upgradeMenuStyle:setSize(10)

@@ -169,15 +169,15 @@ function loadShipUpgradesLayers()
   SetupShipUpgradesList()
   
   -- name textboxes
-  textboxLeftFactionResource = CreateTextBox(0, -80, 100, 100, style, "LFRes: ")
-  textboxRightFactionResource = CreateTextBox(0, -90, 100, 100, style, "RFRes: ")
-  textboxTimeFactionResource = CreateTextBox(0, -100, 100, 100, style, "Time: ")
+  textboxLeftFactionResource = CreateTextBox(0, -80, 100, 100, upgradeMenuStyle, "LFRes: ")
+  textboxRightFactionResource = CreateTextBox(0, -90, 100, 100, upgradeMenuStyle, "RFRes: ")
+  textboxTimeFactionResource = CreateTextBox(0, -100, 100, 100, upgradeMenuStyle, "Time: ")
   
   --Value textboxes
-  textboxLeftFactionResourceValue = CreateTextBox(90, -80, 100, 100, style, "")
-  textboxRightFactionResourceValue = CreateTextBox(90, -90, 100, 100, style, "")
-  textboxTimeValue = CreateTextBox(90, -100, 100, 100, style, "")
-  textboxNameValue = CreateTextBox(0, 70, 160, 40, style, "")
+  textboxLeftFactionResourceValue = CreateTextBox(90, -80, 100, 100, upgradeMenuStyle, "")
+  textboxRightFactionResourceValue = CreateTextBox(90, -90, 100, 100, upgradeMenuStyle, "")
+  textboxTimeValue = CreateTextBox(90, -100, 100, 100, upgradeMenuStyle, "")
+  textboxNameValue = CreateTextBox(0, 70, 160, 40, upgradeMenuStyle, "")
   textboxNameValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   
 	textLayer:insertProp(textboxLeftFactionResource)
