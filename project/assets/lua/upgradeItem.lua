@@ -13,6 +13,7 @@ function UpgradeItem.new(sprite, name, requiredResourceLeftFaction, requiredReso
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
   self.prop:setBlendMode(MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA)
+  self.prop.name = "upgradeItem"
   upgradePartition:insertProp(self.prop)
   
   return self

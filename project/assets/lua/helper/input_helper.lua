@@ -33,7 +33,7 @@ function onTouch(x,y)
     if pickedProp then 
       if (pickedProp.name == "leaveUpgradeScreen") then
         loadMenuLayers()
-      else
+      elseif (pickedProp.name == "upgradeItem") then
         for i = 1, table.getn(shipUpgradesList), 1 do
           local upgrade = shipUpgradesList[i]
           if pickedProp == upgrade:GetProp() then
