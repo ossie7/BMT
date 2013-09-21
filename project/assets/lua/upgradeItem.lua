@@ -2,17 +2,17 @@ UpgradeItem = {}
 UpgradeItem.__index = UpgradeItem
 
 -- syntax equivalent to "MyClass.new = function..."
-function UpgradeItem.new()
+function UpgradeItem.new(sprite, name, requiredResourceLeftFaction, requiredResourceRightFaction, requiredTime)
   self = setmetatable({}, UpgradeItem)
   
-  self.name = ""
-  self.resourceLeftFaction = 0
-  self.resourceRightFaction = 0
-  self.requiredTime = 0
+  self.name = name
+  self.resourceLeftFaction = requiredResourceLeftFaction
+  self.resourceRightFaction = requiredResourceRightFaction
+  self.requiredTime = requiredTime
   self.prop = MOAIProp2D.new()
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
-  self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  self.prop:setBlendMode(MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA)
   upgradePartition:insertProp(self.prop)
   
   return self
@@ -26,16 +26,16 @@ function UpgradeItem:GetName()
   return self.name
 end
 
-function UpgradeItem:SetResources(resourceLeftFaction, resourceRightFaction)
+function UpgradeItem:SetRequiredResources(resourceLeftFaction, resourceRightFaction)
   self.resourceLeftFaction = resourceLeftFaction
   self.resourceRightFaction = resourceRightFaction
 end
 
-function UpgradeItem:GetResourcesLeftFaction()
+function UpgradeItem:GetRequiredResourcesLeftFaction()
   return self.resourceLeftFaction
 end
 
-function UpgradeItem:GetResourcesRightFaction()
+function UpgradeItem:GetRequiredResourcesRightFaction()
   return self.resourceRightFaction
 end
 
@@ -45,6 +45,14 @@ end
 
 function UpgradeItem:GetRequiredTime()
   return self.requiredTime
+end
+
+function UpgradeItem:SetLocation(deltaX, deltaY)
+  self.prop:setLoc(deltaX, deltaY)
+end
+
+function UpgradeItem:SetScale(scale)
+  self.prop:setScl(scale, scale)
 end
 
 function UpgradeItem:UpdateLocation(deltaX, deltaY)

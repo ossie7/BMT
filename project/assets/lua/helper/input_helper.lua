@@ -44,8 +44,8 @@ function onTouch(x,y)
             
             UpdateShipUpgradesPositions(deltaX, deltaY, i)
             textboxNameValue:setString(""..upgrade:GetName())
-            textboxLeftFactionResourceValue:setString(""..upgrade:GetResourcesLeftFaction())
-            textboxRightFactionResourceValue:setString(""..upgrade:GetResourcesRightFaction())
+            textboxLeftFactionResourceValue:setString(""..upgrade:GetRequiredResourcesLeftFaction())
+            textboxRightFactionResourceValue:setString(""..upgrade:GetRequiredResourcesRightFaction())
             textboxTimeValue:setString(""..upgrade:GetRequiredTime())
           end
         end

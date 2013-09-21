@@ -169,52 +169,16 @@ function loadShipUpgradesLayers()
   SetupShipUpgradesList()
   
   -- name textboxes
-  textboxLeftFactionResource = MOAITextBox.new()
-	textboxLeftFactionResource:setStyle(style)
-	textboxLeftFactionResource:setString("LFRes: ")
-	textboxLeftFactionResource:setRect(-50,-50,50,50)
-  textboxLeftFactionResource:setLoc(0,-80)
-	textboxLeftFactionResource:setYFlip(true)
-  
-  textboxRightFactionResource = MOAITextBox.new()
-	textboxRightFactionResource:setStyle(style)
-	textboxRightFactionResource:setString("RFRes: ")
-	textboxRightFactionResource:setRect(-50,-50,50,50)
-  textboxRightFactionResource:setLoc(0,-90)
-	textboxRightFactionResource:setYFlip(true)
-
-  textboxTimeFactionResource = MOAITextBox.new()
-	textboxTimeFactionResource:setStyle(style)
-	textboxTimeFactionResource:setString("Time: ")
-	textboxTimeFactionResource:setRect(-50,-50,50,50)
-  textboxTimeFactionResource:setLoc(0,-100)
-	textboxTimeFactionResource:setYFlip(true)
+  textboxLeftFactionResource = CreateTextBox(0, -80, 100, 100, style, "LFRes: ")
+  textboxRightFactionResource = CreateTextBox(0, -90, 100, 100, style, "RFRes: ")
+  textboxTimeFactionResource = CreateTextBox(0, -100, 100, 100, style, "Time: ")
   
   --Value textboxes
-  textboxLeftFactionResourceValue = MOAITextBox.new()
-	textboxLeftFactionResourceValue:setStyle(style)
-	textboxLeftFactionResourceValue:setRect(-50,-50,50,50)
-  textboxLeftFactionResourceValue:setLoc(90,-80)
-	textboxLeftFactionResourceValue:setYFlip(true)
-  
-  textboxRightFactionResourceValue = MOAITextBox.new()
-	textboxRightFactionResourceValue:setStyle(style)
-	textboxRightFactionResourceValue:setRect(-50,-50,50,50)
-  textboxRightFactionResourceValue:setLoc(90,-90)
-	textboxRightFactionResourceValue:setYFlip(true)
-  
-  textboxTimeValue = MOAITextBox.new()
-	textboxTimeValue:setStyle(style)
-	textboxTimeValue:setRect(-50,-50,50,50)
-  textboxTimeValue:setLoc(90,-100)
-	textboxTimeValue:setYFlip(true)
-  
-  textboxNameValue = MOAITextBox.new()
-	textboxNameValue:setStyle(style)
-	textboxNameValue:setRect(-80,-20,80,20)
-  textboxNameValue:setLoc(0,70)
+  textboxLeftFactionResourceValue = CreateTextBox(90, -80, 100, 100, style, "")
+  textboxRightFactionResourceValue = CreateTextBox(90, -90, 100, 100, style, "")
+  textboxTimeValue = CreateTextBox(90, -100, 100, 100, style, "")
+  textboxNameValue = CreateTextBox(0, 70, 160, 40, style, "")
   textboxNameValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
-	textboxNameValue:setYFlip(true)
   
 	textLayer:insertProp(textboxLeftFactionResource)
   textLayer:insertProp(textboxRightFactionResource)
@@ -227,8 +191,8 @@ function loadShipUpgradesLayers()
   
   local upgrade = shipUpgradesList[1]
   textboxNameValue:setString(""..upgrade:GetName())
-  textboxLeftFactionResourceValue:setString(""..upgrade:GetResourcesLeftFaction())
-  textboxRightFactionResourceValue:setString(""..upgrade:GetResourcesRightFaction())
+  textboxLeftFactionResourceValue:setString(""..upgrade:GetRequiredResourcesLeftFaction())
+  textboxRightFactionResourceValue:setString(""..upgrade:GetRequiredResourcesRightFaction())
   textboxTimeValue:setString(""..upgrade:GetRequiredTime())
   
   propBackButton.name = "leaveUpgradeScreen"
