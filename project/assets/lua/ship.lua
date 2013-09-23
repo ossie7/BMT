@@ -40,8 +40,9 @@ end
 function checkBulletCollision()
   local obj = ebpartition:propForPoint(prop:getLoc() )
   local x,y = prop:getLoc()
-  local robj = ebpartition:propListForRect(x-24, y-16, x-18, y+16)
-  local hobj = ebpartition:propListForRect(x-18, y-14, x+22, y+14)
+  local robj = ebpartition:propListForRect(x-15, y-5, x-12, y+4)
+  local hobj1 = ebpartition:propListForRect(x-11, y-6, x+4, y+5)
+  local hobj2 = ebpartition:propListForRect(x+3, y-2, x+15, y+1)
   
   --Reflect
   if(robj) then
@@ -54,14 +55,25 @@ function checkBulletCollision()
     end
   end
   
-  --Hit
-  if(hobj) then
-    if(type(hobj)=="table") then
-      for i, hit in ipairs(hobj) do
+  --Hitbox 1
+  if(hobj1) then
+    if(type(hobj1)=="table") then
+      for i, hit in ipairs(hobj1) do
         damage(hit)
       end
     else
-      damage(hobj)
+      damage(hobj1)
+    end
+  end
+  
+  --Hitbox 2
+  if(hobj2) then
+    if(type(hobj2)=="table") then
+      for i, hit in ipairs(hobj2) do
+        damage(hit)
+      end
+    else
+      damage(hobj2)
     end
   end
 end

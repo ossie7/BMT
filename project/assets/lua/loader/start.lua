@@ -15,7 +15,7 @@ print("Starting up on:" .. MOAIEnvironment.osBrand  .. " version:" .. MOAIEnviro
 if screenWidth  == nil or screenWidth  == 0 then screenWidth  = 320 end
 if screenHeight == nil or screenHeight == 0 then screenHeight = 180 end
 
-MOAISim.openWindow("BAD MOTHER TRUCKER",screenWidth,screenHeight)
+MOAISim.openWindow("\"THE THIRD\"",screenWidth,screenHeight)
 
 viewport = MOAIViewport.new()
 viewport:setSize(screenWidth, screenHeight)
