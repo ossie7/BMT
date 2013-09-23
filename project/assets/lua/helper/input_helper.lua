@@ -83,11 +83,11 @@ end
 function onMove ( x, y )
   local ax, ay = layer:wndToWorld(x, y*-1)
   if ( drag and ax <= -100) then
-    local deltaY = (ay - lastY) * -1
-    prop:moveLoc (0, deltaY, 0, 0, MOAIEaseType.FLAT )
+    shipDeltaY = (ay - lastY) * -1
+    prop:moveLoc (0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
   elseif(drag and ax >= 100) then
-    local deltaY = (ay - clastY) * -1
-    cross:moveLoc (0, deltaY, 0, 0, MOAIEaseType.FLAT )
+    shipDeltaY = (ay - clastY) * -1
+    cross:moveLoc (0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
   end
   if(ax <= -100) then
     lastX = ax
@@ -108,12 +108,11 @@ function touchMove( x, y, event)
   
   if gamestate == "playing" and prop ~= nil then
     if (event == 1 and ax <= -100) then
-    local deltaX = 0
-      local deltaY = (ay - touchY) * -1
-      prop:moveLoc ( deltaX, deltaY, 0, 0, MOAIEaseType.FLAT )
+      shipDeltaY = (ay - touchY) * -1
+      prop:moveLoc ( 0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
     elseif(event == 1 and ax >= 100) then
-      local deltaY = (ay - ctouchY) * -1
-      cross:moveLoc ( deltaX, deltaY, 0, 0, MOAIEaseType.FLAT )
+      shipDeltaY = (ay - ctouchY) * -1
+      cross:moveLoc ( 0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
     end
     if(ax <= -100) then
       touchX = ax

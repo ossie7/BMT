@@ -6,10 +6,10 @@ function initTextures()
   sprite:setRect(-16,-16,16,16)
 
   texture = MOAIImage.new()
-  texture:load("resources/thing.png")
+  texture:load("resources/bullet_1.png")
   bsprite = MOAIGfxQuad2D.new() -- Bullet
   bsprite:setTexture(texture)
-  bsprite:setRect(-8,-8,8,8)
+  bsprite:setRect(-2,-2,2,2)
   
   pirateTexture = MOAIImage.new()
   pirateTexture:load("resources/pirate_small.png")
@@ -23,7 +23,7 @@ function initTextures()
   esprite:setRect(-12,-12,12,12)
 
   crosstexture = MOAIImage.new()
-  crosstexture:load("resources/cross.png")
+  crosstexture:load("resources/target.png")
   csprite = MOAIGfxQuad2D.new() -- Crosshair
   csprite:setTexture(crosstexture)
   csprite:setRect(-8,-8,8,8)

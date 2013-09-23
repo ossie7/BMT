@@ -37,7 +37,17 @@ function EnemyBullet.reflect(self)
   eblayer:removeProp(self.prop)
   ebrpartition:insertProp(self.prop)
   self.layer = ebrlayer
-  self.angle = self.angle+180
+  local d = shipDeltaY
+  if(d > 20) then
+    d = 20
+  elseif(d < - 20) then
+    d = -20
+  end
+  local a = 180 - self.angle
+  self.angle = (180 + a) - 180 + (60*(d/20))
+  if(self.angle > 250) then self.angle = 250 end
+  if(self.angle < 110) then self.angle = 110 end
+  self.prop:setRot(self.angle)
 end
 
 function EnemyBullet.startThread (self)

@@ -1,4 +1,4 @@
-health = 1000
+health = 999
 
 function checkHealth() 
     return health
