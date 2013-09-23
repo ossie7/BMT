@@ -51,7 +51,7 @@ end
 
 function enemyGenInterval()
   --totalWaves = math.random(week , week+2)
-  totalWaves = 100
+  totalWaves = 5
   if (currentWave < totalWaves) then
     amountEnemies = math.random(3 , 10 )
     for x=1, amountEnemies do
@@ -63,11 +63,20 @@ function enemyGenInterval()
     print("current wave = "..currentWave)
     print("times executed "..timer:getTimesExecuted())
     timer:stop()
-    
-    loadMenuLayers()
-    currentWave = 1
-    week = week + 1
   end
+  
+end
+
+function checkEndOfBattle()
+    local leftEnemies = epartition:propListForRect(-180,-90,180,90)
+    local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
+    if(leftEnemies == nil) then
+      print("left team died")
+        loadMenuLayers()
+    elseif (rightEnemies == nil) then
+      print("right team died")
+      loadMenuLayers()
+      end    
   
 end
 
@@ -85,10 +94,20 @@ function newEnemy ()
   local speed = 1
   local x, y = 0, math.random(bottomborder + 10, topborder - 10)
   local r = math.random(1,2)
-  if(r==1) then x = -180 else x = 180 end
+  
+  if(r==1) then
+    
+    x = -180 
+    else x = 180 
+  end
+  
   local newEnemy = Enemy.new(esprite, x, y, r)
-  epartition:insertProp(newEnemy.prop)
-  newEnemy:startThread()
+  if(r == 1) then
+    epartition:insertProp(newEnemy.prop)
+  else
+    epartition2:insertProp(newEnemy.prop)
+    end
+      newEnemy:startThread()
 end
 
 function calcAngle ( x1, y1, x2, y2 )

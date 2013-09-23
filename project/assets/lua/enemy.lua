@@ -7,6 +7,8 @@ function Enemy.new(sprite, x, y, team)
   self.prop = MOAIProp2D.new()
   self.team = team
   self.prop:setDeck(sprite)
+  -- prop moet dit field hebben voor partition check
+  self.prop.team = team
   self.prop:setLoc(x, y)
   self.enemyLast = clock() + math.random()
   self.enemyInterval = 1.5 + math.random()
@@ -80,6 +82,9 @@ function Enemy.damage(self, obj)
   self.health = self.health - 100
   if (self.health <= 0 ) then
     elayer:removeProp(self.prop)
+    if(currentWave == totalWaves) then
+      checkEndOfBattle()
+    end
     self.prop.thread:stop()
   end
 end

@@ -16,12 +16,19 @@ function initLayers()
 
   blayer = MOAILayer2D.new()
   blayer:setViewport(viewport)
-
+  -- enemies aan linkerkant
   elayer = MOAILayer2D.new()
   elayer:setViewport(viewport)
-
+  
   epartition = MOAIPartition.new()
   elayer:setPartition(epartition)
+  -- enemies aan rechterkant
+  elayer2 = MOAILayer2D.new()
+  elayer2:setViewport(viewport)
+  
+  epartition2 = MOAIPartition.new()
+  elayer2:setPartition(epartition2)
+  
   
   --enemy bullet
   eblayer = MOAILayer2D.new()
@@ -57,6 +64,9 @@ function initLayers()
 end
 
 function loadFightLayers()
+  currentWave = 1
+  week = week + 1
+  
   clearLayers()
   MOAIRenderMgr.pushRenderPass(backgroundLayer1)
   MOAIRenderMgr.pushRenderPass(backgroundLayer2)
@@ -65,6 +75,7 @@ function loadFightLayers()
   MOAIRenderMgr.pushRenderPass(eblayer)
   MOAIRenderMgr.pushRenderPass(ebrlayer)
 	MOAIRenderMgr.pushRenderPass(elayer)
+  MOAIRenderMgr.pushRenderPass(elayer2)
 	MOAIRenderMgr.pushRenderPass(layer)
   MOAIRenderMgr.pushRenderPass(blayer)
   MOAIRenderMgr.pushRenderPass(clayer)
@@ -75,11 +86,11 @@ function loadFightLayers()
   
   spritePauseButton = MOAIGfxQuad2D.new()
 	spritePauseButton:setTexture(texturePause)
-	spritePauseButton:setRect(-16, -16, 16, 16);
+	spritePauseButton:setRect(-8, -8, 8, 8);
   
   propButton = MOAIProp2D.new()
 	propButton:setDeck(spritePauseButton)
-	propButton:setLoc(-70,-65)
+	propButton:setLoc(-130,-70)
   propButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   propButton:setPriority(1000)
   

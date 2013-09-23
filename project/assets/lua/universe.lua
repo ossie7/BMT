@@ -19,7 +19,7 @@ STEP_SIZE_1 = 1
 function moveUniverseBackground()
   while true do
     local x1, y1 = universeProp:getLoc()
-    universeProp:moveRot(0.02)
+    universeProp:moveRot(0.05)
     coroutine.yield()
   end
 end
