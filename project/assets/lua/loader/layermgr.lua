@@ -162,8 +162,14 @@ function loadShipUpgradesLayers()
 	propBackButton:setLoc(-130,-60)
   propBackButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
+  propBuildButton = MOAIProp2D.new()
+	propBuildButton:setDeck(spriteBackButton)
+	propBuildButton:setLoc(130,-60)
+  propBuildButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  
   upgradePartition = MOAIPartition.new()
 	upgradePartition:insertProp(propBackButton)
+  upgradePartition:insertProp(propBuildButton)
 	upgradeLayer:setPartition(upgradePartition)
   
   SetupShipUpgradesList()
@@ -196,6 +202,7 @@ function loadShipUpgradesLayers()
   textboxTimeValue:setString(""..upgrade:GetRequiredTime())
   
   propBackButton.name = "leaveUpgradeScreen"
+  propBuildButton.name = "buildUpgrade"
   gamestate = "upgrading"
 end
 

@@ -9,6 +9,7 @@ function UpgradeItem.new(sprite, name, requiredResourceLeftFaction, requiredReso
   self.resourceLeftFaction = requiredResourceLeftFaction
   self.resourceRightFaction = requiredResourceRightFaction
   self.requiredTime = requiredTime
+  self.build = false
   self.prop = MOAIProp2D.new()
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
@@ -68,4 +69,12 @@ end
 
 function UpgradeItem:GetProp()
   return self.prop
+end
+
+function UpgradeItem:Build(build)
+  self.build = build
+end
+
+function UpgradeItem:IsBuild()
+  return self.build
 end

@@ -53,8 +53,13 @@ function onTouch(x,y)
             textboxLeftFactionResourceValue:setString(""..upgrade:GetRequiredResourcesLeftFaction())
             textboxRightFactionResourceValue:setString(""..upgrade:GetRequiredResourcesRightFaction())
             textboxTimeValue:setString(""..upgrade:GetRequiredTime())
+            
+            SetBuildButtonVisibility(upgrade)
           end
         end
+      elseif (pickedProp.name == "buildUpgrade") then
+        local upgrade = BuildShipUpgrade()
+        SetBuildButtonVisibility(upgrade)
       end
     end
   end
@@ -69,6 +74,14 @@ function onTouch(x,y)
         end
      end
    end
+end
+
+function SetBuildButtonVisibility(upgrade)
+  if upgrade:IsBuild() then
+    propBuildButton:setVisible(false)
+  else
+    propBuildButton:setVisible(true)
+  end
 end
 
 function onMouseLeftEvent ( down )

@@ -19,6 +19,8 @@ require 'enemy_bullet'
 require 'upgradeItem'
 require 'shipUpgradeScreen'
 
+require 'helper/save_helper'
+
 function threadDuel () -- DUEL gamemode thread
   startDuel(sprite, layer)
   startWaves()
