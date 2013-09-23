@@ -48,8 +48,8 @@ function UpgradeItem:GetRequiredTime()
   return self.requiredTime
 end
 
-function UpgradeItem:SetLocation(deltaX, deltaY)
-  self.prop:setLoc(deltaX, deltaY)
+function UpgradeItem:SetLocation(x, y)
+  self.prop:setLoc(x, y)
 end
 
 function UpgradeItem:SetScale(scale)

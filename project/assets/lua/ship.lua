@@ -12,6 +12,9 @@ function newBullet (origX, origY, angle)
 end
 
 function bulletGen(x, y, angle)
+  print("Last: " .. last)
+  print("Interval: " .. interval)
+  print("Clock: " .. clock())
   if(last+interval < clock()) then
     newBullet(x, y, angle)
     last = clock()

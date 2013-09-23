@@ -9,6 +9,12 @@ local touchY = 0
 local ctouchX = 0
 local ctouchY = 0
 
+local swipeStartX = 0
+local swipeStartY = 0
+local swipeLastX = 0
+local swipeLastY = 0
+local minSwipeDistance = 20
+
 function onTouch(x,y)
   if(gamestate == "pause") then
     local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
@@ -75,7 +81,7 @@ function onMouseLeftEvent ( down )
 end
 
 function onMove ( x, y )
-  ax, ay = layer:wndToWorld(x, y*-1)
+  local ax, ay = layer:wndToWorld(x, y*-1)
   if ( drag and ax <= -100) then
     local deltaY = (ay - lastY) * -1
     prop:moveLoc (0, deltaY, 0, 0, MOAIEaseType.FLAT )
@@ -95,22 +101,29 @@ end
 
 function touchMove( x, y, event)
   local ax, ay = layer:wndToWorld(x, y*-1)
-  if (event == 1 and ax <= -100) then
-  local deltaX = 0
-    local deltaY = (ay - touchY) * -1
-    prop:moveLoc ( deltaX, deltaY, 0, 0, MOAIEaseType.FLAT )
-  elseif(event == 1 and ax >= 100) then
-    local deltaY = (ay - ctouchY) * -1
-    cross:moveLoc ( deltaX, deltaY, 0, 0, MOAIEaseType.FLAT )
+  
+  if gamestate == "upgrading" then
+    --SwipingInUpgradeMenu(x, y, event)
   end
-  if(ax <= -100) then
-    touchX = ax
-    touchY = ay
-  elseif(ax >= 100) then
-    ctouchX = ax
-    ctouchY = ay
+  
+  if gamestate == "playing" and prop ~= nil then
+    if (event == 1 and ax <= -100) then
+    local deltaX = 0
+      local deltaY = (ay - touchY) * -1
+      prop:moveLoc ( deltaX, deltaY, 0, 0, MOAIEaseType.FLAT )
+    elseif(event == 1 and ax >= 100) then
+      local deltaY = (ay - ctouchY) * -1
+      cross:moveLoc ( deltaX, deltaY, 0, 0, MOAIEaseType.FLAT )
+    end
+    if(ax <= -100) then
+      touchX = ax
+      touchY = ay
+    elseif(ax >= 100) then
+      ctouchX = ax
+      ctouchY = ay
+    end
+    moveGun(gun, prop, cross)
   end
-  moveGun(gun, prop, cross)
 end
 
 if MOAIInputMgr.device.pointer then
@@ -131,4 +144,28 @@ function playInput()
       MOAIInputMgr.device.pointer:setCallback ( onMove )
     end
   end  
+end
+
+function SwipingInUpgradeMenu(x, y, eventType)
+  local worldX, worldY = upgradeLayer:wndToWorld(x, y*-1)
+  
+  if eventType == MOAITouchSensor.TOUCH_DOWN then
+    swipeStartX = worldX
+    swipeStartY = worldY
+    swipeLastX = worldX
+    swipeLastY = worldY
+  elseif eventType == MOAITouchSensor.TOUCH_MOVE then
+    local deltaStartX = math.abs(worldX - swipeStartX)
+    
+    if(deltaStartX > minSwipeDistance) then
+      local deltaX = worldX - swipeLastX
+      
+      UpdateShipUpgradesPositionsBySwipe(deltaX, 0)
+    end
+    
+    swipeLastX = worldX
+    swipeLastY = worldY
+  elseif eventType == MOAITouchSensor.TOUCH_UP then
+    SnapToClosestUpgrade()
+  end
 end
