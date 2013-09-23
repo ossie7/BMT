@@ -76,14 +76,6 @@ function onTouch(x,y)
    end
 end
 
-function SetBuildButtonVisibility(upgrade)
-  if upgrade:IsBuild() then
-    propBuildButton:setVisible(false)
-  else
-    propBuildButton:setVisible(true)
-  end
-end
-
 function onMouseLeftEvent ( down )
     if ( down ) then
         drag = true

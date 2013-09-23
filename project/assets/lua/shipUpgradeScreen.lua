@@ -1,9 +1,8 @@
 shipUpgradesList = {}
 lastTappedShipUpgrade = 1
+upgradeOffset = 90
 
 function SetupShipUpgradesList()
-  local upgradeOffset = 90
-  
   local upgradeItem1 = UpgradeItem.new(sprite, "Phaser Cannon Mk I", 20, 2000, 0)
   upgradeItem1:SetLocation(0, 10)
   upgradeItem1:SetScale(1.5)
@@ -16,6 +15,19 @@ function SetupShipUpgradesList()
   local upgradeItem3 = UpgradeItem.new(sprite, "Phaser Cannon Mk III", 1000, 10000, 4)
   upgradeItem3:SetLocation(2 * upgradeOffset, 10)
   table.insert(shipUpgradesList, upgradeItem3)
+end
+
+function LoadShipUpgradesList()
+  for i = 1, table.getn(shipUpgradesList), 1 do
+    shipUpgradesList[i]:SetLocation((i - 1) * upgradeOffset, 10)
+    upgradePartition:insertProp(shipUpgradesList[i]:GetProp())
+    
+    if i == 1 then
+      shipUpgradesList[i]:SetScale(1.5)
+    else
+      shipUpgradesList[i]:SetScale(1)
+    end
+  end
 end
 
 function UpdateShipUpgradesPositions(deltaX, deltaY, index)
@@ -71,3 +83,5 @@ function SnapToClosestUpgrade()
   
   UpdateShipUpgradesPositionsBySwipe(0 - closestX, 0)
 end
+
+SetupShipUpgradesList()

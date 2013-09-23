@@ -172,7 +172,7 @@ function loadShipUpgradesLayers()
   upgradePartition:insertProp(propBuildButton)
 	upgradeLayer:setPartition(upgradePartition)
   
-  SetupShipUpgradesList()
+  LoadShipUpgradesList()
   
   -- name textboxes
   textboxLeftFactionResource = CreateTextBox(0, -80, 100, 100, upgradeMenuStyle, "LFRes: ")
@@ -196,6 +196,7 @@ function loadShipUpgradesLayers()
   textLayer:setPriority(1001)
   
   local upgrade = shipUpgradesList[1]
+  SetBuildButtonVisibility(upgrade)
   textboxNameValue:setString(""..upgrade:GetName())
   textboxLeftFactionResourceValue:setString(""..upgrade:GetRequiredResourcesLeftFaction())
   textboxRightFactionResourceValue:setString(""..upgrade:GetRequiredResourcesRightFaction())

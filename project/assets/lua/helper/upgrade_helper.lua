@@ -6,3 +6,12 @@ function BuildShipUpgrade()
   
   return upgrade
 end
+
+function SetBuildButtonVisibility(upgrade)
+  print("SetBuildButtonVisibility")
+  if upgrade:IsBuild() then
+    propBuildButton:setVisible(false)
+  else
+    propBuildButton:setVisible(true)
+  end
+end

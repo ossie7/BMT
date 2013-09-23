@@ -15,7 +15,6 @@ function UpgradeItem.new(sprite, name, requiredResourceLeftFaction, requiredReso
   self.prop:setLoc(x, y)
   self.prop:setBlendMode(MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA)
   self.prop.name = "upgradeItem"
-  upgradePartition:insertProp(self.prop)
   
   return self
 end
@@ -72,7 +71,7 @@ function UpgradeItem:GetProp()
 end
 
 function UpgradeItem:Build(build)
-  self.build = build
+  self.build = build--boolean
 end
 
 function UpgradeItem:IsBuild()
