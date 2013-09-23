@@ -1,9 +1,9 @@
 function initTextures()
   truck = MOAIImage.new()
-  truck:load("resources/truck.png")
+  truck:load("resources/Ship.png")
   sprite = MOAIGfxQuad2D.new() -- Player
   sprite:setTexture(truck)
-  sprite:setRect(-32,-32,32,32)
+  sprite:setRect(-16,-16,16,16)
 
   texture = MOAIImage.new()
   texture:load("resources/thing.png")
@@ -29,8 +29,8 @@ function initTextures()
   csprite:setRect(-8,-8,8,8)
 
   guntexture = MOAIImage.new()
-  guntexture:load("resources/gun.png")
+  guntexture:load("resources/Ship_weapons.png")
   gunsprite = MOAIGfxQuad2D.new() -- Gun
   gunsprite:setTexture(guntexture)
-  gunsprite:setRect(-8,-8,8,8)
+  gunsprite:setRect(-16,-16,16,16)
 end

@@ -4,8 +4,6 @@ waveCounter = 0
 currentWave = 0
 
 
-
-
 function createProp(sprite, layer)
   prop = MOAIProp2D.new()
   prop:setDeck(sprite)
@@ -35,8 +33,8 @@ end
 
 function startTimer()
   clock = os.clock -- Create clock
-  last = 0 -- Last bullet spawn
-  laste = 0 -- Last enemy spawn
+  last = clock() -- Last bullet spawn
+  laste = clock() -- Last enemy spawn
   interval = 0.5 -- Bullet interval
   intervale = 1 -- Enemy interval
 end
@@ -100,8 +98,8 @@ end
 function moveGun(gun, ship, cross)
   local gx, gy = ship:getLoc()
   local cx, cy = cross:getLoc()
-  gun:setRot(calcAngle(gx+14,gy,cx,cy))
-  gun:setLoc(gx+14,gy)
+  gun:setRot(calcAngle(gx,gy,cx,cy))
+  gun:setLoc(gx,gy)
 end
 
 function checkCollision()

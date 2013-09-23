@@ -8,8 +8,8 @@ function Enemy.new(sprite, x, y, team)
   self.team = team
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
-  self.enemyLast = 0
-  self.enemyInterval = 2
+  self.enemyLast = clock() + math.random()
+  self.enemyInterval = 1.5 + math.random()
   self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   self.prop.owner = self
   self.health = 100
