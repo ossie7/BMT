@@ -29,13 +29,42 @@ function Enemy.startThread (self)
         break
       end
       locX,locY = self:getLoc()
-      locY = locY + math.random(-2,2)
+      --locY = locY + math.random(-2,2)
       if(parent.team == 1 and locX < -130) then
         locX = locX + 1
+        self:setLoc(locX, locY)
       elseif (parent.team == 2 and locX > 130) then
         locX = locX - 1
+        self:setLoc(locX, locY)
+      else
+        --
       end
-      self:setLoc(locX, locY)
+      
+      if(parent.team == 1 and locX >= -130) then
+        local newX = math.random(-3,3)
+        local newY = math.random(-3,3)
+        if((newX + locX) >= -110) then
+          newX = 0
+          elseif ((newY + locY) <= -90 or (newY + locY) >= 90) then
+            newY = 0
+          end
+          
+        self:moveLoc(newX, newY, 3)   
+      end
+      
+      if(parent.team == 2 and locX <= 130) then
+        local newX = math.random(-3,3)
+        local newY = math.random(-3,3)
+        if((newX + locX) <= 110) then
+          newX = 0
+          elseif ((newY + locY) <= -90 or (newY + locY) >= 90) then
+            newY = 0
+          end
+          
+        self:moveLoc(newX, newY, 3)   
+      end
+      
+      
       self.owner.checkReflect(self.owner)
       self.owner.checkHit(self.owner)
       self.owner.checkRivalHit(self.owner)
