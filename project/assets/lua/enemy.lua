@@ -91,9 +91,9 @@ end
 
 function Enemy.damage(self, obj)
   obj.thread:stop()
-  ebrpartition:removeProp(obj)
-  ebpartition:removeProp(obj)
   bpartition:removeProp(obj)
+  ebpartition:removeProp(obj)
+  ebrpartition:removeProp(obj)
   obj = nil
   MOAISim.forceGarbageCollection()
   
