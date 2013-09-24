@@ -3,16 +3,16 @@ lastTappedShipUpgrade = 1
 upgradeOffset = 90
 
 function SetupShipUpgradesList()
-  local upgradeItem1 = UpgradeItem.new(sprite, "Phaser Cannon Mk I", 20, 2000, 0)
+  local upgradeItem1 = UpgradeItem.new(gunsprite, "Phaser Cannon Mk I", 20, 2000, 0)
   upgradeItem1:SetLocation(0, 10)
-  upgradeItem1:SetScale(1.5)
+  upgradeItem1:SetScale(3)
   table.insert(shipUpgradesList, upgradeItem1)
   
-  local upgradeItem2 = UpgradeItem.new(sprite, "Phaser Cannon Mk II", 500, 5000, 2)
+  local upgradeItem2 = UpgradeItem.new(gunsprite, "Phaser Cannon Mk II", 500, 5000, 2)
   upgradeItem2:SetLocation(1 * upgradeOffset, 10)
   table.insert(shipUpgradesList, upgradeItem2)
   
-  local upgradeItem3 = UpgradeItem.new(sprite, "Phaser Cannon Mk III", 1000, 10000, 4)
+  local upgradeItem3 = UpgradeItem.new(gunsprite, "Phaser Cannon Mk III", 1000, 10000, 4)
   upgradeItem3:SetLocation(2 * upgradeOffset, 10)
   table.insert(shipUpgradesList, upgradeItem3)
 end
@@ -23,9 +23,9 @@ function LoadShipUpgradesList()
     upgradePartition:insertProp(shipUpgradesList[i]:GetProp())
     
     if i == 1 then
-      shipUpgradesList[i]:SetScale(1.5)
+      shipUpgradesList[i]:SetScale(3)
     else
-      shipUpgradesList[i]:SetScale(1)
+      shipUpgradesList[i]:SetScale(2)
     end
   end
 end
@@ -37,9 +37,9 @@ function UpdateShipUpgradesPositions(deltaX, deltaY, index)
       upgrade:UpdateLocation(deltaX, deltaY)
       
       if i == index then
-        upgrade:UpdateScale(0.5)
+        upgrade:UpdateScale(1)
       elseif i == lastTappedShipUpgrade then
-        upgrade:UpdateScale(-0.5)
+        upgrade:UpdateScale(-1)
       end
     end
   end

@@ -135,17 +135,23 @@ function loadMenuLayers()
 	  
 	propStartButton = MOAIProp2D.new()
 	propStartButton:setDeck(spriteStartButton)
-	propStartButton:setLoc(-120,80)
+	propStartButton:setLoc(0,-50)
   propStartButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
   propShipUpgradesButton = MOAIProp2D.new()
 	propShipUpgradesButton:setDeck(spriteStartButton)
-	propShipUpgradesButton:setLoc(120,80)
+	propShipUpgradesButton:setLoc(-94,-50)
   propShipUpgradesButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  
+  propStationUpgradesButton = MOAIProp2D.new()
+	propStationUpgradesButton:setDeck(spriteStartButton)
+	propStationUpgradesButton:setLoc(94,-50)
+  propStationUpgradesButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
 
 	partition = MOAIPartition.new()
 	partition:insertProp(propStartButton)
   partition:insertProp(propShipUpgradesButton)
+  partition:insertProp(propStationUpgradesButton)
 	menuLayer:setPartition(partition)
 	  
 	gamestate = "pause"
@@ -178,10 +184,17 @@ function loadShipUpgradesLayers()
 	propBuildButton:setLoc(130,-60)
   propBuildButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
+  propPlayerShip = MOAIProp2D.new()
+	propPlayerShip:setDeck(sprite)
+	propPlayerShip:setLoc(0, 10)
+  propPlayerShip:setScl(3)
+  propPlayerShip:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  
   upgradePartition = MOAIPartition.new()
 	upgradePartition:insertProp(propBackButton)
   upgradePartition:insertProp(propBuildButton)
 	upgradeLayer:setPartition(upgradePartition)
+  upgradeLayer:insertProp(propPlayerShip)
   
   LoadShipUpgradesList()
   
