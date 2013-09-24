@@ -25,25 +25,6 @@ function Bullet.checkIfInside(self, locX,locY)
     end
 end
 
-killCounter = 0
-function Bullet.checkCollision(self)
-  local obj = epartition2:propForPoint(self.prop:getLoc())
-  
-  if obj then
-    epartition2:removeProp(obj)
-    obj.thread:stop()
-    obj = nil
-    coins = coins + 1
-    textboxGameMode:setString("Coins = "..coins)
-    self.layer:removeProp(self.prop)
-    MOAISim.forceGarbageCollection()
-    self.prop.thread:stop()
-    if(lastWaveRight == true) then
-      checkEndOfBattle()
-    end
-  end
-end
-
 function Bullet.bulletMovement(self, x, y)
   nx = x + math.cos(math.rad(self.angle)) * self.speed
   ny = y + math.sin(math.rad(self.angle)) * self.speed
@@ -55,14 +36,10 @@ function Bullet.startThread (self)
   
   function self.prop:moveBullet(layer, parent)
     local locX,locY = self:getLoc()
-    
     while parent:checkIfInside(locX,locY) do
-      
       if(gamestate == "pause" or gamestate == "upgrading") then
         break
       end
-    
-      parent:checkCollision()
       locX,locY = parent:bulletMovement(locX, locY)
       self:setLoc(locX,locY)
       coroutine.yield()

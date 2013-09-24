@@ -33,6 +33,7 @@ function Enemy.startThread (self)
       end
       self:setLoc(locX, locY)
       self.owner.checkReflect(self.owner)
+      self.owner.checkHit(self.owner)
       local gx, gy = self:getLoc()
       local cx, cy = prop:getLoc()
       local angle = calcAngle(gx,gy,cx,cy)
@@ -60,6 +61,20 @@ function Enemy.enemyBulletGen(self, x, y, angle)
   end
 end
 
+function Enemy.checkHit(self)
+  local x, y = self.prop:getLoc()
+  local objs = bpartition:propListForRect(x-6, y-5, x+6, y+5)
+  if(objs) then
+    if(type(objs)=="table") then
+      for i, hit in ipairs(objs) do
+        self:damage(hit)
+      end
+    else
+      self:damage(objs)
+    end
+  end
+end
+
 function Enemy.checkReflect(self)
   local x, y = self.prop:getLoc()
   local objs = ebrpartition:propListForRect(x-6, y-5, x+6, y+5)
@@ -75,15 +90,28 @@ function Enemy.checkReflect(self)
 end
 
 function Enemy.damage(self, obj)
-  ebrpartition:removeProp(obj)
   obj.thread:stop()
+  ebrpartition:removeProp(obj)
+  ebpartition:removeProp(obj)
+  bpartition:removeProp(obj)
+  obj = nil
+  MOAISim.forceGarbageCollection()
+  
   self.health = self.health - 100
+  
+  coins = coins + 1
+  textboxGameMode:setString("Coins = "..coins)
+  
   if (self.health <= 0 ) then
-    elayer:removeProp(self.prop)
-    if(currentWave == totalWaves) then
-      checkEndOfBattle()
-    end
-    self.prop.thread:stop()
+    self:die()
   end
 end
 
+function Enemy.die(self)
+  elayer:removeProp(self.prop)
+  elayer2:removeProp(self.prop)
+  if(lastWaveRight == true or lastWaveLeft == true) then
+      checkEndOfBattle()
+    end
+  self.prop.thread:stop()
+end

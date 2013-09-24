@@ -16,6 +16,8 @@ function initLayers()
 
   blayer = MOAILayer2D.new()
   blayer:setViewport(viewport)
+  bpartition = MOAIPartition.new()
+  blayer:setPartition(bpartition)
   -- enemies aan linkerkant
   elayer = MOAILayer2D.new()
   elayer:setViewport(viewport)

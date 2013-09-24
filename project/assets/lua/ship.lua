@@ -7,7 +7,7 @@ end
 
 function newBullet (origX, origY, angle)
     local bullet = Bullet.new(bsprite, blayer, origX, origY, epartition, angle)
-    blayer:insertProp(bullet.prop)
+    bpartition:insertProp(bullet.prop)
     bullet:startThread()
 end
 

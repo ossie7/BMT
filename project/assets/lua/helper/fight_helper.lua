@@ -1,12 +1,6 @@
 week = 1
 waveCounter = 0
 
-
-leftStart = 100
-leftPower = 100
-rightStart = 100
-rightPower = 100
-
 function createProp(sprite, layer)
   prop = MOAIProp2D.new()
   prop:setDeck(sprite)
@@ -181,10 +175,10 @@ function powerThread()
     if(gamestate == "pause" or gamestate == "upgrading") then
       break
     end
-    local left = (leftPower/leftStart) * 150
-    local right = (rightPower/rightStart) * -150
-    lbsprite:setRect(0,0,left,-16) ---+150
-    rbsprite:setRect(right,-16,0,0) ---150
+    local left = ((amountLeftEnemies-totalAmountLeft)/amountLeftEnemies) * 150
+    local right = ((amountRightEnemies-totalAmountRight)/amountRightEnemies) * -150
+    lbsprite:setRect(0,0,left,-16)
+    rbsprite:setRect(right,-16,0,0)
     coroutine.yield()
   end
 end
