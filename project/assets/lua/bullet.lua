@@ -25,6 +25,7 @@ function Bullet.checkIfInside(self, locX,locY)
     end
 end
 
+killCounter = 0
 function Bullet.checkCollision(self)
   local obj = epartition2:propForPoint(self.prop:getLoc())
   
@@ -37,7 +38,7 @@ function Bullet.checkCollision(self)
     self.layer:removeProp(self.prop)
     MOAISim.forceGarbageCollection()
     self.prop.thread:stop()
-    if(currentWave == totalWaves) then
+    if(lastWaveRight == true) then
       checkEndOfBattle()
     end
   end

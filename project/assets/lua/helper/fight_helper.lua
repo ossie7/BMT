@@ -1,7 +1,6 @@
 week = 1
 waveCounter = 0
 
-currentWave = 0
 
 leftStart = 100
 leftPower = 100
@@ -44,30 +43,91 @@ function startTimer()
 end
 
 function startDuel(sprite, layer)
-  totalWaves = 5
   createProp(sprite, layer)
   createGunTools()
   createUniverseBackground()
+
+  currentWaveRight = 1
+  amountRightEnemies = 10 -- TODO dynamisch maken
+  totalAmountRight = 0
+  lastWaveRight = false
+  
+  currentWaveLeft = 1
+  amountLeftEnemies = 40 -- TODO dynamisch maken
+  totalAmountLeft = 0
+  lastWaveLeft = false
+  
   startTimer()
   prop:setLoc(0,0)
   startPowerThread()
   startShipThread()
+
 end
 
-function enemyGenInterval()
-  if (currentWave < totalWaves) then
-    amountEnemies = math.random(3 , 10 )
-    for x=1, amountEnemies do
-        newEnemy()
-        print(x)
-    end
-    currentWave = currentWave + 1
+function createEnemyLeft()
+  currentAmountLeft = math.random(currentWaveLeft, (amountLeftEnemies/10)+currentWaveLeft)
+
+  if((totalAmountLeft + currentAmountLeft) > amountLeftEnemies) then
+    currentAmountLeft = amountLeftEnemies - totalAmountLeft
+    totalAmountLeft = amountLeftEnemies
+    lastWaveLeft = true
   else
-    print("current wave = "..currentWave)
-    print("times executed "..timer:getTimesExecuted())
+      totalAmountLeft = totalAmountLeft + currentAmountLeft
+  end
+  
+  if (totalAmountLeft <= amountLeftEnemies) then
+    
+    for x=1, currentAmountLeft do
+        newEnemy(1)
+    end
+    
+    currentWaveLeft = currentWaveLeft + 1
+  else
     timer:stop()
   end
   
+end
+
+function createEnemyRight()
+  --totalWaves = math.random(week , week+2)
+  currentAmountRight = math.random(currentWaveRight, (amountRightEnemies/10)+currentWaveRight)
+  
+  if(totalAmountRight + currentAmountRight > amountRightEnemies) then
+    currentAmountRight = amountRightEnemies - totalAmountRight
+    totalAmountRight = amountRightEnemies
+    lastWaveRight = true
+  else
+      totalAmountRight = totalAmountRight + currentAmountRight
+  end
+  
+  if (totalAmountRight <= amountRightEnemies) then
+    
+    for x=1, currentAmountRight do
+        newEnemy(2)
+        print(x)
+    end
+    
+    currentWaveRight = currentWaveRight + 1
+  else
+    timer2:stop()
+  end
+  
+end
+
+function startWaves() 
+  timer = MOAITimer.new()
+  timer:setMode(MOAITimer.LOOP)
+  timer:setSpan(math.random(9,12))
+  timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyLeft() end)
+  timer:start()
+  createEnemyLeft()
+  
+  timer2 = MOAITimer.new()
+  timer2:setMode(MOAITimer.LOOP)
+  timer2:setSpan(math.random(9,12))
+  timer2:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyRight() end)
+  timer2:start()
+  createEnemyRight()
 end
 
 function checkEndOfBattle()
@@ -80,29 +140,16 @@ function checkEndOfBattle()
   end
 end
 
-function startWaves() 
-  timer = MOAITimer.new()
-  timer:setMode(MOAITimer.LOOP)
-  timer:setSpan(10)
-  timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() enemyGenInterval() end)
-  timer:start()
-  enemyGenInterval()
-end
-
-
-function newEnemy ()
+function newEnemy (enemyTeam)
   local speed = 1
   local x, y = 0, math.random(bottomborder + 10, topborder - 10)
-  local r = math.random(1,2)
+  --local r = math.random(1,2)
   
-  if(r==1) then
-    
-    x = -180 
-    else x = 180 
+  if(enemyTeam==1) then x = -180 else x = 180 
   end
   
-  local newEnemy = Enemy.new(esprite, x, y, r)
-  if(r == 1) then
+  local newEnemy = Enemy.new(esprite, x, y, enemyTeam)
+  if(enemyTeam == 1) then
     epartition:insertProp(newEnemy.prop)
   else
     epartition2:insertProp(newEnemy.prop)
