@@ -45,11 +45,13 @@ function startDuel(sprite, layer)
   amountRightEnemies = 10 -- TODO dynamisch maken
   totalAmountRight = 0
   lastWaveRight = false
+  rightKilled = 0
   
   currentWaveLeft = 1
   amountLeftEnemies = 40 -- TODO dynamisch maken
   totalAmountLeft = 0
   lastWaveLeft = false
+  leftKilled = 0
   
   startTimer()
   prop:setLoc(0,0)
@@ -175,8 +177,8 @@ function powerThread()
     if(gamestate == "pause" or gamestate == "upgrading") then
       break
     end
-    local left = ((amountLeftEnemies-totalAmountLeft)/amountLeftEnemies) * 150
-    local right = ((amountRightEnemies-totalAmountRight)/amountRightEnemies) * -150
+    local left = ((amountLeftEnemies-leftKilled)/amountLeftEnemies) * 150
+    local right = ((amountRightEnemies-rightKilled)/amountRightEnemies) * -150
     lbsprite:setRect(0,0,left,-16)
     rbsprite:setRect(right,-16,0,0)
     coroutine.yield()
