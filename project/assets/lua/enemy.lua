@@ -4,15 +4,19 @@ Enemy.__index = Enemy
 -- syntax equivalent to "MyClass.new = function..."
 function Enemy.new(sprite, x, y, team)
   self = setmetatable({}, Enemy)
-  self.prop = MOAIProp2D.new()
+
   self.team = team
-  self.prop:setDeck(sprite)
-  self.prop.owner = self
-  self.prop:setLoc(x, y)
+  self.target = nil
+  self.health = 100
   self.enemyLast = clock() + math.random()
   self.enemyInterval = 1.5 + math.random()
+  
+  self.prop = MOAIProp2D.new()
+  self.prop:setDeck(sprite)
+  self.prop:setLoc(x, y)
   self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  self.health = 100
+  self.prop.owner = self
+  
   return self
 end
 
@@ -34,10 +38,8 @@ function Enemy.startThread (self)
       self:setLoc(locX, locY)
       self.owner.checkReflect(self.owner)
       self.owner.checkHit(self.owner)
-      local gx, gy = self:getLoc()
-      local cx, cy = prop:getLoc()
-      local angle = calcAngle(gx,gy,cx,cy)
-      parent.enemyBulletGen(parent, gx, gy, angle)
+      self.owner.checkRivalHit(self.owner)
+      parent.enemyBulletGen(parent, locX, locY)
 
       coroutine.yield()
     end
@@ -47,17 +49,41 @@ function Enemy.startThread (self)
   self.prop.thread:run(self.prop.moveEnemy, self.prop, self)
 end
 
-function Enemy.newEnemyBullet (origX, origY, angle)
-    local enemyBullet = EnemyBullet.new(bsprite, origX, origY, angle)
-
+function Enemy.newEnemyBullet (self, origX, origY, angle)
+    local enemyBullet = EnemyBullet.new(bsprite, origX, origY, angle, self.team)
     ebpartition:insertProp(enemyBullet.prop)
     enemyBullet:startThread()
 end
 
-function Enemy.enemyBulletGen(self, x, y, angle)
-  if(self.enemyLast+self.enemyInterval < clock()) then
-    self.newEnemyBullet(x, y, angle)
-    self.enemyLast = clock()
+function Enemy.enemyBulletGen(self, x, y)
+  if(self.target == nil) then
+    local ot = nil
+    if(self.team == 1) then
+      ot = epartition2
+    else
+      ot = epartition
+    end
+  
+    local e = ot:propListForRect(-160, -90, 160, 90)
+    if(e) then
+      if(type(e)=="table") then
+        local n = table.getn(e)
+        self.target = e[math.random(1,n)]
+      else
+        self.target = e
+      end
+    end
+  else
+    if(self.target.owner.health > 0) then
+      if(self.enemyLast+self.enemyInterval < clock()) then
+        local tx, ty = self.target:getLoc()
+        local angle = calcAngle(x, y, tx, ty)
+        self:newEnemyBullet(x, y, angle)
+        self.enemyLast = clock()
+      end
+    else
+      self.target = nil
+    end
   end
 end
 
@@ -71,6 +97,20 @@ function Enemy.checkHit(self)
       end
     else
       self:damage(objs)
+    end
+  end
+end
+
+function Enemy.checkRivalHit(self)
+  local x, y = self.prop:getLoc()
+  local objs = ebpartition:propListForRect(x-6, y-5, x+6, y+5)
+  if(objs) then
+    if(type(objs)=="table") then
+      for i, hit in ipairs(objs) do
+        if(self.team ~= hit.owner.source) then self:damage(hit) end
+      end
+    else
+      if(self.team ~= objs.owner.source) then self:damage(objs) end
     end
   end
 end

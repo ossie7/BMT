@@ -141,7 +141,10 @@ function newEnemy (enemyTeam)
   local x, y = 0, math.random(bottomborder + 10, topborder - 10)
   --local r = math.random(1,2)
   
-  if(enemyTeam==1) then x = -180 else x = 180 
+  if(enemyTeam==1) then
+    x = -180
+  else
+    x = 180
   end
   
   local newEnemy = Enemy.new(esprite, x, y, enemyTeam)
@@ -149,8 +152,8 @@ function newEnemy (enemyTeam)
     epartition:insertProp(newEnemy.prop)
   else
     epartition2:insertProp(newEnemy.prop)
-    end
-      newEnemy:startThread()
+  end
+  newEnemy:startThread()
 end
 
 function calcAngle ( x1, y1, x2, y2 )

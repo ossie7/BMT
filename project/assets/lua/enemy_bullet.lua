@@ -2,13 +2,16 @@ EnemyBullet = {}
 EnemyBullet.__index = EnemyBullet
 
 -- syntax equivalent to "MyClass.new = function..."
-function EnemyBullet.new(sprite, x, y, angle)
+function EnemyBullet.new(sprite, x, y, angle, source)
   self = setmetatable({}, EnemyBullet)
-  self.prop = MOAIProp2D.new()
+  
   self.partition = ebpartition
   self.layer = eblayer
   self.angle = angle
   self.speed = 1
+  self.source = source
+  
+  self.prop = MOAIProp2D.new()
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
   self.prop:setRot(angle)
