@@ -7,13 +7,11 @@ function Enemy.new(sprite, x, y, team)
   self.prop = MOAIProp2D.new()
   self.team = team
   self.prop:setDeck(sprite)
-  -- prop moet dit field hebben voor partition check
-  self.prop.team = team
+  self.prop.owner = self
   self.prop:setLoc(x, y)
   self.enemyLast = clock() + math.random()
   self.enemyInterval = 1.5 + math.random()
   self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  self.prop.owner = self
   self.health = 100
   return self
 end

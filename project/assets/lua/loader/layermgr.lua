@@ -60,6 +60,9 @@ function initLayers()
   upgradeLayer = MOAILayer2D.new()
   upgradeLayer:setViewport(viewport)
   
+  barlayer = MOAILayer2D.new()
+  barlayer:setViewport(viewport)
+  
   loadMenuLayers()
 end
 
@@ -80,6 +83,7 @@ function loadFightLayers()
   MOAIRenderMgr.pushRenderPass(blayer)
   MOAIRenderMgr.pushRenderPass(clayer)
   MOAIRenderMgr.pushRenderPass(textLayer)
+  MOAIRenderMgr.pushRenderPass(barlayer)
   
   texturePause = MOAIImage.new()
   texturePause:load("resources/wm_pause.png")
@@ -247,4 +251,5 @@ function clearLayers()
   buttonlayer:clear()
   textLayer:clear()
   upgradeLayer:clear()
+  barlayer:clear()
 end
