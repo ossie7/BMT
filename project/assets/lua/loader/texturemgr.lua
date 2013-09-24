@@ -33,4 +33,16 @@ function initTextures()
   gunsprite = MOAIGfxQuad2D.new() -- Gun
   gunsprite:setTexture(guntexture)
   gunsprite:setRect(-16,-16,16,16)
+  
+  lbtexture = MOAIImage.new()
+  lbtexture:load("resources/lb.png")
+  lbsprite = MOAIGfxQuad2D.new() -- Left bar
+  lbsprite:setTexture(lbtexture)
+  lbsprite:setRect(0,0,150,-16)
+  
+  rbtexture = MOAIImage.new()
+  rbtexture:load("resources/rb.png")
+  rbsprite = MOAIGfxQuad2D.new() -- Right bar
+  rbsprite:setTexture(rbtexture)
+  rbsprite:setRect(-150,-16,0,0)
 end

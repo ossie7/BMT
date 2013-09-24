@@ -26,27 +26,12 @@ function Bullet.checkIfInside(self, locX,locY)
 end
 
 function Bullet.checkCollision(self)
-  --local obj = self.partition:propForPoint( self.prop:getLoc() )
-  local obj2 = epartition2:propForPoint(self.prop:getLoc())
-  --[[
+  local obj = epartition2:propForPoint(self.prop:getLoc())
+  
   if obj then
-    self.partition:removeProp(obj)
-    
+    epartition2:removeProp(obj)
     obj.thread:stop()
     obj = nil
-    coins = coins + 1
-    textboxGameMode:setString("Coins = "..coins)
-    
-    self.layer:removeProp(self.prop)
-    MOAISim.forceGarbageCollection()
-    self.prop.thread:stop()
-  end]]--
-  
-  if obj2 then
-    epartition2:removeProp(obj2)
-    print("terminated enemie from team 2")
-    obj2.thread:stop()
-    obj2 = nil
     coins = coins + 1
     textboxGameMode:setString("Coins = "..coins)
     self.layer:removeProp(self.prop)
@@ -55,9 +40,7 @@ function Bullet.checkCollision(self)
     if(currentWave == totalWaves) then
       checkEndOfBattle()
     end
-  
   end
-  
 end
 
 function Bullet.bulletMovement(self, x, y)
