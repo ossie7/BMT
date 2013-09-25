@@ -23,8 +23,9 @@ function save_userdata()
   end
 end
 
-function SetupNewUserdata()  
+function SetupNewUserdata()
   userdata.shipUpgrades = {}
+  userdata.warzone = 5
 end
 
 function SetupUserdata()

@@ -26,8 +26,8 @@ rightborder = screenWidthScale / 2
 topborder = screenHeightScale / 2
 bottomborder = (screenHeightScale / 2) * -1
 
-initLayers()
 initTextures()
+initLayers()
 initSounds()
 
 coins = 0

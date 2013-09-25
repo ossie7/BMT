@@ -129,9 +129,14 @@ end
 function checkEndOfBattle()
   local leftEnemies = epartition:propListForRect(-180,-90,180,90)
   local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
+  local wz = userdata.warzone
   if(leftEnemies == nil) then
+    if(wz > 0) then userdata.warzone = wz -1 end
+    save_userdata()
     loadMenuLayers()
   elseif (rightEnemies == nil) then
+    if(wz < 10) then userdata.warzone = wz +1 end
+    save_userdata()
     loadMenuLayers()
   end
 end
@@ -182,8 +187,8 @@ function powerThread()
     end
     local left = ((amountLeftEnemies-leftKilled)/amountLeftEnemies) * 150
     local right = ((amountRightEnemies-rightKilled)/amountRightEnemies) * -150
-    lbsprite:setRect(0,0,left,-16)
-    rbsprite:setRect(right,-16,0,0)
+    lbsprite:setRect(0,0,left,-8)
+    rbsprite:setRect(right,-8,0,0)
     coroutine.yield()
   end
 end
@@ -191,13 +196,13 @@ end
 function startPowerThread()
   lb = MOAIProp2D.new()
   lb:setDeck(lbsprite)
-  lb:setLoc(leftborder + 10,topborder - 10)
+  lb:setLoc(leftborder + 10,topborder - 5)
   lb:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   barlayer:insertProp(lb)
 
   rb = MOAIProp2D.new()
   rb:setDeck(rbsprite)
-  rb:setLoc(rightborder - 10, topborder - 10)
+  rb:setLoc(rightborder - 10, topborder - 5)
   rb:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   barlayer:insertProp(rb)
   

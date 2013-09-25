@@ -65,6 +65,12 @@ function initLayers()
   barlayer = MOAILayer2D.new()
   barlayer:setViewport(viewport)
   
+  baselayer = MOAILayer2D.new()
+  baselayer:setViewport(viewport)
+  
+  basebarlayer = MOAILayer2D.new()
+  basebarlayer:setViewport(viewport)
+  
   loadMenuLayers()
 end
 
@@ -130,8 +136,18 @@ end
 function loadMenuLayers()
   clearLayers()
   
+  MOAIRenderMgr.pushRenderPass(baselayer)
+  MOAIRenderMgr.pushRenderPass(basebarlayer)
   MOAIRenderMgr.pushRenderPass(menuLayer)
 	
+  basebackprop = MOAIProp2D.new()
+	basebackprop:setDeck(basesprite)
+	basebackprop:setLoc(0,0)
+  basebackprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  baselayer:insertProp(basebackprop)
+  
+  loadBaseBars()
+  
 	texturePlay = MOAIImage.new()
   texturePlay:load("resources/play_button.png")
   
@@ -165,6 +181,38 @@ function loadMenuLayers()
 	propStartButton.name = "playing"
   propShipUpgradesButton.name = "shipUpgrades"
 
+end
+
+function loadBaseBars()
+  local left = ((userdata.warzone - 0.5) / 9) * 212
+  local right = ((9.5 - userdata.warzone) / 9) * -212
+  local fist = ((userdata.warzone - 5) / 9 ) * 212
+  
+  lbprop = MOAIProp2D.new()
+	lbprop:setDeck(lbsprite)
+	lbprop:setLoc(-128,38)
+  lbprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  basebarlayer:insertProp(lbprop)
+  lbsprite:setRect(0,0,left,-11)
+  
+  rbprop = MOAIProp2D.new()
+	rbprop:setDeck(rbsprite)
+	rbprop:setLoc(128,38)
+  rbprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  basebarlayer:insertProp(rbprop)
+  rbsprite:setRect(right,-11,0,0)
+  
+  lfprop = MOAIProp2D.new()
+	lfprop:setDeck(lfsprite)
+	lfprop:setLoc(fist,33)
+  lfprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  basebarlayer:insertProp(lfprop)
+  
+  rfprop = MOAIProp2D.new()
+	rfprop:setDeck(rfsprite)
+	rfprop:setLoc(fist,33)
+  rfprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  basebarlayer:insertProp(rfprop)
 end
 
 function loadShipUpgradesLayers()
@@ -239,6 +287,8 @@ end
 
 function clearLayers()
   menuLayer:clear()
+  baselayer:clear()
+  basebarlayer:clear()
   backgroundLayer1:clear()
   backgroundLayer2:clear()
   universeLayer:clear()
