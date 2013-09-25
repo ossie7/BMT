@@ -2,17 +2,20 @@ Bullet = {}
 Bullet.__index = Bullet
 
 -- syntax equivalent to "MyClass.new = function..."
-function Bullet.new(sprite, layer, x, y, partition, angle)
+function Bullet.new(sprite, layer, x, y, partition, angle, damage)
   self = setmetatable({}, Bullet)
   self.prop = MOAIProp2D.new()
   self.partition = partition
   self.layer = layer
   self.angle = angle
   self.speed = 3
+  self.damage = damage
+  
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
   self.prop:setRot(angle)
   self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  self.prop.owner = self
   return self
 end
 

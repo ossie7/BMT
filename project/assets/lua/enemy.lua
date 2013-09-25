@@ -8,6 +8,7 @@ function Enemy.new(sprite, x, y, team)
   self.team = team
   self.target = nil
   self.health = 100
+  self.damage = 50
   self.enemyLast = clock() + math.random()
   self.enemyInterval = 1.5 + math.random()
   
@@ -29,15 +30,12 @@ function Enemy.startThread (self)
         break
       end
       locX,locY = self:getLoc()
-      --locY = locY + math.random(-2,2)
       if(parent.team == 1 and locX < -130) then
         locX = locX + 1
         self:setLoc(locX, locY)
       elseif (parent.team == 2 and locX > 130) then
         locX = locX - 1
         self:setLoc(locX, locY)
-      else
-        --
       end
       
       if(parent.team == 1 and locX >= -130) then
@@ -45,10 +43,9 @@ function Enemy.startThread (self)
         local newY = math.random(-3,3)
         if((newX + locX) >= -110) then
           newX = 0
-          elseif ((newY + locY) <= -90 or (newY + locY) >= 90) then
-            newY = 0
-          end
-          
+        elseif ((newY + locY) <= -90 or (newY + locY) >= 90) then
+          newY = 0
+        end
         self:moveLoc(newX, newY, 3)   
       end
       
@@ -57,10 +54,9 @@ function Enemy.startThread (self)
         local newY = math.random(-3,3)
         if((newX + locX) <= 110) then
           newX = 0
-          elseif ((newY + locY) <= -90 or (newY + locY) >= 90) then
-            newY = 0
-          end
-          
+        elseif ((newY + locY) <= -90 or (newY + locY) >= 90) then
+          newY = 0
+        end
         self:moveLoc(newX, newY, 3)   
       end
       
@@ -79,7 +75,7 @@ function Enemy.startThread (self)
 end
 
 function Enemy.newEnemyBullet (self, origX, origY, angle)
-    local enemyBullet = EnemyBullet.new(bsprite, origX, origY, angle, self.team)
+    local enemyBullet = EnemyBullet.new(bsprite, origX, origY, angle, self.team, self.damage)
     ebpartition:insertProp(enemyBullet.prop)
     enemyBullet:startThread()
 end
@@ -122,10 +118,10 @@ function Enemy.checkHit(self)
   if(objs) then
     if(type(objs)=="table") then
       for i, hit in ipairs(objs) do
-        self:damage(hit)
+        self:damageTaken(hit)
       end
     else
-      self:damage(objs)
+      self:damageTaken(objs)
     end
   end
 end
@@ -136,10 +132,10 @@ function Enemy.checkRivalHit(self)
   if(objs) then
     if(type(objs)=="table") then
       for i, hit in ipairs(objs) do
-        if(self.team ~= hit.owner.source) then self:damage(hit) end
+        if(self.team ~= hit.owner.source) then self:damageTaken(hit) end
       end
     else
-      if(self.team ~= objs.owner.source) then self:damage(objs) end
+      if(self.team ~= objs.owner.source) then self:damageTaken(objs) end
     end
   end
 end
@@ -150,15 +146,16 @@ function Enemy.checkReflect(self)
   if(objs) then
     if(type(objs)=="table") then
       for i, hit in ipairs(objs) do
-        self:damage(hit)
+        self:damageTaken(hit)
       end
     else
-      self:damage(objs)
+      self:damageTaken(objs)
     end
   end
 end
 
-function Enemy.damage(self, obj)
+function Enemy.damageTaken(self, obj)
+  local damage = obj.owner.damage
   obj.thread:stop()
   bpartition:removeProp(obj)
   ebpartition:removeProp(obj)
@@ -166,7 +163,7 @@ function Enemy.damage(self, obj)
   obj = nil
   MOAISim.forceGarbageCollection()
   
-  self.health = self.health - 100
+  self.health = self.health - damage
   
   coins = coins + 1
   textboxGameMode:setString("Coins = "..coins)
