@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package com.getmoai.samples;
+package com.bttf.thethird;
 
 import android.app.Activity;
 import android.app.ActivityManager;
