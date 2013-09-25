@@ -1,75 +1,36 @@
-function initLayers()
-  backgroundLayer1 = MOAILayer2D.new()
-  backgroundLayer1:setViewport(viewport)
-
-  backgroundLayer2 = MOAILayer2D.new()
-  backgroundLayer2:setViewport(viewport)
-
-  backlayer = MOAILayer2D.new()
-  backlayer:setViewport(viewport)
-  
-  universeLayer = MOAILayer2D.new()
-  universeLayer:setViewport(viewport)
-
-  layer = MOAILayer2D.new()
+function cl()
+  local layer = MOAILayer2D.new()
   layer:setViewport(viewport)
+  return layer
+end
 
-  blayer = MOAILayer2D.new()
-  blayer:setViewport(viewport)
-  bpartition = MOAIPartition.new()
-  blayer:setPartition(bpartition)
-  -- enemies aan linkerkant
-  elayer = MOAILayer2D.new()
-  elayer:setViewport(viewport)
-  
-  epartition = MOAIPartition.new()
-  elayer:setPartition(epartition)
-  -- enemies aan rechterkant
-  elayer2 = MOAILayer2D.new()
-  elayer2:setViewport(viewport)
-  
-  epartition2 = MOAIPartition.new()
-  elayer2:setPartition(epartition2)
-  
-  
-  --enemy bullet
-  eblayer = MOAILayer2D.new()
-  eblayer:setViewport(viewport)
+function cp(layer)
+  local partition = MOAIPartition.new()
+  layer:setPartition(partition)
+  return partition
+end
 
-  ebpartition = MOAIPartition.new()
-  eblayer:setPartition(ebpartition)
-  
-  --enemy bullet reflection
-  ebrlayer = MOAILayer2D.new()
-  ebrlayer:setViewport(viewport)
-  
-  ebrpartition = MOAIPartition.new()
-  ebrlayer:setPartition(ebrpartition)
-  
-  clayer = MOAILayer2D.new()
-  clayer:setViewport(viewport)
-
-  buttonlayer = MOAILayer2D.new()
-  buttonlayer:setViewport(viewport)
-
-  textLayer = MOAILayer2D.new()
-  textLayer:setViewport(viewport)
-
-  menuLayer = MOAILayer2D.new()
-  menuLayer:setViewport(viewport)
-  
-  --upgrade layers
-  upgradeLayer = MOAILayer2D.new()
-  upgradeLayer:setViewport(viewport)
-  
-  barlayer = MOAILayer2D.new()
-  barlayer:setViewport(viewport)
-  
-  baselayer = MOAILayer2D.new()
-  baselayer:setViewport(viewport)
-  
-  basebarlayer = MOAILayer2D.new()
-  basebarlayer:setViewport(viewport)
+function initLayers()
+  universeLayer = cl() --Universe background
+  layer         = cl() --Ship
+  clayer        = cl() --Crosshair/gun
+  buttonlayer   = cl() --Menu buttons
+  textLayer     = cl() --Text
+  menuLayer     = cl() --Menu
+  upgradeLayer  = cl() --Upgrade
+  barlayer      = cl() --Fight progress bars
+  baselayer     = cl() --Base background
+  basebarlayer  = cl() --Warzone bars
+  blayer        = cl() --Bullets
+  bpartition    = cp(blayer)
+  elayer        = cl() --Enemy bullets
+  epartition    = cp(elayer)
+  elayer2       = cl() --Right enemies
+  epartition2   = cp(elayer2)
+  eblayer       = cl() --Enemy bullets
+  ebpartition   = cp(eblayer)
+  ebrlayer      = cl() --Reflected enemy bullets
+  ebrpartition  = cp(ebrlayer)
   
   loadMenuLayers()
 end
@@ -79,8 +40,6 @@ function loadFightLayers()
   week = week + 1
   
   clearLayers()
-  MOAIRenderMgr.pushRenderPass(backgroundLayer1)
-  MOAIRenderMgr.pushRenderPass(backgroundLayer2)
   MOAIRenderMgr.pushRenderPass(universeLayer)
   MOAIRenderMgr.pushRenderPass(buttonlayer)
   MOAIRenderMgr.pushRenderPass(eblayer)
@@ -289,8 +248,6 @@ function clearLayers()
   menuLayer:clear()
   baselayer:clear()
   basebarlayer:clear()
-  backgroundLayer1:clear()
-  backgroundLayer2:clear()
   universeLayer:clear()
   eblayer:clear()
   buttonlayer:clear()
