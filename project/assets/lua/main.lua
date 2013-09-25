@@ -33,8 +33,6 @@ function threadDuel () -- DUEL gamemode thread
   end
 end
 
-
-
 function checkIfInside(locX,locY)
     if (locX < rightborder and locX > leftborder) and (locY < topborder and locY > bottomborder) then
         return true

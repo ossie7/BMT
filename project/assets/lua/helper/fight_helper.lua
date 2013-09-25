@@ -143,16 +143,19 @@ end
 
 function newEnemy (enemyTeam)
   local speed = 1
+  local s = nil
   local x, y = 0, math.random(bottomborder + 10, topborder - 10)
   --local r = math.random(1,2)
   
   if(enemyTeam==1) then
     x = -180
+    s = e1sprite
   else
     x = 180
+    s= e2sprite
   end
   
-  local newEnemy = Enemy.new(esprite, x, y, enemyTeam)
+  local newEnemy = Enemy.new(s, x, y, enemyTeam)
   if(enemyTeam == 1) then
     epartition:insertProp(newEnemy.prop)
   else

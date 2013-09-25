@@ -11,15 +11,17 @@ function initTextures()
   bsprite:setTexture(texture)
   bsprite:setRect(-2,-2,2,2)
   
-  pirateTexture = MOAIImage.new()
-  pirateTexture:load("resources/pirate_small.png")
-  pirateSprite = MOAIGfxQuad2D.new() -- Pirate
-  pirateSprite:setTexture(pirateTexture)
-  pirateSprite:setRect(-12,-12,12,12)
-
-  esprite = MOAIGfxQuad2D.new() -- Enemy
-  esprite:setTexture(pirateTexture)
-  esprite:setRect(-12,-12,12,12)
+  e1texture = MOAIImage.new()
+  e1texture:load("resources/left_small.png")
+  e1sprite = MOAIGfxQuad2D.new() -- Enemy left
+  e1sprite:setTexture(e1texture)
+  e1sprite:setRect(-12,-12,12,12)
+  
+  e2texture = MOAIImage.new()
+  e2texture:load("resources/right_small.png")
+  e2sprite = MOAIGfxQuad2D.new() -- Enemy right
+  e2sprite:setTexture(e2texture)
+  e2sprite:setRect(-12,-12,12,12)
 
   crosstexture = MOAIImage.new()
   crosstexture:load("resources/target.png")
