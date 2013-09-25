@@ -41,17 +41,6 @@
 		
 		<!-- EXTERNAL DECLARATIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
 
-<!-- Tapjoy -->
-<activity android:name="com.tapjoy.TJCVirtualGoods" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" android:configChanges="keyboardHidden|orientation" />
-<activity android:name="com.tapjoy.DownloadVirtualGood" android:theme="@android:style/Theme.Dialog" android:configChanges="keyboardHidden|orientation" android:launchMode="singleTask" />
-<activity android:name="com.tapjoy.TJCOffersWebView" android:configChanges="keyboardHidden|orientation" />
-<activity android:name="com.tapjoy.TapjoyFeaturedAppWebView" android:configChanges="keyboardHidden|orientation" />
-<activity android:name="com.tapjoy.TapjoyVideoView" android:configChanges="keyboardHidden|orientation" />
-<receiver android:name="com.tapjoy.TapjoyReferralTracker" android:exported="true">    
-    <intent-filter>
-        <action android:name="com.android.vending.INSTALL_REFERRER" />
-    </intent-filter>
-</receiver>
 
 <!-- Google Push (C2DM) Messaging -->
 <receiver android:name="com.ziplinegames.moai.MoaiGooglePushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
@@ -104,9 +93,6 @@
 <permission android:name="com.getmoai.samples.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 <uses-permission android:name="com.getmoai.samples.permission.C2D_MESSAGE" />
 <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
-<!-- Facebook -->
-<uses-permission android:name="android.permission.INTERNET" />
 
 <!-- Crittercism -->
 <uses-permission android:name="android.permission.INTERNET"/>
