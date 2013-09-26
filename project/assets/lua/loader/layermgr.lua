@@ -31,6 +31,7 @@ function initLayers()
   ebpartition   = cp(eblayer)
   ebrlayer      = cl() --Reflected enemy bullets
   ebrpartition  = cp(ebrlayer)
+  endweeklayer  = cl()
   
   loadMenuLayers()
 end
@@ -58,7 +59,7 @@ function loadFightLayers()
   
   spritePauseButton = MOAIGfxQuad2D.new()
 	spritePauseButton:setTexture(texturePause)
-	spritePauseButton:setRect(-8, -8, 8, 8);
+	spritePauseButton:setRect(-8, -8, 8, 8)
   
   propButton = MOAIProp2D.new()
 	propButton:setDeck(spritePauseButton)
@@ -71,7 +72,7 @@ function loadFightLayers()
   
   textboxGameMode = MOAITextBox.new()
 	textboxGameMode:setStyle(style)
-	textboxGameMode:setString("Coins ="..coins)
+	textboxGameMode:setString("Turn "..week)
 	textboxGameMode:setRect(-50,-50,50,50)
   textboxGameMode:setLoc(-100,30)
 	textboxGameMode:setYFlip ( true )
@@ -238,6 +239,45 @@ function loadShipUpgradesLayers()
   gamestate = "upgrading"
 end
 
+function endOfBattle(winningTeam)
+  
+  clearLayers()
+  textureGoMenu = MOAIImage.new()
+  textureGoMenu:load("resources/play_button.png")
+  
+  spriteGoMenu = MOAIGfxQuad2D.new()
+	spriteGoMenu:setTexture(textureGoMenu)
+	spriteGoMenu:setRect(-8, -8, 8, 8)
+  
+  propGoMenu = MOAIProp2D.new()
+	propGoMenu:setDeck(spriteGoMenu)
+	propGoMenu:setLoc(-130,-70)
+  propGoMenu:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  propGoMenu:setPriority(1000)
+  propGoMenu.name = "button"
+  
+  --endweekLayer:insertProp(propButton)
+  
+  amountOfLoot = 300
+  MOAIRenderMgr.pushRenderPass(endweeklayer)
+  if(team == 1) then
+    textboxBattleResults = CreateTextBox(-75, 50, 150, 100, upgradeMenuStyle,
+      "The left team has lost this battle, you gained "..amountOfLoot.." metal")
+  else
+     textboxBattleResults = CreateTextBox(0, 0, 150, 100, upgradeMenuStyle, 
+     "The right team has lost this battle, you gained "..amountOfLoot.." plasma")
+   end
+  
+  endweeklayer:insertProp(textboxBattleResults)
+  endweeklayer:insertProp(propGoMenu)
+  
+  endOfBattlePartition = MOAIPartition.new()
+	endOfBattlePartition:insertProp(propGoMenu)
+  endOfBattlePartition:insertProp(textboxBattleResults)
+	endweeklayer:setPartition(endOfBattlePartition)
+  gamestate = "endOfBattle"
+end
+
 function clearLayers()
   universeLayer:clear()
   layer:clear()
@@ -254,5 +294,47 @@ function clearLayers()
   elayer2:clear()
   eblayer:clear()
   ebrlayer:clear()
+<<<<<<< Updated upstream
   MOAISim.forceGarbageCollection()
 end
+=======
+  endweeklayer:clear()
+  --killAll()
+  MOAISim.forceGarbageCollection()
+end
+
+function killAll()
+  
+  for i, e in ipairs(enemyList) do
+    local c = table.getn(enemyList)
+    print(i .. "/" .. c)
+    if(e ~= nil and e.prop ~= nil and e.prop.thread ~= nil) then
+      e.prop.thread:stop()
+      print("1")
+    end
+    if(e ~= nil and e.prop ~= nil) then
+      e.prop = nil
+      print("2")
+    end
+    if(e ~= nil and e.thread ~= nil) then
+      e.thread:stop()
+      print("3")
+    end
+    if(e ~= nil) then
+      e = nil
+      print("4")
+    end
+    
+    local clock = os.clock
+    function sleep(n)
+      local t0 = clock()
+      while clock() - t0 <= n do end
+    end
+    sleep(0.1)
+    print("Done")
+  end
+
+  enemyList = {}
+  enemyCount = 0
+end
+>>>>>>> Stashed changes

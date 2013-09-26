@@ -162,9 +162,6 @@ function Enemy.damageTaken(self, obj)
   
   self.health = self.health - damage
   
-  coins = coins + 1
-  textboxGameMode:setString("Coins = "..coins)
-  
   if (self.health <= 0 ) then
     self:die()
   end

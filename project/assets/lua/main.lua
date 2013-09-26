@@ -24,7 +24,7 @@ function threadDuel () -- DUEL gamemode thread
   startDuel(sprite, layer)
   startWaves()
   while true do
-    if(gamestate == "pause" or gamestate == "upgrading") then
+    if(gamestate == "pause" or gamestate == "upgrading" or gamestate == "endOfBattle") then
       timer:stop()
       break
     end

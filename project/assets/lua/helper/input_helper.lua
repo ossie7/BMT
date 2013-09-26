@@ -76,6 +76,15 @@ function onTouch(x,y)
         end
      end
    end
+   
+   if(gamestate == "endOfBattle") then
+    local goToMenuButton = endOfBattlePartition:propForPoint( endweeklayer:wndToWorld(x,y) )
+    if goToMenuButton then 
+        loadMenuLayers()
+        MOAISim.forceGarbageCollection()  
+        gamestate = "pause"  
+     end
+   end
 end
 
 function onMouseLeftEvent ( down )

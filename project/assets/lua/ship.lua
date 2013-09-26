@@ -36,7 +36,7 @@ end
 
 function shipThread()
   while true do
-    if(gamestate == "pause" or gamestate == "upgrading") then
+    if(gamestate == "pause" or gamestate == "upgrading" or gamestate == "endOfBattle") then
       break
     end
     checkBulletCollision()

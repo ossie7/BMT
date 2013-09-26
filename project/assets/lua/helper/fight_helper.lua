@@ -1,4 +1,4 @@
-week = 1
+week = 0
 waveCounter = 0
 battleDone = 0
 
@@ -43,7 +43,7 @@ function startDuel(sprite, layer)
   createUniverseBackground()
 
   currentWaveRight = 1
-  amountRightEnemies = 30 -- TODO dynamisch maken
+  amountRightEnemies = 5 -- TODO dynamisch maken
   totalAmountRight = 0
   lastWaveRight = false
   rightKilled = 0
@@ -128,6 +128,7 @@ function startWaves()
 end
 
 function checkEndOfBattle()
+<<<<<<< Updated upstream
   if(battleDone == 0) then
     local leftEnemies = epartition:propListForRect(-180,-90,180,90)
     local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
@@ -143,6 +144,19 @@ function checkEndOfBattle()
       loadMenuLayers()
       battleDone = 1
     end
+=======
+  local leftEnemies = epartition:propListForRect(-180,-90,180,90)
+  local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
+  local wz = userdata.warzone
+  if(leftEnemies == nil) then
+    if(wz > 1) then userdata.warzone = wz -1 end
+    save_userdata()
+    endOfBattle(1)
+  elseif (rightEnemies == nil) then
+    if(wz < 9) then userdata.warzone = wz +1 end
+    save_userdata()
+    endOfBattle(2)
+>>>>>>> Stashed changes
   end
 end
 
@@ -191,7 +205,7 @@ end
 
 function powerThread()
   while true do
-    if(gamestate == "pause" or gamestate == "upgrading") then
+    if(gamestate == "pause" or gamestate == "upgrading" or gamestate == "endOfBattle") then
       break
     end
     local left = ((amountLeftEnemies-leftKilled)/amountLeftEnemies) * 150
