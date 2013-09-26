@@ -42,6 +42,7 @@ function EnemyBullet.reflect(self)
   ebrpartition:insertProp(self.prop)
   self.layer = ebrlayer
   self.damage = self.damage * 2
+  self.source = 3
   local d = shipDeltaY
   if(d > 20) then
     d = 20

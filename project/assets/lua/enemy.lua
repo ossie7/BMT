@@ -81,9 +81,9 @@ end
 function Enemy.hitThread(self)
   while true do
     local x, y = self.prop:getLoc()
-    self:checkReflect()
-    self:checkHit()
-    self:checkRivalHit()
+    self:checkAllHits(bpartition:propListForRect(x-6, y-5, x+6, y+5))
+    self:checkAllHits(ebpartition:propListForRect(x-6, y-5, x+6, y+5))
+    self:checkAllHits(ebrpartition:propListForRect(x-6, y-5, x+6, y+5))
     self:enemyBulletGen(x, y)
     coroutine.yield()
   end
@@ -134,44 +134,18 @@ function Enemy.enemyBulletGen(self, x, y)
   end
 end
 
-function Enemy.checkHit(self)
-  local x, y = self.prop:getLoc()
-  local objs = bpartition:propListForRect(x-6, y-5, x+6, y+5)
+function Enemy.checkAllHits(self, objs)
   if(objs) then
     if(type(objs)=="table") then
       for i, hit in ipairs(objs) do
-        self:damageTaken(hit)
+        if(hit.owner.source == nil or (self.team ~= hit.owner.source)) then
+          self:damageTaken(hit)
+        end
       end
     else
-      self:damageTaken(objs)
-    end
-  end
-end
-
-function Enemy.checkRivalHit(self)
-  local x, y = self.prop:getLoc()
-  local objs = ebpartition:propListForRect(x-6, y-5, x+6, y+5)
-  if(objs) then
-    if(type(objs)=="table") then
-      for i, hit in ipairs(objs) do
-        if(self.team ~= hit.owner.source) then self:damageTaken(hit) end
+      if(objs.owner.source == nil or (self.team ~= objs.owner.source)) then
+        self:damageTaken(objs)
       end
-    else
-      if(self.team ~= objs.owner.source) then self:damageTaken(objs) end
-    end
-  end
-end
-
-function Enemy.checkReflect(self)
-  local x, y = self.prop:getLoc()
-  local objs = ebrpartition:propListForRect(x-6, y-5, x+6, y+5)
-  if(objs) then
-    if(type(objs)=="table") then
-      for i, hit in ipairs(objs) do
-        self:damageTaken(hit)
-      end
-    else
-      self:damageTaken(objs)
     end
   end
 end
