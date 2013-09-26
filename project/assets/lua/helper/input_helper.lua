@@ -101,7 +101,9 @@ function onMove ( x, y )
     clastX = ax
     clastY = ay
   end
+  keepInside(prop)
   moveGun(gun, prop, cross)
+  keepInside(cross)
 end
 
 function touchMove( x, y, event)
@@ -126,7 +128,9 @@ function touchMove( x, y, event)
       ctouchX = ax
       ctouchY = ay
     end
+    keepInside(prop)
     moveGun(gun, prop, cross)
+    keepInside(cross)
   end
 end
 
@@ -172,4 +176,11 @@ function SwipingInUpgradeMenu(x, y, eventType)
   elseif eventType == MOAITouchSensor.TOUCH_UP then
     SnapToClosestUpgrade()
   end
+end
+
+function keepInside(p)
+  local x, y = p:getLoc()
+  if(y>70) then y = 70 end
+  if(y<-80) then y = -80 end
+  p:setLoc(x,y)
 end
