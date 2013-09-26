@@ -75,9 +75,15 @@ function Enemy.startThread (self)
 end
 
 function Enemy.newEnemyBullet (self, origX, origY, angle)
-    local enemyBullet = EnemyBullet.new(bsprite, origX, origY, angle, self.team, self.damage)
-    ebpartition:insertProp(enemyBullet.prop)
-    enemyBullet:startThread()
+  local sprite = nil
+  if(self.team == 1) then
+    sprite = eb1sprite
+  else
+    sprite = eb2sprite
+  end
+  local enemyBullet = EnemyBullet.new(sprite, origX, origY, angle, self.team, self.damage)
+  ebpartition:insertProp(enemyBullet.prop)
+  enemyBullet:startThread()
 end
 
 function Enemy.enemyBulletGen(self, x, y)
