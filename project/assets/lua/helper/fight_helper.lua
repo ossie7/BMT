@@ -45,13 +45,13 @@ function startDuel(sprite, layer)
   createUniverseBackground()
 
   currentWaveRight = 1
-  amountRightEnemies = 10 -- TODO dynamisch maken
+  amountRightEnemies = 30 -- TODO dynamisch maken
   totalAmountRight = 0
   lastWaveRight = false
   rightKilled = 0
   
   currentWaveLeft = 1
-  amountLeftEnemies = 40 -- TODO dynamisch maken
+  amountLeftEnemies = 20 -- TODO dynamisch maken
   totalAmountLeft = 0
   lastWaveLeft = false
   leftKilled = 0
