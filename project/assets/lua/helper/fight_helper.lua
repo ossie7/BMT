@@ -147,7 +147,7 @@ end
 function newEnemy (enemyTeam)
   local speed = 1
   local s = nil
-  local x, y = 0, math.random(bottomborder + 10, topborder - 10)
+  local x, y = 0, math.random(bottomborder + 10, topborder - 20)
   --local r = math.random(1,2)
   
   if(enemyTeam==1) then

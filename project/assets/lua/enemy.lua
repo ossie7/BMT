@@ -13,9 +13,9 @@ function Enemy.new(sprite, x, y, team)
   else
     self.damage = 100
   end
-  self.enemyLast = clock() + math.random()
-  self.enemyInterval = 1.5 + math.random()
-  
+  self.enemyLast = clock() + math.random() + math.random()
+  self.enemyInterval = 1.5 + math.random() + math.random()
+  self.entryLoc = math.random(130,140)
   self.prop = MOAIProp2D.new()
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
@@ -37,10 +37,10 @@ function Enemy.startThread (self)
         break
       end
       locX,locY = self:getLoc()
-      if(parent.team == 1 and locX < -130) then
+      if(parent.team == 1 and locX < (parent.entryLoc * -1)) then
         locX = locX + 1
         self:setLoc(locX, locY)
-      elseif (parent.team == 2 and locX > 130) then
+      elseif (parent.team == 2 and locX > parent.entryLoc) then
         locX = locX - 1
         self:setLoc(locX, locY)
       end
