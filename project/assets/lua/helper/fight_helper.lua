@@ -1,8 +1,6 @@
 week = 1
 waveCounter = 0
-
-enemyList   = {}
-enemyCount  = 0
+battleDone = 0
 
 function createProp(sprite, layer)
   prop = MOAIProp2D.new()
@@ -130,17 +128,21 @@ function startWaves()
 end
 
 function checkEndOfBattle()
-  local leftEnemies = epartition:propListForRect(-180,-90,180,90)
-  local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
-  local wz = userdata.warzone
-  if(leftEnemies == nil) then
-    if(wz > 1) then userdata.warzone = wz -1 end
-    save_userdata()
-    loadMenuLayers()
-  elseif (rightEnemies == nil) then
-    if(wz < 9) then userdata.warzone = wz +1 end
-    save_userdata()
-    loadMenuLayers()
+  if(battleDone == 0) then
+    local leftEnemies = epartition:propListForRect(-180,-90,180,90)
+    local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
+    local wz = userdata.warzone
+    if(leftEnemies == nil) then
+      if(wz > 1) then userdata.warzone = wz -1 end
+      save_userdata()
+      loadMenuLayers()
+      battleDone = 1
+    elseif (rightEnemies == nil) then
+      if(wz < 9) then userdata.warzone = wz +1 end
+      save_userdata()
+      loadMenuLayers()
+      battleDone = 1
+    end
   end
 end
 
@@ -165,9 +167,6 @@ function newEnemy (enemyTeam)
     epartition2:insertProp(newEnemy.prop)
   end
   newEnemy:startThread()
-  
-  enemyCount = enemyCount + 1
-  enemyList[enemyCount] = newEnemy
   newEnemy = nil
 end
 

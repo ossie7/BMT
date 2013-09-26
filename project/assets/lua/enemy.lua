@@ -34,7 +34,7 @@ function Enemy.startThread (self)
   function self.prop:moveEnemy(parent)
     while true do
       if(gamestate == "pause" or gamestate == "upgrading") then
-        break
+        parent:die()
       end
       locX,locY = self:getLoc()
       if(parent.team == 1 and locX < (parent.entryLoc * -1)) then
@@ -80,6 +80,9 @@ end
 
 function Enemy.hitThread(self)
   while true do
+    if(gamestate == "pause" or gamestate == "upgrading") then
+      self:die()
+    end
     local x, y = self.prop:getLoc()
     self:checkAllHits(bpartition:propListForRect(x-6, y-5, x+6, y+5))
     self:checkAllHits(ebpartition:propListForRect(x-6, y-5, x+6, y+5))
