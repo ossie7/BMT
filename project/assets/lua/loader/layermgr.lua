@@ -106,27 +106,20 @@ function loadMenuLayers()
   baselayer:insertProp(basebackprop)
   
   loadBaseBars()
-  
-	texturePlay = MOAIImage.new()
-  texturePlay:load("resources/play_button.png")
-  
-	spriteStartButton = MOAIGfxQuad2D.new()
-	spriteStartButton:setTexture(texturePlay)
-	spriteStartButton:setRect(-32, -32, 32, 32);
 	  
 	propStartButton = MOAIProp2D.new()
-	propStartButton:setDeck(spriteStartButton)
-	propStartButton:setLoc(0,-50)
+	propStartButton:setDeck(warroomStartBattleSprite)
+	propStartButton:setLoc(12, -15)
   propStartButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
   propShipUpgradesButton = MOAIProp2D.new()
-	propShipUpgradesButton:setDeck(spriteStartButton)
-	propShipUpgradesButton:setLoc(-94,-50)
+	propShipUpgradesButton:setDeck(warroomShipUpgradeSprite)
+	propShipUpgradesButton:setLoc(-65, -50)
   propShipUpgradesButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
   propStationUpgradesButton = MOAIProp2D.new()
-	propStationUpgradesButton:setDeck(spriteStartButton)
-	propStationUpgradesButton:setLoc(94,-50)
+	propStationUpgradesButton:setDeck(warroomStationUpgradeSprite)
+	propStationUpgradesButton:setLoc(65, -38)
   propStationUpgradesButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
 
 	partition = MOAIPartition.new()

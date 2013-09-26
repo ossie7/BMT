@@ -13,6 +13,9 @@ function initTextures()
   basesprite = cs("resources/base.png",        -160, -90, 160, 90) --Base Background
   lfsprite   = cs("resources/blue_fist.png",   -22,  -11, 0,   11) --Left Fist
   rfsprite   = cs("resources/red_fist.png",    0,    -11, 22,  11) --Right Fist
+  warroomShipUpgradeSprite = cs("resources/transparent.png", -15, -23, 15, 23) --Ship upgrades button in warroom
+  warroomStationUpgradeSprite = cs("resources/transparent.png", -15, -25, 15, 25) --Station upgrades button in warroom
+  warroomStartBattleSprite = cs("resources/transparent.png", -15, -25, 15, 25) --Start Battle button in warroom
 end
 
 function cs(path, x1, y1, x2, y2) -- Create sprite
