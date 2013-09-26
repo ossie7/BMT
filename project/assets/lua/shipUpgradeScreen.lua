@@ -31,10 +31,12 @@ function UpdateShipUpgradesPositions(deltaX, deltaY, index)
       local upgrade = shipUpgradesList[i]
       upgrade:UpdateLocation(deltaX, deltaY)
       
+      if i == lastTappedShipUpgrade then
+        upgrade:UpdateScale(-1)
+      end
+      
       if i == index then
         upgrade:UpdateScale(1)
-      elseif i == lastTappedShipUpgrade then
-        upgrade:UpdateScale(-1)
       end
     end
   end
