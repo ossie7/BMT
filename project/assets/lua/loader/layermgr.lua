@@ -294,15 +294,11 @@ function clearLayers()
   elayer2:clear()
   eblayer:clear()
   ebrlayer:clear()
-<<<<<<< Updated upstream
-  MOAISim.forceGarbageCollection()
-end
-=======
   endweeklayer:clear()
   --killAll()
   MOAISim.forceGarbageCollection()
 end
-
+--[[
 function killAll()
   
   for i, e in ipairs(enemyList) do
@@ -337,4 +333,4 @@ function killAll()
   enemyList = {}
   enemyCount = 0
 end
->>>>>>> Stashed changes
+--]]

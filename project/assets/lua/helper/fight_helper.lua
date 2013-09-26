@@ -128,7 +128,6 @@ function startWaves()
 end
 
 function checkEndOfBattle()
-<<<<<<< Updated upstream
   if(battleDone == 0) then
     local leftEnemies = epartition:propListForRect(-180,-90,180,90)
     local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
@@ -136,28 +135,16 @@ function checkEndOfBattle()
     if(leftEnemies == nil) then
       if(wz > 1) then userdata.warzone = wz -1 end
       save_userdata()
-      loadMenuLayers()
+      endOfBattle(1)
       battleDone = 1
     elseif (rightEnemies == nil) then
       if(wz < 9) then userdata.warzone = wz +1 end
       save_userdata()
-      loadMenuLayers()
+      endOfBattle(2)
       battleDone = 1
     end
-=======
-  local leftEnemies = epartition:propListForRect(-180,-90,180,90)
-  local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
-  local wz = userdata.warzone
-  if(leftEnemies == nil) then
-    if(wz > 1) then userdata.warzone = wz -1 end
-    save_userdata()
-    endOfBattle(1)
-  elseif (rightEnemies == nil) then
-    if(wz < 9) then userdata.warzone = wz +1 end
-    save_userdata()
-    endOfBattle(2)
->>>>>>> Stashed changes
   end
+  
 end
 
 function newEnemy (enemyTeam)
