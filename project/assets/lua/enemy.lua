@@ -8,7 +8,11 @@ function Enemy.new(sprite, x, y, team)
   self.team = team
   self.target = nil
   self.health = 100
-  self.damage = 50
+  if(team == 1) then
+    self.damage = 50
+  else
+    self.damage = 100
+  end
   self.enemyLast = clock() + math.random()
   self.enemyInterval = 1.5 + math.random()
   

@@ -131,11 +131,11 @@ function checkEndOfBattle()
   local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
   local wz = userdata.warzone
   if(leftEnemies == nil) then
-    if(wz > 0) then userdata.warzone = wz -1 end
+    if(wz > 1) then userdata.warzone = wz -1 end
     save_userdata()
     loadMenuLayers()
   elseif (rightEnemies == nil) then
-    if(wz < 10) then userdata.warzone = wz +1 end
+    if(wz < 9) then userdata.warzone = wz +1 end
     save_userdata()
     loadMenuLayers()
   end
