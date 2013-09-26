@@ -32,6 +32,7 @@ function initLayers()
   ebrlayer      = cl() --Reflected enemy bullets
   ebrpartition  = cp(ebrlayer)
   endweeklayer  = cl()
+  upgradeback   = cl()
   
   loadMenuLayers()
 end
@@ -106,7 +107,34 @@ function loadMenuLayers()
 	basebackprop:setLoc(0,0)
   basebackprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   baselayer:insertProp(basebackprop)
+  --[[
+  textureMetal = MOAIImage.new()
+  textureMetal:load("resources/metal.png")
   
+  spriteMetal = MOAIGfxQuad2D.new()
+	spriteMetal:setTexture(textureMetal)
+	spriteMetal:setRect(-4, -4, 4, 4);
+  
+  propMetal = MOAIProp2D.new()
+	propMetal:setDeck(spriteMetal)
+	propMetal:setLoc(90,80)
+  propMetal:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  
+  textboxMetalAmount = CreateTextBox(115, 82, 30, 15, upgradeMenuStyle, ""..amountOfMetal)
+  textboxEnergyAmount = CreateTextBox(150, 82, 30, 15, upgradeMenuStyle, ""..amountOfEnergy)
+  
+  textureEnergy = MOAIImage.new()
+  textureEnergy:load("resources/energy.png")
+  
+  spriteEnergy = MOAIGfxQuad2D.new()
+	spriteEnergy:setTexture(textureEnergy)
+	spriteEnergy:setRect(-4, -4, 4, 4);
+  
+  propEnergy = MOAIProp2D.new()
+	propEnergy:setDeck(spriteEnergy)
+	propEnergy:setLoc(120,80)
+  propEnergy:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  -------------------------]]
   loadBaseBars()
 	  
 	propStartButton = MOAIProp2D.new()
@@ -171,12 +199,67 @@ end
 
 function loadShipUpgradesLayers()
   clearLayers()
-   
+  
+  MOAIRenderMgr.pushRenderPass(upgradeback)
   MOAIRenderMgr.pushRenderPass(upgradeLayer)
   MOAIRenderMgr.pushRenderPass(textLayer)
   
   texturePlay = MOAIImage.new()
   texturePlay:load("resources/play_button.png")
+  
+  textureMetal = MOAIImage.new()
+  textureMetal:load("resources/metal.png")
+  
+  spriteMetal = MOAIGfxQuad2D.new()
+	spriteMetal:setTexture(textureMetal)
+	spriteMetal:setRect(-4, -4, 4, 4);
+  
+  propMetal = MOAIProp2D.new()
+	propMetal:setDeck(spriteMetal)
+	propMetal:setLoc(90,80)
+  propMetal:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  local amountOfMetal = 0
+  local amountOfEnergy = 0
+  if(userdata.metal == nil) then
+        
+    amountOfMetal = 0
+  else
+    amountOfMetal = userdata.metal
+  end
+  
+  if(userdata.tech == nil) then
+        
+    amountOfEnergy = 0
+  else
+    amountOfEnergy = userdata.tech
+  end
+  
+  textboxMetalAmount = CreateTextBox(115, 82, 30, 15, upgradeMenuStyle, ""..amountOfMetal)
+  textboxEnergyAmount = CreateTextBox(150, 82, 30, 15, upgradeMenuStyle, ""..amountOfEnergy)
+  
+  textureEnergy = MOAIImage.new()
+  textureEnergy:load("resources/energy.png")
+  
+  spriteEnergy = MOAIGfxQuad2D.new()
+	spriteEnergy:setTexture(textureEnergy)
+	spriteEnergy:setRect(-4, -4, 4, 4);
+  
+  propEnergy = MOAIProp2D.new()
+	propEnergy:setDeck(spriteEnergy)
+	propEnergy:setLoc(120,80)
+  propEnergy:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  
+  textureUpgradeBackground = MOAIImage.new()
+  textureUpgradeBackground:load("resources/upgrade.png")
+  
+  spriteUpgradeBackground = MOAIGfxQuad2D.new()
+	spriteUpgradeBackground:setTexture(textureUpgradeBackground)
+	spriteUpgradeBackground:setRect(-160, -90, 160, 90);
+  
+  propUpgradeBackground = MOAIProp2D.new()
+	propUpgradeBackground:setDeck(spriteUpgradeBackground)
+	propUpgradeBackground:setLoc(0,0)
+  propUpgradeBackground:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
 	spriteBackButton = MOAIGfxQuad2D.new()
 	spriteBackButton:setTexture(texturePlay)
@@ -199,6 +282,12 @@ function loadShipUpgradesLayers()
   propPlayerShip:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
   upgradePartition = MOAIPartition.new()
+  
+  upgradeback:insertProp(propUpgradeBackground)
+  upgradeback:insertProp(propMetal)
+  upgradeback:insertProp(propEnergy)
+  upgradeback:insertProp(textboxMetalAmount)
+  upgradeback:insertProp(textboxEnergyAmount)
 	upgradePartition:insertProp(propBackButton)
   upgradePartition:insertProp(propBuildButton)
 	upgradeLayer:setPartition(upgradePartition)
@@ -207,20 +296,17 @@ function loadShipUpgradesLayers()
   LoadShipUpgradesList()
   
   -- name textboxes
-  textboxMetal = CreateTextBox(0, -80, 100, 100, upgradeMenuStyle, "Metal: ")
-  textboxTech = CreateTextBox(0, -90, 100, 100, upgradeMenuStyle, "Tech: ")
-  textboxTime = CreateTextBox(0, -100, 100, 100, upgradeMenuStyle, "Time: ")
+  --textboxMetal = CreateTextBox(0, -80, 100, 100, upgradeMenuStyle, "Metal: ")
+  --textboxTech = CreateTextBox(0, -90, 100, 100, upgradeMenuStyle, "Tech: ")
+  --textboxTime = CreateTextBox(0, -100, 100, 100, upgradeMenuStyle, "Time: ")
   
   --Value textboxes
-  textboxMetalValue = CreateTextBox(90, -80, 100, 100, upgradeMenuStyle, "")
-  textboxTechValue = CreateTextBox(90, -90, 100, 100, upgradeMenuStyle, "")
-  textboxTimeValue = CreateTextBox(90, -100, 100, 100, upgradeMenuStyle, "")
+  textboxMetalValue = CreateTextBox(-48, -66, 64, 15, upgradeMenuStyle, "")
+  textboxTechValue = CreateTextBox(92, -66, 64, 15, upgradeMenuStyle, "")
+  textboxTimeValue = CreateTextBox(27, -66, 64, 15, upgradeMenuStyle, "")
   textboxNameValue = CreateTextBox(0, 70, 160, 40, upgradeMenuStyle, "")
   textboxNameValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   
-	textLayer:insertProp(textboxMetal)
-  textLayer:insertProp(textboxTech)
-  textLayer:insertProp(textboxTime)
   textLayer:insertProp(textboxMetalValue)
   textLayer:insertProp(textboxTechValue)
   textLayer:insertProp(textboxTimeValue)
@@ -239,7 +325,7 @@ function loadShipUpgradesLayers()
   gamestate = "upgrading"
 end
 
-function endOfBattle(winningTeam)
+function endOfBattle(winningTeam, loot)
   
   clearLayers()
   textureGoMenu = MOAIImage.new()
@@ -258,14 +344,18 @@ function endOfBattle(winningTeam)
   
   --endweekLayer:insertProp(propButton)
   
-  amountOfLoot = 300
+  amountOfLoot = loot
   MOAIRenderMgr.pushRenderPass(endweeklayer)
   if(team == 1) then
     textboxBattleResults = CreateTextBox(-75, 50, 150, 100, upgradeMenuStyle,
       "The left team has lost this battle, you gained "..amountOfLoot.." metal")
+    userdata.metal = loot
+    save_userdata()
   else
      textboxBattleResults = CreateTextBox(0, 0, 150, 100, upgradeMenuStyle, 
      "The right team has lost this battle, you gained "..amountOfLoot.." plasma")
+   userdata.tech = loot
+   save_userdata()
    end
   
   endweeklayer:insertProp(textboxBattleResults)
@@ -295,6 +385,7 @@ function clearLayers()
   eblayer:clear()
   ebrlayer:clear()
   endweeklayer:clear()
+  upgradeback:clear()
   --killAll()
   MOAISim.forceGarbageCollection()
 end

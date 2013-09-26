@@ -131,16 +131,17 @@ function checkEndOfBattle()
   if(battleDone == 0) then
     local leftEnemies = epartition:propListForRect(-180,-90,180,90)
     local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
+    local earnedLoot = 100
     local wz = userdata.warzone
     if(leftEnemies == nil) then
       if(wz > 1) then userdata.warzone = wz -1 end
       save_userdata()
-      endOfBattle(1)
+      endOfBattle(1, earnedLoot)
       battleDone = 1
     elseif (rightEnemies == nil) then
       if(wz < 9) then userdata.warzone = wz +1 end
       save_userdata()
-      endOfBattle(2)
+      endOfBattle(2, earnedLoot)
       battleDone = 1
     end
   end
