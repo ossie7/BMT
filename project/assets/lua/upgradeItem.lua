@@ -2,7 +2,7 @@ UpgradeItem = {}
 UpgradeItem.__index = UpgradeItem
 
 -- syntax equivalent to "MyClass.new = function..."
-function UpgradeItem.new(sprite, name, metal, tech, requiredTime)
+function UpgradeItem.new(name, metal, tech, requiredTime)
   self = setmetatable({}, UpgradeItem)
   
   self.name = name
@@ -10,12 +10,8 @@ function UpgradeItem.new(sprite, name, metal, tech, requiredTime)
   self.tech = tech
   self.requiredTime = requiredTime
   self.build = false
-  self.prop = MOAIProp2D.new()
-  self.prop:setDeck(sprite)
-  self.prop:setLoc(x, y)
-  self.prop:setBlendMode(MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA)
-  self.prop.name = "upgradeItem"
-  upgradePartition:insertProp(self.prop)
+  self.prop = nil
+  self.loaded = false
   
   return self
 end
@@ -77,4 +73,17 @@ end
 
 function UpgradeItem:IsBuild()
   return self.build
+end
+
+function UpgradeItem:Load(sprite)
+  if self.loaded == false then
+    self.prop = MOAIProp2D.new()
+    self.prop:setDeck(sprite)
+    self.prop:setLoc(0, 0)
+    self.prop:setBlendMode(MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA)
+    self.prop.name = "upgradeItem"
+    self.loaded = true
+  end
+  
+  upgradePartition:insertProp(self.prop)
 end

@@ -7,6 +7,20 @@ end
 
 
 function newBullet (origX, origY, angle)
+  local bestGunBuildIndex = 0
+  
+  if table.getn(shipUpgradesList) > 0 then
+    for i = 1, table.getn(shipUpgradesList), 1 do
+      local upgrade = shipUpgradesList[i]
+      
+      if upgrade:IsBuild() then
+        bestGunBuildIndex = i
+      end
+    end
+  end
+  
+  local buffedBulletDamage = bulletDamage + (bulletDamage * (bestGunBuildIndex * 0.05))
+  
   local bullet = Bullet.new(bsprite, blayer, origX, origY, epartition, angle, bulletDamage)
   bpartition:insertProp(bullet.prop)
   bullet:startThread()
