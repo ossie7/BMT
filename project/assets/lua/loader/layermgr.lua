@@ -260,4 +260,24 @@ function clearLayers()
   elayer2:clear()
   eblayer:clear()
   ebrlayer:clear()
+  killAll()
+  MOAISim.forceGarbageCollection()
+end
+
+function killAll()
+
+  for i, e in ipairs(enemyList) do
+    if(e ~= nil and e.prop ~= nil) then
+      e.thread:stop()
+      e.prop.thread:stop()
+      e.prop = nil
+      e = nil
+    elseif(e ~= nil) then
+      e.thread:stop()
+      e = nil
+    end
+  end
+
+  enemyList = {}
+  enemyCount = 0
 end

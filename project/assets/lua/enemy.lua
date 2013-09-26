@@ -25,6 +25,9 @@ function Enemy.new(sprite, x, y, team)
   return self
 end
 
+function wait ( action )
+    while action:isBusy () do coroutine:yield () end
+end
 
 function Enemy.startThread (self)
   
@@ -43,14 +46,15 @@ function Enemy.startThread (self)
       end
       
       if(parent.team == 1 and locX >= -130) then
-        local newX = math.random(-3,3)
-        local newY = math.random(-3,3)
+        local newX = math.random(-10,10)
+        local newY = math.random(-10,10)
         if((newX + locX) >= -110) then
           newX = 0
-        elseif ((newY + locY) <= -90 or (newY + locY) >= 90) then
+        end
+        if ((newY + locY) <= -80 or (newY + locY) >= 70) then
           newY = 0
         end
-        self:moveLoc(newX, newY, 3)   
+        wait(self:moveLoc(newX, newY, 3))
       end
       
       if(parent.team == 2 and locX <= 130) then
@@ -58,24 +62,31 @@ function Enemy.startThread (self)
         local newY = math.random(-3,3)
         if((newX + locX) <= 110) then
           newX = 0
-        elseif ((newY + locY) <= -90 or (newY + locY) >= 90) then
+        end
+        if ((newY + locY) <= -80 or (newY + locY) >= 70) then
           newY = 0
         end
-        self:moveLoc(newX, newY, 3)   
+        wait(self:moveLoc(newX, newY, 3))
       end
-      
-      
-      self.owner.checkReflect(self.owner)
-      self.owner.checkHit(self.owner)
-      self.owner.checkRivalHit(self.owner)
-      parent.enemyBulletGen(parent, locX, locY)
-
       coroutine.yield()
     end
   end
 
   self.prop.thread = MOAICoroutine.new()
   self.prop.thread:run(self.prop.moveEnemy, self.prop, self)
+  self.thread = MOAICoroutine.new()
+  self.thread:run(self.hitThread, self)
+end
+
+function Enemy.hitThread(self)
+  while true do
+    local x, y = self.prop:getLoc()
+    self:checkReflect()
+    self:checkHit()
+    self:checkRivalHit()
+    self:enemyBulletGen(x, y)
+    coroutine.yield()
+  end
 end
 
 function Enemy.newEnemyBullet (self, origX, origY, angle)
@@ -88,6 +99,7 @@ function Enemy.newEnemyBullet (self, origX, origY, angle)
   local enemyBullet = EnemyBullet.new(sprite, origX, origY, angle, self.team, self.damage)
   ebpartition:insertProp(enemyBullet.prop)
   enemyBullet:startThread()
+  enemyBullet = nil
 end
 
 function Enemy.enemyBulletGen(self, x, y)
@@ -166,12 +178,10 @@ end
 
 function Enemy.damageTaken(self, obj)
   local damage = obj.owner.damage
-  obj.thread:stop()
   bpartition:removeProp(obj)
   ebpartition:removeProp(obj)
   ebrpartition:removeProp(obj)
-  obj = nil
-  MOAISim.forceGarbageCollection()
+  obj.owner:die()
   
   self.health = self.health - damage
   
@@ -194,5 +204,10 @@ function Enemy.die(self)
   else
     rightKilled = rightKilled + 1
   end
+  MOAISim.forceGarbageCollection()
   self.prop.thread:stop()
+  self.thread:stop()
+  self.prop = nil
+  self = nil
+  
 end

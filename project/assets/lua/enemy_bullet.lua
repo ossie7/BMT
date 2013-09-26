@@ -75,3 +75,11 @@ function EnemyBullet.startThread (self)
   self.prop.thread = MOAICoroutine.new()
   self.prop.thread:run(self.prop.moveEnemyBullet, self.prop, self)
 end
+
+function EnemyBullet.die(self)
+  eblayer:removeProp(self.prop)
+  ebrlayer:removeProp(self.prop)
+  self.prop.thread:stop()
+  self.prop = nil
+  self = nil
+end

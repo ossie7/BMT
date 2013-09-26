@@ -20,12 +20,11 @@ function Bullet.new(sprite, layer, x, y, partition, angle, damage)
 end
 
 function Bullet.checkIfInside(self, locX,locY)
-    if (locX < 160 and locX > -160) and (locY < 120 and locY > -120) then
-        return true
-    else
-        self.layer:removeProp(self.prop)
-        return false
-    end
+  if (locX < 160 and locX > -160) and (locY < 120 and locY > -120) then
+    return true
+  else
+    return false
+  end
 end
 
 function Bullet.bulletMovement(self, x, y)
@@ -47,10 +46,16 @@ function Bullet.startThread (self)
       self:setLoc(locX,locY)
       coroutine.yield()
     end
-    self.thread:stop()
-    parent = nil
+    parent:die()
   end
 
   self.prop.thread = MOAICoroutine.new()
   self.prop.thread:run(self.prop.moveBullet, self.prop, self.layer, self)
+end
+
+function Bullet.die(self)
+  blayer:removeProp(self.prop)
+  self.prop.thread:stop()
+  self.prop = nil
+  self = nil
 end

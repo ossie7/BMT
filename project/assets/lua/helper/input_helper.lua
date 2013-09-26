@@ -15,6 +15,8 @@ local swipeLastX = 0
 local swipeLastY = 0
 local minSwipeDistance = 20
 
+shipDeltaY = 0
+
 function onTouch(x,y)
   if(gamestate == "pause") then
     local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )

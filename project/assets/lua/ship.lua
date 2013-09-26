@@ -2,14 +2,15 @@ health = 999
 bulletDamage = 100
 
 function checkHealth() 
-    return health
+  return health
 end
 
 
 function newBullet (origX, origY, angle)
-    local bullet = Bullet.new(bsprite, blayer, origX, origY, epartition, angle, bulletDamage)
-    bpartition:insertProp(bullet.prop)
-    bullet:startThread()
+  local bullet = Bullet.new(bsprite, blayer, origX, origY, epartition, angle, bulletDamage)
+  bpartition:insertProp(bullet.prop)
+  bullet:startThread()
+  bullet = nil
 end
 
 function bulletGen(x, y, angle)

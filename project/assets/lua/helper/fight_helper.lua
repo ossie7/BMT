@@ -1,6 +1,9 @@
 week = 1
 waveCounter = 0
 
+enemyList   = {}
+enemyCount  = 0
+
 function createProp(sprite, layer)
   prop = MOAIProp2D.new()
   prop:setDeck(sprite)
@@ -162,6 +165,10 @@ function newEnemy (enemyTeam)
     epartition2:insertProp(newEnemy.prop)
   end
   newEnemy:startThread()
+  
+  enemyCount = enemyCount + 1
+  enemyList[enemyCount] = newEnemy
+  newEnemy = nil
 end
 
 function calcAngle ( x1, y1, x2, y2 )
