@@ -16,6 +16,13 @@ function initTextures()
   warroomShipUpgradeSprite = cs("resources/transparent.png", -15, -23, 15, 23) --Ship upgrades button in warroom
   warroomStationUpgradeSprite = cs("resources/transparent.png", -15, -25, 15, 25) --Station upgrades button in warroom
   warroomStartBattleSprite = cs("resources/transparent.png", -15, -25, 15, 25) --Start Battle button in warroom
+  
+  tileLib = MOAITileDeck2D.new()
+  tileLib:setTexture("resources/explo_sprite.png")
+  -- aantal afbeeldingen h*b
+  tileLib:setSize(4 , 2)
+  tileLib:setRect(-16,-16,16,16)
+
 end
 
 function cs(path, x1, y1, x2, y2) -- Create sprite

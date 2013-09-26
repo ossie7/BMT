@@ -42,6 +42,18 @@ function loadFightLayers()
   week = week + 1
   battleDone = 0
   
+  propExplosion = MOAIProp2D.new()
+  propExplosion:setDeck(tileLib)
+
+  curve = MOAIAnimCurve.new()
+  curve:reserveKeys(8)
+
+  for i=1, 8, 1 do
+    -- index, time, hoeveelste plaatje
+    curve:setKey(i, 0.05 * i, i)
+    
+  end
+
   clearLayers()
   MOAIRenderMgr.pushRenderPass(universeLayer)
   MOAIRenderMgr.pushRenderPass(buttonlayer)

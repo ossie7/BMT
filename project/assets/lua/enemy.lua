@@ -168,6 +168,8 @@ function Enemy.damageTaken(self, obj)
 end
 
 function Enemy.die(self)
+  local xDie,yDie = self.prop:getLoc()
+
   elayer:removeProp(self.prop)
   elayer2:removeProp(self.prop)
   if(lastWaveRight == true or lastWaveLeft == true) then
@@ -183,5 +185,14 @@ function Enemy.die(self)
   self.thread:stop()
   self.prop = nil
   self = nil
+  
+    anim = MOAIAnim.new()
+  anim:reserveLinks(1) -- aantal curves
+  anim:setLink(1, curve, propExplosion, MOAIProp2D.ATTR_INDEX )
+  anim:setMode(MOAITimer.NORMAL)
+  anim:setSpan(9 * 0.05)
+  anim:start()
+  propExplosion:setLoc(xDie, yDie)
+  elayer:insertProp(propExplosion)
   
 end
