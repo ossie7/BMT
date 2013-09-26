@@ -1,6 +1,7 @@
 io.output( ):setvbuf("no") -- Fix for console lag
 
 -- Requires
+require 'helper/save_helper'
 require 'helper/base_helper'
 require 'helper/data_helper'
 require 'helper/fight_helper'
@@ -16,8 +17,6 @@ require 'ship'
 require 'enemy_bullet'
 require 'upgradeItem'
 require 'shipUpgradeScreen'
-
-require 'helper/save_helper'
 
 require 'loader/start'
 

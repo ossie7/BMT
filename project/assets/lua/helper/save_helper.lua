@@ -26,18 +26,13 @@ end
 function SetupNewUserdata()
   userdata.shipUpgrades = {}
   userdata.warzone = 5
-end
-
-function SetupUserdata()
-  for i = 1, table.getn(userdata.shipUpgrades), 1 do
-    shipUpgradesList[i]:Build(userdata.shipUpgrades[i])
-  end
+  userdata.metal = 0
+  userdata.tech = 0
 end
 
 -- At the beginning of your application, get the persisted data:
 if (userdata_f ~= nil) then
   userdata = userdata_f()
-  SetupUserdata()
 else
   SetupNewUserdata()
 end

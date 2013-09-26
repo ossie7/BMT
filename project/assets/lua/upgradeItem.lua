@@ -2,12 +2,12 @@ UpgradeItem = {}
 UpgradeItem.__index = UpgradeItem
 
 -- syntax equivalent to "MyClass.new = function..."
-function UpgradeItem.new(sprite, name, requiredResourceLeftFaction, requiredResourceRightFaction, requiredTime)
+function UpgradeItem.new(sprite, name, metal, tech, requiredTime)
   self = setmetatable({}, UpgradeItem)
   
   self.name = name
-  self.resourceLeftFaction = requiredResourceLeftFaction
-  self.resourceRightFaction = requiredResourceRightFaction
+  self.metal = metal
+  self.tech = tech
   self.requiredTime = requiredTime
   self.build = false
   self.prop = MOAIProp2D.new()
@@ -15,6 +15,7 @@ function UpgradeItem.new(sprite, name, requiredResourceLeftFaction, requiredReso
   self.prop:setLoc(x, y)
   self.prop:setBlendMode(MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA)
   self.prop.name = "upgradeItem"
+  upgradePartition:insertProp(self.prop)
   
   return self
 end
@@ -27,17 +28,17 @@ function UpgradeItem:GetName()
   return self.name
 end
 
-function UpgradeItem:SetRequiredResources(resourceLeftFaction, resourceRightFaction)
-  self.resourceLeftFaction = resourceLeftFaction
-  self.resourceRightFaction = resourceRightFaction
+function UpgradeItem:SetRequiredResources(metal, tech)
+  self.metal = metal
+  self.tech = tech
 end
 
-function UpgradeItem:GetRequiredResourcesLeftFaction()
-  return self.resourceLeftFaction
+function UpgradeItem:GetRequiredMetal()
+  return self.metal
 end
 
-function UpgradeItem:GetRequiredResourcesRightFaction()
-  return self.resourceRightFaction
+function UpgradeItem:GetRequiredTech()
+  return self.tech
 end
 
 function UpgradeItem:SetRequiredTime(requiredTime)

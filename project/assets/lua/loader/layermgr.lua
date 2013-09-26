@@ -212,22 +212,22 @@ function loadShipUpgradesLayers()
   LoadShipUpgradesList()
   
   -- name textboxes
-  textboxLeftFactionResource = CreateTextBox(0, -80, 100, 100, upgradeMenuStyle, "LFRes: ")
-  textboxRightFactionResource = CreateTextBox(0, -90, 100, 100, upgradeMenuStyle, "RFRes: ")
-  textboxTimeFactionResource = CreateTextBox(0, -100, 100, 100, upgradeMenuStyle, "Time: ")
+  textboxMetal = CreateTextBox(0, -80, 100, 100, upgradeMenuStyle, "Metal: ")
+  textboxTech = CreateTextBox(0, -90, 100, 100, upgradeMenuStyle, "Tech: ")
+  textboxTime = CreateTextBox(0, -100, 100, 100, upgradeMenuStyle, "Time: ")
   
   --Value textboxes
-  textboxLeftFactionResourceValue = CreateTextBox(90, -80, 100, 100, upgradeMenuStyle, "")
-  textboxRightFactionResourceValue = CreateTextBox(90, -90, 100, 100, upgradeMenuStyle, "")
+  textboxMetalValue = CreateTextBox(90, -80, 100, 100, upgradeMenuStyle, "")
+  textboxTechValue = CreateTextBox(90, -90, 100, 100, upgradeMenuStyle, "")
   textboxTimeValue = CreateTextBox(90, -100, 100, 100, upgradeMenuStyle, "")
   textboxNameValue = CreateTextBox(0, 70, 160, 40, upgradeMenuStyle, "")
   textboxNameValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   
-	textLayer:insertProp(textboxLeftFactionResource)
-  textLayer:insertProp(textboxRightFactionResource)
-  textLayer:insertProp(textboxTimeFactionResource)
-  textLayer:insertProp(textboxLeftFactionResourceValue)
-  textLayer:insertProp(textboxRightFactionResourceValue)
+	textLayer:insertProp(textboxMetal)
+  textLayer:insertProp(textboxTech)
+  textLayer:insertProp(textboxTime)
+  textLayer:insertProp(textboxMetalValue)
+  textLayer:insertProp(textboxTechValue)
   textLayer:insertProp(textboxTimeValue)
   textLayer:insertProp(textboxNameValue)
   textLayer:setPriority(1001)
@@ -235,8 +235,8 @@ function loadShipUpgradesLayers()
   local upgrade = shipUpgradesList[1]
   SetBuildButtonVisibility(upgrade)
   textboxNameValue:setString(""..upgrade:GetName())
-  textboxLeftFactionResourceValue:setString(""..upgrade:GetRequiredResourcesLeftFaction())
-  textboxRightFactionResourceValue:setString(""..upgrade:GetRequiredResourcesRightFaction())
+  textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
+  textboxTechValue:setString(""..upgrade:GetRequiredTech())
   textboxTimeValue:setString(""..upgrade:GetRequiredTime())
   
   propBackButton.name = "leaveUpgradeScreen"
