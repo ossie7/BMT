@@ -31,7 +31,8 @@ function initLayers()
   ebpartition   = cp(eblayer)
   ebrlayer      = cl() --Reflected enemy bullets
   ebrpartition  = cp(ebrlayer)
-  exlayer       = cl() --Explosion layer
+  exlayer       = cl() --Explosions
+  ihlayer       = cl() --Input hint
   endweeklayer  = cl() --Reward screen
   upgradeback   = cl() --Upgrade background
   
@@ -57,6 +58,7 @@ function loadFightLayers()
 
   clearLayers()
   MOAIRenderMgr.pushRenderPass(universeLayer)
+  MOAIRenderMgr.pushRenderPass(ihlayer)
   MOAIRenderMgr.pushRenderPass(buttonlayer)
   MOAIRenderMgr.pushRenderPass(eblayer)
   MOAIRenderMgr.pushRenderPass(ebrlayer)
@@ -107,6 +109,28 @@ function loadFightLayers()
 	buttonlayer:setPartition(pausePartition)
   gamestate = "playing"
   propButton.name = "pause"
+  
+  --Input Help - TEMP - BEGIN
+  ihtexture = MOAIImage.new()
+  ihtexture:load("resources/controls.png")
+  
+  ihsprite = MOAIGfxQuad2D.new()
+	ihsprite:setTexture(ihtexture)
+	ihsprite:setRect(0, 0, -80, -50)
+  
+  ihprop1 = MOAIProp2D.new()
+	ihprop1:setDeck(ihsprite)
+	ihprop1:setLoc(-40,-40)
+  ihprop1:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  ihlayer:insertProp(ihprop1)
+  
+  ihprop2 = MOAIProp2D.new()
+	ihprop2:setDeck(ihsprite)
+	ihprop2:setLoc(120,-40)
+  ihprop2:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  ihlayer:insertProp(ihprop2)
+
+  --Input Help - TEMP - END
 end
 
 function loadMenuLayers()
@@ -340,6 +364,7 @@ end
 
 function clearLayers()
   universeLayer:clear()
+  ihlayer:clear()
   layer:clear()
   clayer:clear()
   buttonlayer:clear()

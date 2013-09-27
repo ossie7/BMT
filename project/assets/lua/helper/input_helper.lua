@@ -97,18 +97,18 @@ function onMouseLeftEvent ( down )
 end
 
 function onMove ( x, y )
-  local ax, ay = layer:wndToWorld(x, y*-1)
-  if ( drag and ax <= -100) then
-    shipDeltaY = (ay - lastY) * -1
+  local ax, ay = layer:wndToWorld(x, y)
+  if ( drag and ax >= -120 and ax <= -40 and ay <= -40) then
+    shipDeltaY = (ay - lastY) * 3
     prop:moveLoc (0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
-  elseif(drag and ax >= 100) then
-    shipDeltaY = (ay - clastY) * -1
+  elseif(drag and ax <= 120 and ax >= 40 and ay <= -40) then
+    shipDeltaY = (ay - clastY) * 3
     cross:moveLoc (0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
   end
-  if(ax <= -100) then
+  if(ax >= -120 and ax <= -40 and ay <= -40) then
     lastX = ax
     lastY = ay
-  elseif(ax >= 100) then
+  elseif(ax <= 120 and ax >= 40 and ay <= -40) then
     clastX = ax
     clastY = ay
   end
@@ -118,24 +118,24 @@ function onMove ( x, y )
 end
 
 function touchMove( x, y, event)
-  local ax, ay = layer:wndToWorld(x, y*-1)
+  local ax, ay = layer:wndToWorld(x, y)
   
   if gamestate == "upgrading" then
     --SwipingInUpgradeMenu(x, y, event)
   end
   
   if gamestate == "playing" and prop ~= nil then
-    if (event == 1 and ax <= -100) then
-      shipDeltaY = (ay - touchY) * -1
+    if (event == 1 and ax >= -120 and ax <= -40 and ay <= -40) then
+      shipDeltaY = (ay - touchY) * 3
       prop:moveLoc ( 0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
-    elseif(event == 1 and ax >= 100) then
-      shipDeltaY = (ay - ctouchY) * -1
+    elseif(event == 1 and ax <= 120 and ax >= 40 and ay <= -40) then
+      shipDeltaY = (ay - ctouchY) * 3
       cross:moveLoc ( 0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
     end
-    if(ax <= -100) then
+    if(ax >= -120 and ax <= -40 and ay <= -40) then
       touchX = ax
       touchY = ay
-    elseif(ax >= 100) then
+    elseif(ax <= 120 and ax >= 40 and ay <= -40) then
       ctouchX = ax
       ctouchY = ay
     end
