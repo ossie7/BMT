@@ -108,10 +108,10 @@ end
 function Enemy.enemyBulletGen(self, x, y)
   if(self.target == nil) then
     local ot = nil
-    if(self.team == 1) then
-      ot = epartition2
-    else
+    if(self.team == 2) then
       ot = epartition
+    else
+      ot = epartition2
     end
   
     local e = ot:propListForRect(-160, -90, 160, 90)
@@ -193,6 +193,6 @@ function Enemy.die(self)
   anim:setSpan(9 * 0.05)
   anim:start()
   propExplosion:setLoc(xDie, yDie)
-  elayer:insertProp(propExplosion)
+  exlayer:insertProp(propExplosion)
   
 end

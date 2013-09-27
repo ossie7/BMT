@@ -31,8 +31,9 @@ function initLayers()
   ebpartition   = cp(eblayer)
   ebrlayer      = cl() --Reflected enemy bullets
   ebrpartition  = cp(ebrlayer)
-  endweeklayer  = cl()
-  upgradeback   = cl()
+  exlayer       = cl() --Explosion layer
+  endweeklayer  = cl() --Reward screen
+  upgradeback   = cl() --Upgrade background
   
   loadMenuLayers()
 end
@@ -61,6 +62,7 @@ function loadFightLayers()
   MOAIRenderMgr.pushRenderPass(ebrlayer)
 	MOAIRenderMgr.pushRenderPass(elayer)
   MOAIRenderMgr.pushRenderPass(elayer2)
+  MOAIRenderMgr.pushRenderPass(exlayer)
 	MOAIRenderMgr.pushRenderPass(layer)
   MOAIRenderMgr.pushRenderPass(blayer)
   MOAIRenderMgr.pushRenderPass(clayer)
@@ -354,42 +356,7 @@ function clearLayers()
   ebrlayer:clear()
   endweeklayer:clear()
   upgradeback:clear()
-  --killAll()
+  exlayer:clear()
   MOAISim.forceGarbageCollection()
 end
---[[
-function killAll()
-  
-  for i, e in ipairs(enemyList) do
-    local c = table.getn(enemyList)
-    print(i .. "/" .. c)
-    if(e ~= nil and e.prop ~= nil and e.prop.thread ~= nil) then
-      e.prop.thread:stop()
-      print("1")
-    end
-    if(e ~= nil and e.prop ~= nil) then
-      e.prop = nil
-      print("2")
-    end
-    if(e ~= nil and e.thread ~= nil) then
-      e.thread:stop()
-      print("3")
-    end
-    if(e ~= nil) then
-      e = nil
-      print("4")
-    end
-    
-    local clock = os.clock
-    function sleep(n)
-      local t0 = clock()
-      while clock() - t0 <= n do end
-    end
-    sleep(0.1)
-    print("Done")
-  end
 
-  enemyList = {}
-  enemyCount = 0
-end
---]]

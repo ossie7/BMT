@@ -9,7 +9,6 @@ require 'helper/input_helper'
 require 'helper/text_helper'
 require 'helper/upgrade_helper'
 
-require 'background'
 require 'universe'
 require 'bullet'
 require 'enemy'
