@@ -14,7 +14,7 @@ function initTextures()
   lfsprite   = cs("resources/blue_fist.png",   -22,  -11, 0,   11) --Left Fist
   rfsprite   = cs("resources/red_fist.png",    0,    -11, 22,  11) --Right Fist
   metalSprite = cs("resources/metal.png",      -4,   -4,  4,   4) --Metal Icon
-  energySprite = cs("resources/energy.png",    -4,   -4,  4,   4) --Energy Icon
+  plasmaSprite = cs("resources/energy.png",    -4,   -4,  4,   4) --Energy Icon
   shipUpgradeScreenSprite =     cs("resources/upgrade.png",       -160, -90,  160,  90) -- shipupgrades background
   warroomShipUpgradeSprite =    cs("resources/transparent.png",   -15,  -23,  15,   23) --Ship upgrades button warroom
   warroomStationUpgradeSprite = cs("resources/transparent.png",   -15,  -25,  15,   25) --Station upgrades button warroom

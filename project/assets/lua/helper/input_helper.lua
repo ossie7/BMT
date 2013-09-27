@@ -53,7 +53,7 @@ function onTouch(x,y)
             UpdateShipUpgradesPositions(deltaX, deltaY, i)
             textboxNameValue:setString(""..upgrade:GetName())
             textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
-            textboxTechValue:setString(""..upgrade:GetRequiredTech())
+            textboxPlasmaValue:setString(""..upgrade:GetRequiredPlasma())
             textboxTimeValue:setString(""..upgrade:GetRequiredTime())
             
             SetBuildButtonVisibility(upgrade)

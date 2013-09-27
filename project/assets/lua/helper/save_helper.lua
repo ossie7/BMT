@@ -29,7 +29,7 @@ function SetupNewUserdata()
   userdata.shipUpgrades = {}
   userdata.warzone = 5
   userdata.metal = 0
-  userdata.tech = 0
+  userdata.plasma = 0
 end
 
 -- At the beginning of your application, get the persisted data:

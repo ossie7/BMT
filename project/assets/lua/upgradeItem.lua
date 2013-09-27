@@ -2,12 +2,12 @@ UpgradeItem = {}
 UpgradeItem.__index = UpgradeItem
 
 -- syntax equivalent to "MyClass.new = function..."
-function UpgradeItem.new(name, metal, tech, requiredTime)
+function UpgradeItem.new(name, metal, plasma, requiredTime)
   self = setmetatable({}, UpgradeItem)
   
   self.name = name
   self.metal = metal
-  self.tech = tech
+  self.plasma = plasma
   self.requiredTime = requiredTime
   self.build = false
   self.prop = nil
@@ -24,17 +24,17 @@ function UpgradeItem:GetName()
   return self.name
 end
 
-function UpgradeItem:SetRequiredResources(metal, tech)
+function UpgradeItem:SetRequiredResources(metal, plasma)
   self.metal = metal
-  self.tech = tech
+  self.plasma = plasma
 end
 
 function UpgradeItem:GetRequiredMetal()
   return self.metal
 end
 
-function UpgradeItem:GetRequiredTech()
-  return self.tech
+function UpgradeItem:GetRequiredPlasma()
+  return self.plasma
 end
 
 function UpgradeItem:SetRequiredTime(requiredTime)

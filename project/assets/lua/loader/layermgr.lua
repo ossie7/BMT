@@ -219,16 +219,16 @@ function loadShipUpgradesLayers()
   --resource icons
   propMetal = MOAIProp2D.new()
 	propMetal:setDeck(metalSprite)
-	propMetal:setLoc(90,80)
+	propMetal:setLoc(30,80)
   propMetal:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
-  propEnergy = MOAIProp2D.new()
-	propEnergy:setDeck(energySprite)
-	propEnergy:setLoc(120,80)
-  propEnergy:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  propPlasma = MOAIProp2D.new()
+	propPlasma:setDeck(plasmaSprite)
+	propPlasma:setLoc(100,80)
+  propPlasma:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
-  textboxMetalAmount = CreateTextBox(115, 82, 30, 15, upgradeMenuStyle, ""..userdata.metal)
-  textboxEnergyAmount = CreateTextBox(150, 82, 30, 15, upgradeMenuStyle, ""..userdata.tech)
+  textboxMetalAmount = CreateTextBox(50, 82, 30, 15, upgradeMenuStyle, ""..userdata.metal)
+  textboxEnergyAmount = CreateTextBox(120, 82, 30, 15, upgradeMenuStyle, ""..userdata.plasma)
   
   propUpgradeBackground = MOAIProp2D.new()
 	propUpgradeBackground:setDeck(shipUpgradeScreenSprite)
@@ -258,7 +258,7 @@ function loadShipUpgradesLayers()
   
   upgradeback:insertProp(propUpgradeBackground)
   upgradeback:insertProp(propMetal)
-  upgradeback:insertProp(propEnergy)
+  upgradeback:insertProp(propPlasma)
   upgradeback:insertProp(textboxMetalAmount)
   upgradeback:insertProp(propPlayerShip)
   upgradeback:insertProp(textboxEnergyAmount)
@@ -268,15 +268,15 @@ function loadShipUpgradesLayers()
   --Value textboxes
   textboxMetalValue = CreateTextBox(-75, -66, 64, 15, upgradeMenuStyle, "")
   textboxMetalValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
-  textboxTechValue = CreateTextBox(73, -66, 64, 15, upgradeMenuStyle, "")
-  textboxTechValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  textboxPlasmaValue = CreateTextBox(73, -66, 64, 15, upgradeMenuStyle, "")
+  textboxPlasmaValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   textboxTimeValue = CreateTextBox(-1, -66, 64, 15, upgradeMenuStyle, "")
   textboxTimeValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   textboxNameValue = CreateTextBox(0, -30, 160, 40, upgradeMenuStyle, "")
   textboxNameValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   
   textLayer:insertProp(textboxMetalValue)
-  textLayer:insertProp(textboxTechValue)
+  textLayer:insertProp(textboxPlasmaValue)
   textLayer:insertProp(textboxTimeValue)
   textLayer:insertProp(textboxNameValue)
   textLayer:setPriority(1001)
@@ -285,7 +285,7 @@ function loadShipUpgradesLayers()
   SetBuildButtonVisibility(upgrade)
   textboxNameValue:setString(""..upgrade:GetName())
   textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
-  textboxTechValue:setString(""..upgrade:GetRequiredTech())
+  textboxPlasmaValue:setString(""..upgrade:GetRequiredPlasma())
   textboxTimeValue:setString(""..upgrade:GetRequiredTime())
   
   propBackButton.name = "leaveUpgradeScreen"
@@ -322,7 +322,7 @@ function endOfBattle(winningTeam, loot)
   else
      textboxBattleResults = CreateTextBox(0, 0, 150, 100, upgradeMenuStyle, 
      "The right team has lost this battle, you gained "..amountOfLoot.." plasma")
-   userdata.tech = userdata.tech + loot
+   userdata.plasma = userdata.plasma + loot
    save_userdata()
    end
   

@@ -3,24 +3,27 @@ function BuildShipUpgrade()
   
   if EnoughResources(upgrade) then
     local metal = upgrade:GetRequiredMetal()
-    local tech = upgrade:GetRequiredTech()
+    local plasma = upgrade:GetRequiredPlasma()
     
     userdata.metal = userdata.metal - metal
-    userdata.tech = userdata.tech - tech
+    userdata.plasma = userdata.plasma - plasma
     
     upgrade:Build(true)
   end
   
   save_userdata()
   
+  textboxMetalAmount:setString(""..userdata.metal)
+  textboxEnergyAmount:setString(""..userdata.plasma)
+  
   return upgrade
 end
 
 function EnoughResources(upgrade)
   local metal = upgrade:GetRequiredMetal()
-  local tech = upgrade:GetRequiredTech()
+  local plasma = upgrade:GetRequiredPlasma()
   
-  if userdata.metal >= metal and userdata.tech >= tech then
+  if userdata.metal >= metal and userdata.plasma >= plasma then
     return true
   else
     return false
