@@ -1,4 +1,3 @@
-
 local lastX = 0
 local lastY = 0
 local clastX = 0
@@ -16,114 +15,48 @@ local swipeLastY = 0
 local minSwipeDistance = 20
 
 shipDeltaY = 0
+drag = false
+event = nil
 
-function onTouch(x,y)
-  if(gamestate == "pause") then
-    local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
-    if hitButton then 
-      if (hitButton.name == "playing") then
-        thread:run(threadDuel)
-          
-        lastX, lastY = layer:wndToWorld(x, y*-1)
-          
-        loadFightLayers()
-        gamestate = "playing"
-        boolean = WAIT
-        playInput()
-      elseif (hitButton.name == "shipUpgrades") then
-        loadShipUpgradesLayers()
-      end
-    end
+function mouseInput(down)
+  local x, y = MOAIInputMgr.device.pointer:getLoc()
+  if (down == true and drag == true) then
+    event = MOAITouchSensor.TOUCH_MOVE
+  elseif( down == false and drag) then
+    event = MOAITouchSensor.TOUCH_UP
+    drag = false
+    mouseMove(x, y)
+    event = nil
+  elseif( down and drag == false) then
+    event = MOAITouchSensor.TOUCH_DOWN
+    drag = true
+    mouseMove(x, y)
+    event = MOAITouchSensor.TOUCH_MOVE
   end
-  
-  if(gamestate == "upgrading") then
-    local pickedProp = upgradePartition:propForPoint( upgradeLayer:wndToWorld(x,y) )
-    if pickedProp then 
-      if (pickedProp.name == "leaveUpgradeScreen") then
-        loadMenuLayers()
-      elseif (pickedProp.name == "upgradeItem") then
-        for i = 1, table.getn(shipUpgradesList), 1 do
-          local upgrade = shipUpgradesList[i]
-          if pickedProp == upgrade:GetProp() then
-            local deltaX, deltaY
-            local propX, propY = pickedProp:getLoc()
-            deltaX = 0 - propX
-            deltaY = 10 - propY
-            
-            UpdateShipUpgradesPositions(deltaX, deltaY, i)
-            textboxNameValue:setString(""..upgrade:GetName())
-            textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
-            textboxPlasmaValue:setString(""..upgrade:GetRequiredPlasma())
-            textboxTimeValue:setString(""..upgrade:GetRequiredTime())
-            
-            SetBuildButtonVisibility(upgrade)
-          end
-        end
-      elseif (pickedProp.name == "buildUpgrade") then
-        local upgrade = BuildShipUpgrade()
-        SetBuildButtonVisibility(upgrade)
-      end
-    end
+end
+
+function mouseMove(x, y)
+  if(event) then
+    touchInput(event, 1, x, y, 1)
   end
-   
+end
+
+function touchInput(event, idx, x, y, tapCount)
   if(gamestate == "playing") then
-    local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
-    if gameButton then 
-      if (gameButton.name == "pause") then
-        loadMenuLayers()
-        MOAISim.forceGarbageCollection()  
-        gamestate = "pause"  
-        end
-     end
-   end
-   
-   if(gamestate == "endOfBattle") then
-    local goToMenuButton = eobpartition:propForPoint( endweeklayer:wndToWorld(x,y) )
-    if goToMenuButton then 
-        loadMenuLayers()
-        gamestate = "pause"  
-     end
-   end
-end
-
-function onMouseLeftEvent ( down )
-    if ( down ) then
-        drag = true
-        onTouch(MOAIInputMgr.device.pointer:getLoc())
-    else
-        drag = false
-    end
-end
-
-function onMove ( x, y )
-  local ax, ay = layer:wndToWorld(x, y)
-  if ( drag and ax >= -120 and ax <= -40 and ay <= -40) then
-    shipDeltaY = (ay - lastY) * 3
-    prop:moveLoc (0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
-  elseif(drag and ax <= 120 and ax >= 40 and ay <= -40) then
-    shipDeltaY = (ay - clastY) * 3
-    cross:moveLoc (0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
+    playInput(event, idx, x, y)
+  elseif(gamestate == "upgrading") then
+    upgradeInput(event, idx, x, y)
+  elseif(gamestate == "endOfBattle") then
+    eobInput(event, idx, x, y)
+  elseif(gamestate == "pause") then
+    baseInput(event, idx, x, y)
   end
-  if(ax >= -120 and ax <= -40 and ay <= -40) then
-    lastX = ax
-    lastY = ay
-  elseif(ax <= 120 and ax >= 40 and ay <= -40) then
-    clastX = ax
-    clastY = ay
-  end
-  keepInside(prop)
-  moveGun(gun, prop, cross)
-  keepInside(cross)
 end
 
-function touchMove( x, y, event)
+function playInput(event, idx, x, y)
   local ax, ay = layer:wndToWorld(x, y)
   
-  if gamestate == "upgrading" then
-    --SwipingInUpgradeMenu(x, y, event)
-  end
-  
-  if gamestate == "playing" and prop ~= nil then
+  if prop ~= nil then
     if (event == 1 and ax >= -120 and ax <= -40 and ay <= -40) then
       shipDeltaY = (ay - touchY) * 3
       prop:moveLoc ( 0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
@@ -142,26 +75,77 @@ function touchMove( x, y, event)
     moveGun(gun, prop, cross)
     keepInside(cross)
   end
+  
+  local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
+  if gameButton then 
+    if (gameButton.name == "pause") then
+      loadMenuLayers()
+      MOAISim.forceGarbageCollection()  
+      gamestate = "pause"  
+    end
+  end
 end
 
-if MOAIInputMgr.device.pointer then
-  MOAIInputMgr.device.mouseLeft:setCallback ( onMouseLeftEvent )
-else
-  MOAIInputMgr.device.touch:setCallback (
-    function ( eventType, idx, x, y, tapCount )
-      onTouch(x, y)
-      touchMove ( x, y, eventType )
+function upgradeInput(event, idx, x, y)
+  local pickedProp = upgradePartition:propForPoint( upgradeLayer:wndToWorld(x,y) )
+  if pickedProp then 
+    if (pickedProp.name == "leaveUpgradeScreen") then
+      loadMenuLayers()
+    elseif (pickedProp.name == "upgradeItem") then
+      for i = 1, table.getn(shipUpgradesList), 1 do
+        local upgrade = shipUpgradesList[i]
+        if pickedProp == upgrade:GetProp() then
+          local deltaX, deltaY
+          local propX, propY = pickedProp:getLoc()
+          deltaX = 0 - propX
+          deltaY = 10 - propY
+           
+          UpdateShipUpgradesPositions(deltaX, deltaY, i)
+          textboxNameValue:setString(""..upgrade:GetName())
+          textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
+          textboxPlasmaValue:setString(""..upgrade:GetRequiredPlasma())
+          textboxTimeValue:setString(""..upgrade:GetRequiredTime())
+            
+          SetBuildButtonVisibility(upgrade)
+        end
+      end
+    elseif (pickedProp.name == "buildUpgrade") then
+      local upgrade = BuildShipUpgrade()
+      SetBuildButtonVisibility(upgrade)
     end
-    )
+  end
 end
 
-function playInput()
-  if MOAIInputMgr.device.pointer then
-    MOAIInputMgr.device.mouseLeft:setCallback ( onMouseLeftEvent )
-    if(gamestate == "playing") then
-      MOAIInputMgr.device.pointer:setCallback ( onMove )
+function eobInput(event, idx, x, y)
+  local goToMenuButton = eobpartition:propForPoint( endweeklayer:wndToWorld(x,y) )
+  if goToMenuButton then
+    loadMenuLayers()
+    gamestate = "pause"
+  end
+end
+
+function baseInput(event, idx, x, y)
+  local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
+  if hitButton then 
+    if (hitButton.name == "playing") then
+      thread:run(threadDuel)
+        
+      lastX, lastY = layer:wndToWorld(x, y*-1)
+        
+      loadFightLayers()
+      gamestate = "playing"
+      boolean = WAIT
+    elseif (hitButton.name == "shipUpgrades") then
+      loadShipUpgradesLayers()
     end
-  end  
+  end
+end
+
+function keepInside(p)
+  local x, y = p:getLoc()
+  if(y>70) then y = 70 end
+  if(y<-80) then y = -80 end
+  p:setLoc(x,y)
 end
 
 function SwipingInUpgradeMenu(x, y, eventType)
@@ -188,9 +172,9 @@ function SwipingInUpgradeMenu(x, y, eventType)
   end
 end
 
-function keepInside(p)
-  local x, y = p:getLoc()
-  if(y>70) then y = 70 end
-  if(y<-80) then y = -80 end
-  p:setLoc(x,y)
+if MOAIInputMgr.device.pointer then
+  MOAIInputMgr.device.mouseLeft:setCallback (mouseInput)
+  MOAIInputMgr.device.pointer:setCallback (mouseMove)
+else
+  MOAIInputMgr.device.touch:setCallback (touchInput)
 end
