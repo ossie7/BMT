@@ -1,7 +1,6 @@
 Enemy = {}
 Enemy.__index = Enemy
 
--- syntax equivalent to "MyClass.new = function..."
 function Enemy.new(sprite, x, y, team)
   self = setmetatable({}, Enemy)
 
@@ -106,34 +105,49 @@ function Enemy.newEnemyBullet (self, origX, origY, angle)
 end
 
 function Enemy.enemyBulletGen(self, x, y)
-  if(self.target == nil) then
-    local ot = nil
-    if(self.team == 2) then
-      ot = epartition
-    else
-      ot = epartition2
+    if(mission == "chased") then
+        self.target = prop
     end
-  
-    local e = ot:propListForRect(-160, -90, 160, 90)
-    if(e) then
-      if(type(e)=="table") then
-        local n = table.getn(e)
-        self.target = e[math.random(1,n)]
+    
+    if(self.target == nil) then
+      local ot = nil
+      if(self.team == 2) then
+        ot = epartition
       else
-        self.target = e
+        ot = epartition2
       end
-    end
-  else
-    if(self.target.owner.health > 0) then
-      if(self.enemyLast+self.enemyInterval < clock()) then
-        local tx, ty = self.target:getLoc()
-        local angle = calcAngle(x, y, tx, ty)
-        self:newEnemyBullet(x, y, angle)
-        self.enemyLast = clock()
+    
+      local e = ot:propListForRect(-160, -90, 160, 90)
+      if(e) then
+        if(type(e)=="table") then
+          local n = table.getn(e)
+          self.target = e[math.random(1,n)]
+        else
+          self.target = e
+        end
       end
     else
-      self.target = nil
+      if(mission == "chased") then
+        print("Hi There")
+        if(self.enemyLast+self.enemyInterval < clock()) then
+          local tx, ty = prop:getLoc()
+          local angle = calcAngle(x, y, tx, ty)
+          self:newEnemyBullet(x, y, angle)
+          self.enemyLast = clock()
+        end
+      else
+        if(self.target.owner.health > 0) then
+          if(self.enemyLast+self.enemyInterval < clock()) then
+            local tx, ty = self.target:getLoc()
+            local angle = calcAngle(x, y, tx, ty)
+            self:newEnemyBullet(x, y, angle)
+            self.enemyLast = clock()
+          end
+      else
+        self.target = nil
+      end
     end
+    
   end
 end
 
@@ -188,9 +202,7 @@ function Enemy.die(self)
   self.thread:stop()
   self.prop = nil
   self = nil
-  
 
-  
 end
 
 function runExplosion(xDie, yDie)

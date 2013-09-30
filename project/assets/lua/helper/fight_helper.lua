@@ -1,6 +1,8 @@
 week = 0
 waveCounter = 0
 battleDone = 0
+-- chased, sandwiched
+mission = ""
 
 function createProp(sprite, layer)
   prop = MOAIProp2D.new()
@@ -112,19 +114,23 @@ function createEnemyRight()
 end
 
 function startWaves() 
-  timer = MOAITimer.new()
-  timer:setMode(MOAITimer.LOOP)
-  timer:setSpan(math.random(9,12))
-  timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyLeft() end)
-  timer:start()
-  createEnemyLeft()
-  
-  timer2 = MOAITimer.new()
-  timer2:setMode(MOAITimer.LOOP)
-  timer2:setSpan(math.random(9,12))
-  timer2:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyRight() end)
-  timer2:start()
-  createEnemyRight()
+  mission = ""
+  if(mission == "chased" or mission == "") then
+    timer = MOAITimer.new()
+    timer:setMode(MOAITimer.LOOP)
+    timer:setSpan(math.random(9,12))
+    timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyLeft() end)
+    timer:start()
+    createEnemyLeft()
+  end
+  if(mission ~= "chased") then
+      timer2 = MOAITimer.new()
+      timer2:setMode(MOAITimer.LOOP)
+      timer2:setSpan(math.random(9,12))
+      timer2:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyRight() end)
+      timer2:start()
+      createEnemyRight()
+    end
 end
 
 function checkEndOfBattle()
