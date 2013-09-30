@@ -15,6 +15,7 @@ local swipeLastY = 0
 local minSwipeDistance = 20
 
 shipDeltaY = 0
+gunDeltaY = 0
 drag = false
 event = nil
 
@@ -61,13 +62,13 @@ function playInput(event, idx, x, y)
       shipDeltaY = (ay - touchY) * 3
       prop:moveLoc ( 0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
     elseif(event == 1 and ax <= 120 and ax >= 40 and ay <= -40) then
-      shipDeltaY = (ay - ctouchY) * 3
-      cross:moveLoc ( 0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
+      gunDeltaY = (ay - ctouchY) * 3
+      cross:moveLoc ( 0, gunDeltaY, 0, 0, MOAIEaseType.FLAT )
     end
-    if(ax >= -120 and ax <= -40 and ay <= -40) then
+    if(ax >= -120 and ax <= -40 and ay <= 0) then
       touchX = ax
       touchY = ay
-    elseif(ax <= 120 and ax >= 40 and ay <= -40) then
+    elseif(ax <= 120 and ax >= 40 and ay <= 0) then
       ctouchX = ax
       ctouchY = ay
     end
