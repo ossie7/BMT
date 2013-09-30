@@ -33,7 +33,7 @@ function Enemy.startThread (self)
   
   function self.prop:moveEnemy(parent)
     while true do
-      if(gamestate == "pause" or gamestate == "upgrading" or gamestate == "endOfBattle") then
+      if(gamestate ~= "playing") then
         parent:die()
       end
       locX,locY = self:getLoc()
@@ -80,7 +80,7 @@ end
 
 function Enemy.hitThread(self)
   while true do
-    if(gamestate == "pause" or gamestate == "upgrading" or gamestate == "endOfBattle") then
+    if(gamestate ~= "playing") then
       self:die()
     end
     local x, y = self.prop:getLoc()

@@ -1,5 +1,5 @@
 function CreateTextBox(x, y, width, height, textStyle, text)
-  textbox = MOAITextBox.new()
+  local textbox = MOAITextBox.new()
 	textbox:setStyle(textStyle)
 	textbox:setRect(-(width / 2), -(height / 2), width / 2, height / 2)
   textbox:setLoc(x, y)

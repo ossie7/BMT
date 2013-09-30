@@ -34,6 +34,7 @@ function initLayers()
   exlayer       = cl() --Explosions
   ihlayer       = cl() --Input hint
   endweeklayer  = cl() --Reward screen
+  eobpartition  = cp(endweeklayer)
   upgradeback   = cl() --Upgrade background
   
   loadMenuLayers()
@@ -340,25 +341,25 @@ function endOfBattle(winningTeam, loot)
   
   amountOfLoot = loot
   MOAIRenderMgr.pushRenderPass(endweeklayer)
-  if(team == 1) then
-    textboxBattleResults = CreateTextBox(-75, 50, 150, 100, upgradeMenuStyle,
-      "The left team has lost this battle, you gained "..amountOfLoot.." metal")
-    userdata.metal = userdata.metal + loot
-    save_userdata()
+  
+  local teamText = ""
+  if(winningTeam == 1) then
+    teamText = "left"
   else
-     textboxBattleResults = CreateTextBox(0, 0, 150, 100, upgradeMenuStyle, 
-     "The right team has lost this battle, you gained "..amountOfLoot.." plasma")
-   userdata.plasma = userdata.plasma + loot
-   save_userdata()
-   end
+    teamText = "right"
+  end
   
-  endweeklayer:insertProp(textboxBattleResults)
-  endweeklayer:insertProp(propGoMenu)
+  if(textboxBattleResults ~= nil) then
+    eobpartition:removeProp(textboxBattleResults)
+  end
+  textboxBattleResults = CreateTextBox(0, 0, 150, 100, upgradeMenuStyle, 
+    "The " .. teamText .. " team has lost this battle, you gained "..amountOfLoot.." plasma")
   
-  endOfBattlePartition = MOAIPartition.new()
-	endOfBattlePartition:insertProp(propGoMenu)
-  endOfBattlePartition:insertProp(textboxBattleResults)
-	endweeklayer:setPartition(endOfBattlePartition)
+  userdata.plasma = userdata.plasma + loot
+  save_userdata()
+  
+  eobpartition:insertProp(textboxBattleResults)
+	eobpartition:insertProp(propGoMenu)
   gamestate = "endOfBattle"
 end
 
@@ -382,6 +383,7 @@ function clearLayers()
   endweeklayer:clear()
   upgradeback:clear()
   exlayer:clear()
+  eobpartition:clear()
   MOAISim.forceGarbageCollection()
 end
 

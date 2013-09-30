@@ -39,7 +39,7 @@ function Bullet.startThread (self)
   function self.prop:moveBullet(layer, parent)
     local locX,locY = self:getLoc()
     while parent:checkIfInside(locX,locY) do
-      if(gamestate == "pause" or gamestate == "upgrading") then
+      if(gamestate ~= "playing") then
         break
       end
       locX,locY = parent:bulletMovement(locX, locY)
