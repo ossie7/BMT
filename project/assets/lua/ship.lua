@@ -36,6 +36,8 @@ end
 
 function shipThread()
   while true do
+    SetShipColor(1, 1, 1, 1)
+    
     if(gamestate == "pause" or gamestate == "upgrading" or gamestate == "endOfBattle") then
       break
     end
@@ -99,6 +101,7 @@ function damage(obj)
   ebpartition:removeProp(obj)
   ebrpartition:removeProp(obj)
   health = health - 1
+  SetShipColor(1, 0, 0, 1)
   textboxHealth:setString("Health = "..health)
   if (health <= 0 ) then
     layer:removeProp(prop)
@@ -106,3 +109,6 @@ function damage(obj)
   end
 end
 
+function SetShipColor(r, g, b, a)
+  prop:setColor(r, g, b, a)
+end
