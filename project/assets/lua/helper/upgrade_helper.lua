@@ -2,13 +2,21 @@ function BuildUpgrade()
   local upgrade = currentUpgradesList[lastTappedUpgrade]
   
   if EnoughResources(upgrade) then
-    local metal = upgrade:GetRequiredMetal()
-    local plasma = upgrade:GetRequiredPlasma()
+    local allowBuild = true
     
-    userdata.metal = userdata.metal - metal
-    userdata.plasma = userdata.plasma - plasma
+    if upgradeType == "station" and userdata.warzone ~= 5 then
+      allowBuild = false
+    end
     
-    upgrade:Build(true)
+    if allowBuild then
+      local metal = upgrade:GetRequiredMetal()
+      local plasma = upgrade:GetRequiredPlasma()
+      
+      userdata.metal = userdata.metal - metal
+      userdata.plasma = userdata.plasma - plasma
+      
+      upgrade:Build(true)
+    end
   end
   
   save_userdata()
