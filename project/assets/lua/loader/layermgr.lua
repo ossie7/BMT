@@ -28,7 +28,6 @@ function initLayers()
   pausePartition = cp(buttonlayer)
   textLayer      = cl() --Text
   menuLayer      = cl() --Menu
-  upgradeLayer   = cl() --Upgrade
   barlayer       = cl() --Fight progress bars
   baselayer      = cl() --Base background
   basebarlayer   = cl() --Warzone bars
@@ -47,6 +46,8 @@ function initLayers()
   endweeklayer   = cl() --Reward screen
   eobpartition   = cp(endweeklayer)
   upgradeback    = cl() --Upgrade background
+  upgradeLayer   = cl() --UpgradeItem layer
+  upgradePartition = cp(upgradeLayer)--upgrade partition
   
   loadMenuLayers()
 end
@@ -159,23 +160,25 @@ function loadBaseBars()
   basebarlayer:insertProp(rfprop)
 end
 
-function loadShipUpgradesLayers()
+function loadUpgradesLayers(upgradeScreenType)
   clearLayers()
   MOAIRenderMgr.pushRenderPass(upgradeback)
   MOAIRenderMgr.pushRenderPass(upgradeLayer)
   MOAIRenderMgr.pushRenderPass(textLayer)
   
+  upgradeType = upgradeScreenType
   ShowPlayerResources()
-    
-  propUpgradeBackground = cprop(shipUpgradeScreenSprite, 0, 0)
+  LoadUpgradesList()
   
+  if upgradeType == "ship" then
+    propUpgradeBackground = cprop(shipUpgradeScreenSprite, 0, 0)
+  elseif upgradeType == "station" then
+    propUpgradeBackground = cprop(stationUpgradeScreenSprite, 0, 0)
+  end
   propBackButton = cprop(warroomButtonSprite, -132, -62)
-  
   propBuildButton = cprop(warroomButtonSprite, 132, -62)
-  
   propPlayerShip = cprop(sprite, 0, 10, 3)
   
-  upgradePartition = cp(upgradeLayer)
   upgradePartition:insertProp(propBuildButton)
   upgradePartition:insertProp(propBackButton)
   
@@ -183,10 +186,11 @@ function loadShipUpgradesLayers()
   upgradeback:insertProp(propMetal)
   upgradeback:insertProp(propPlasma)
   upgradeback:insertProp(textboxMetalAmount)
-  upgradeback:insertProp(propPlayerShip)
   upgradeback:insertProp(textboxEnergyAmount)
   
-  LoadShipUpgradesList()
+  if upgradeType == "ship" then
+    upgradeback:insertProp(propPlayerShip)
+  end
   
   --Value textboxes
   local textboxY = -62
@@ -214,7 +218,6 @@ function loadShipUpgradesLayers()
   
   propBackButton.name = "leaveUpgradeScreen"
   propBuildButton.name = "buildUpgrade"
-  upgradeType = "ship"
   gamestate = "upgrading"
 end
 

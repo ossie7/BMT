@@ -105,7 +105,7 @@ function upgradeInput(event, idx, x, y)
           deltaX = 0 - propX
           deltaY = 10 - propY
            
-          UpdateShipUpgradesPositions(deltaX, deltaY, i)
+          UpdateUpgradesPositions(deltaX, deltaY, i)
           textboxNameValue:setString(""..upgrade:GetName())
           textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
           textboxPlasmaValue:setString(""..upgrade:GetRequiredPlasma())
@@ -141,7 +141,9 @@ function baseInput(event, idx, x, y)
       gamestate = "playing"
       boolean = WAIT
     elseif (hitButton.name == "shipUpgrades") then
-      loadShipUpgradesLayers()
+      loadUpgradesLayers("ship")
+    elseif (hitButton.name == "stationUpgrades") then
+      loadUpgradesLayers("station")
     end
   end
 end

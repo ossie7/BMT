@@ -1,19 +1,24 @@
-function LoadShipUpgradesList()
-  for i = 1, table.getn(shipUpgradesList), 1 do
-    shipUpgradesList[i]:Load(gunsprite)
-    shipUpgradesList[i]:SetLocation((i - 1) * upgradeOffset, 10)
+function LoadUpgradesList()
+  if upgradeType == "ship" then
+    currentUpgradesList = shipUpgradesList
+  elseif upgradeType == "station" then
+    currentUpgradesList = stationUpgradesList
+  end
+  
+  for i = 1, table.getn(currentUpgradesList), 1 do
+    currentUpgradesList[i]:Load(gunsprite)
+    currentUpgradesList[i]:SetLocation((i - 1) * upgradeOffset, 10)
     if i == 1 then
-      shipUpgradesList[i]:SetScale(3)
+      currentUpgradesList[i]:SetScale(3)
     else
-      shipUpgradesList[i]:SetScale(2)
+      currentUpgradesList[i]:SetScale(2)
     end
   end
   
   lastTappedUpgrade = 1
-  currentUpgradesList = shipUpgradesList
 end
 
-function UpdateShipUpgradesPositions(deltaX, deltaY, index)
+function UpdateUpgradesPositions(deltaX, deltaY, index)
   if index ~= lastTappedUpgrade then
     for i = 1, table.getn(currentUpgradesList), 1 do
       local upgrade = currentUpgradesList[i]

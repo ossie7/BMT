@@ -22,7 +22,7 @@ function CreateShipUpgradesList()
 end
 
 function CreateStationUpgradesList()
-  local upgradeItem1 = UpgradeItem.new("Station Hull", 100, 1000, 5)
+  local upgradeItem1 = UpgradeItem.new("Station Hull", 0, 0, 5)
   local upgradeItem2 = UpgradeItem.new("Live Support", 200, 2000, 7)
   local upgradeItem3 = UpgradeItem.new("Embassasy", 300, 3000, 9)
   
