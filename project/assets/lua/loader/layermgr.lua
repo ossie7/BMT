@@ -10,53 +10,48 @@ function cp(layer)
   return partition
 end
 
+function cprop(sprite, x, y, scale)
+  scale = scale or 1
+  local prop = MOAIProp2D.new()
+	prop:setDeck(sprite)
+	prop:setLoc(x, y)
+  prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  prop:setScl(scale)
+  return prop
+end
+
 function initLayers()
-  universeLayer = cl() --Universe background
-  layer         = cl() --Ship
-  clayer        = cl() --Crosshair/gun
-  buttonlayer   = cl() --Menu buttons
-  textLayer     = cl() --Text
-  menuLayer     = cl() --Menu
-  upgradeLayer  = cl() --Upgrade
-  barlayer      = cl() --Fight progress bars
-  baselayer     = cl() --Base background
-  basebarlayer  = cl() --Warzone bars
-  blayer        = cl() --Bullets
-  bpartition    = cp(blayer)
-  elayer        = cl() --Enemy bullets
-  epartition    = cp(elayer)
-  elayer2       = cl() --Right enemies
-  epartition2   = cp(elayer2)
-  eblayer       = cl() --Enemy bullets
-  ebpartition   = cp(eblayer)
-  ebrlayer      = cl() --Reflected enemy bullets
-  ebrpartition  = cp(ebrlayer)
-  exlayer       = cl() --Explosions
-  ihlayer       = cl() --Input hint
-  endweeklayer  = cl() --Reward screen
-  eobpartition  = cp(endweeklayer)
-  upgradeback   = cl() --Upgrade background
+  universeLayer  = cl() --Universe background
+  layer          = cl() --Ship
+  clayer         = cl() --Crosshair/gun
+  buttonlayer    = cl() --Menu buttons
+  pausePartition = cp(buttonlayer)
+  textLayer      = cl() --Text
+  menuLayer      = cl() --Menu
+  upgradeLayer   = cl() --Upgrade
+  barlayer       = cl() --Fight progress bars
+  baselayer      = cl() --Base background
+  basebarlayer   = cl() --Warzone bars
+  blayer         = cl() --Bullets
+  bpartition     = cp(blayer)
+  elayer         = cl() --Enemy bullets
+  epartition     = cp(elayer)
+  elayer2        = cl() --Right enemies
+  epartition2    = cp(elayer2)
+  eblayer        = cl() --Enemy bullets
+  ebpartition    = cp(eblayer)
+  ebrlayer       = cl() --Reflected enemy bullets
+  ebrpartition   = cp(ebrlayer)
+  exlayer        = cl() --Explosions
+  ihlayer        = cl() --Input hint
+  endweeklayer   = cl() --Reward screen
+  eobpartition   = cp(endweeklayer)
+  upgradeback    = cl() --Upgrade background
   
   loadMenuLayers()
 end
 
 function loadFightLayers()
-  currentWave = 1
-  week = week + 1
-  battleDone = 0
-  
-  propExplosion = MOAIProp2D.new()
-  propExplosion:setDeck(tileLib)
-
-  curve = MOAIAnimCurve.new()
-  curve:reserveKeys(8)
-
-  for i=1, 8, 1 do
-    -- index, time, hoeveelste plaatje
-    curve:setKey(i, 0.05 * i, i)
-    
-  end
-
   clearLayers()
   MOAIRenderMgr.pushRenderPass(universeLayer)
   MOAIRenderMgr.pushRenderPass(ihlayer)
@@ -72,98 +67,67 @@ function loadFightLayers()
   MOAIRenderMgr.pushRenderPass(textLayer)
   MOAIRenderMgr.pushRenderPass(barlayer)
   
-  propButton = MOAIProp2D.new()
-	propButton:setDeck(spritePauseButton)
-	propButton:setLoc(-130,-70)
-  propButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  currentWave = 1
+  week = week + 1
+  battleDone = 0
+  
+  propExplosion = MOAIProp2D.new()
+  propExplosion:setDeck(tileLib)
+
+  curve = MOAIAnimCurve.new()
+  curve:reserveKeys(8)
+
+  for i=1, 8, 1 do
+    -- index, time, hoeveelste plaatje
+    curve:setKey(i, 0.05 * i, i)
+    
+  end
+  
+  propButton = cprop(spritePauseButton, -130, -70)
   propButton.name = "pause"
   
-  gtButton = MOAIProp2D.new()
-	gtButton:setDeck(gtsprite)
-	gtButton:setLoc(0,-70)
-  gtButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  gtButton = cprop(gtsprite, 0, -70)
   gtButton.name = "gunToggle"
   
-  textboxGameMode = MOAITextBox.new()
-	textboxGameMode:setStyle(style)
-	textboxGameMode:setString("Turn "..week)
-	textboxGameMode:setRect(-50,-50,50,50)
-  textboxGameMode:setLoc(-100,30)
-	textboxGameMode:setYFlip ( true )
-	textLayer:insertProp(textboxGameMode)
-  textLayer:setPriority(1001)
-  
-  textboxHealth = MOAITextBox.new()
-	textboxHealth:setStyle(style)
-	textboxHealth:setString("Health ="..health)
-	textboxHealth:setRect(-60,-50,60,50)
-  textboxHealth:setLoc(100,30)
-	textboxHealth:setYFlip ( true )
-	textLayer:insertProp(textboxHealth)
-    
-  pausePartition = MOAIPartition.new()
   pausePartition:insertProp(gtButton)
 	pausePartition:insertProp(propButton)
-	buttonlayer:setPartition(pausePartition)
+  
   gamestate = "playing"
   
-  
   --Input Help - TEMP - BEGIN
-  ihtexture = MOAIImage.new()
-  ihtexture:load("resources/controls.png")
+  ihsprite = cs("resources/controls.png", 0, 0, -80, -50)
   
-  ihsprite = MOAIGfxQuad2D.new()
-	ihsprite:setTexture(ihtexture)
-	ihsprite:setRect(0, 0, -80, -50)
-  
-  ihprop1 = MOAIProp2D.new()
-	ihprop1:setDeck(ihsprite)
-	ihprop1:setLoc(-40,-40)
-  ihprop1:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  ihprop1 = cprop(ihsprite, -40, -40)
   ihlayer:insertProp(ihprop1)
   
-  ihprop2 = MOAIProp2D.new()
-	ihprop2:setDeck(ihsprite)
-	ihprop2:setLoc(120,-40)
-  ihprop2:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  ihprop2 = cprop(ihsprite, 120, -40)
   ihlayer:insertProp(ihprop2)
-
   --Input Help - TEMP - END
 end
 
 function loadMenuLayers()
   clearLayers()
-  
   MOAIRenderMgr.pushRenderPass(baselayer)
   MOAIRenderMgr.pushRenderPass(basebarlayer)
   MOAIRenderMgr.pushRenderPass(menuLayer)
 	
-  basebackprop = MOAIProp2D.new()
-	basebackprop:setDeck(basesprite)
-	basebackprop:setLoc(0,0)
-  basebackprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  basebackprop = cprop(basesprite, 0, 0)
   baselayer:insertProp(basebackprop)
   
   ShowPlayerResources()
   
   loadBaseBars()
 	  
-	propStartButton = MOAIProp2D.new()
-	propStartButton:setDeck(warroomStartBattleSprite)
-	propStartButton:setLoc(12, -15)
-  propStartButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+	propStartButton = cprop(warroomStartBattleSprite, 12, -15)
+  propStartButton.name = "playing"
   
-  propShipUpgradesButton = MOAIProp2D.new()
-	propShipUpgradesButton:setDeck(warroomShipUpgradeSprite)
-	propShipUpgradesButton:setLoc(-65, -50)
-  propShipUpgradesButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  propShipUpgradesButton = cprop(warroomShipUpgradeSprite, -65, -50)
+  propShipUpgradesButton.name = "shipUpgrades"
   
-  propStationUpgradesButton = MOAIProp2D.new()
-	propStationUpgradesButton:setDeck(warroomStationUpgradeSprite)
-	propStationUpgradesButton:setLoc(65, -38)
-  propStationUpgradesButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  propStationUpgradesButton = cprop(warroomStationUpgradeSprite, 65, -38)
+  propStationUpgradesButton.name = "stationUpgrades"
 
-	partition = MOAIPartition.new()
+	partition = cp(menuLayer)
 	partition:insertProp(propStartButton)
   partition:insertProp(propShipUpgradesButton)
   partition:insertProp(propStationUpgradesButton)
@@ -172,13 +136,7 @@ function loadMenuLayers()
   partition:insertProp(textboxMetalAmount)
   partition:insertProp(textboxEnergyAmount)
   
-	menuLayer:setPartition(partition)
-	  
 	gamestate = "pause"
-	
-	propStartButton.name = "playing"
-  propShipUpgradesButton.name = "shipUpgrades"
-
 end
 
 function loadBaseBars()
@@ -186,67 +144,40 @@ function loadBaseBars()
   local right = ((9.5 - userdata.warzone) / 9) * -212
   local fist = ((userdata.warzone - 5) / 9 ) * 212
   
-  lbprop = MOAIProp2D.new()
-	lbprop:setDeck(lbsprite)
-	lbprop:setLoc(-128,38)
-  lbprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  lbprop = cprop(lbsprite, -128, 38)
   basebarlayer:insertProp(lbprop)
   lbsprite:setRect(0,0,left,-11)
   
-  rbprop = MOAIProp2D.new()
-	rbprop:setDeck(rbsprite)
-	rbprop:setLoc(128,38)
-  rbprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  rbprop = cprop(rbsprite, 128,38)
   basebarlayer:insertProp(rbprop)
   rbsprite:setRect(right,-11,0,0)
   
-  lfprop = MOAIProp2D.new()
-	lfprop:setDeck(lfsprite)
-	lfprop:setLoc(fist,33)
-  lfprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  lfprop = cprop(lfsprite, fist, 33)
   basebarlayer:insertProp(lfprop)
   
-  rfprop = MOAIProp2D.new()
-	rfprop:setDeck(rfsprite)
-	rfprop:setLoc(fist,33)
-  rfprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  rfprop = cprop(rfsprite, fist, 33)
   basebarlayer:insertProp(rfprop)
 end
 
 function loadShipUpgradesLayers()
   clearLayers()
-  
   MOAIRenderMgr.pushRenderPass(upgradeback)
   MOAIRenderMgr.pushRenderPass(upgradeLayer)
   MOAIRenderMgr.pushRenderPass(textLayer)
   
   ShowPlayerResources()
     
-  propUpgradeBackground = MOAIProp2D.new()
-	propUpgradeBackground:setDeck(shipUpgradeScreenSprite)
-	propUpgradeBackground:setLoc(0,0)
-  propUpgradeBackground:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  propUpgradeBackground = cprop(shipUpgradeScreenSprite, 0, 0)
   
-  propBackButton = MOAIProp2D.new()
-	propBackButton:setDeck(warroomButtonSprite)
-	propBackButton:setLoc(-132, -62)
-  propBackButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  propBackButton = cprop(warroomButtonSprite, -132, -62)
   
-  propBuildButton = MOAIProp2D.new()
-	propBuildButton:setDeck(warroomButtonSprite)
-	propBuildButton:setLoc(132, -62)
-  propBuildButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  propBuildButton = cprop(warroomButtonSprite, 132, -62)
   
-  propPlayerShip = MOAIProp2D.new()
-	propPlayerShip:setDeck(sprite)
-	propPlayerShip:setLoc(0, 10)
-  propPlayerShip:setScl(3)
-  propPlayerShip:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  propPlayerShip = cprop(sprite, 0, 10, 3)
   
-  upgradePartition = MOAIPartition.new()
+  upgradePartition = cp(upgradeLayer)
   upgradePartition:insertProp(propBuildButton)
   upgradePartition:insertProp(propBackButton)
-  upgradeLayer:setPartition(upgradePartition)
   
   upgradeback:insertProp(propUpgradeBackground)
   upgradeback:insertProp(propMetal)
@@ -288,26 +219,13 @@ function loadShipUpgradesLayers()
 end
 
 function endOfBattle(winningTeam, loot)
-  
   clearLayers()
-  textureGoMenu = MOAIImage.new()
-  textureGoMenu:load("resources/play_button.png")
-  
-  spriteGoMenu = MOAIGfxQuad2D.new()
-	spriteGoMenu:setTexture(textureGoMenu)
-	spriteGoMenu:setRect(-8, -8, 8, 8)
-  
-  propGoMenu = MOAIProp2D.new()
-	propGoMenu:setDeck(spriteGoMenu)
-	propGoMenu:setLoc(-130,-70)
-  propGoMenu:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  propGoMenu:setPriority(1000)
-  propGoMenu.name = "button"
-  
-  --endweekLayer:insertProp(propButton)
-  
-  amountOfLoot = loot
   MOAIRenderMgr.pushRenderPass(endweeklayer)
+  
+  propGoMenu = cprop(spriteGoMenu, -130,-70)
+  propGoMenu.name = "button"
+
+  amountOfLoot = loot
   
   local teamText = ""
   if(winningTeam == 1) then
@@ -315,31 +233,24 @@ function endOfBattle(winningTeam, loot)
   else
     teamText = "right"
   end
-  
+
   if(textboxBattleResults ~= nil) then
     eobpartition:removeProp(textboxBattleResults)
   end
   textboxBattleResults = CreateTextBox(0, 0, 150, 100, upgradeMenuStyle, 
     "The " .. teamText .. " team has lost this battle, you gained "..amountOfLoot.." plasma")
-  
+
   userdata.plasma = userdata.plasma + loot
   save_userdata()
-  
+
   eobpartition:insertProp(textboxBattleResults)
 	eobpartition:insertProp(propGoMenu)
   gamestate = "endOfBattle"
 end
 
 function ShowPlayerResources()
-  propMetal = MOAIProp2D.new()
-	propMetal:setDeck(metalSprite)
-	propMetal:setLoc(78,80)
-  propMetal:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  
-  propPlasma = MOAIProp2D.new()
-	propPlasma:setDeck(plasmaSprite)
-	propPlasma:setLoc(120,80)
-  propPlasma:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  propMetal  = cprop(metalSprite,  78,  80)
+  propPlasma = cprop(plasmaSprite, 120, 80)
   
   textboxMetalAmount = CreateTextBox(98, 82, 35, 15, upgradeMenuStyle, ""..userdata.metal)
   textboxMetalAmount:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
@@ -370,4 +281,3 @@ function clearLayers()
   eobpartition:clear()
   MOAISim.forceGarbageCollection()
 end
-
