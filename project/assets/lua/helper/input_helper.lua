@@ -1,8 +1,3 @@
-local lastX = 0
-local lastY = 0
-local clastX = 0
-local clastY = 0
-
 local touchX = 0
 local touchY = 0
 local ctouchX = 0
@@ -58,17 +53,17 @@ function playInput(event, idx, x, y)
   local ax, ay = layer:wndToWorld(x, y)
   
   if prop ~= nil then
-    if (event == 1 and ax >= -120 and ax <= -40 and ay <= -40) then
+    if (event == 1 and ax >= -120 and ax <= -40 and ay <= -20) then
       shipDeltaY = (ay - touchY) * 3
       prop:moveLoc ( 0, shipDeltaY, 0, 0, MOAIEaseType.FLAT )
-    elseif(event == 1 and ax <= 120 and ax >= 40 and ay <= -40) then
+    elseif(event == 1 and ax <= 120 and ax >= 40 and ay <= -20) then
       gunDeltaY = (ay - ctouchY) * 3
       cross:moveLoc ( 0, gunDeltaY, 0, 0, MOAIEaseType.FLAT )
     end
-    if(ax >= -120 and ax <= -40 and ay <= 0) then
+    if(ax >= -120 and ax <= -40 and ay <= -20) then
       touchX = ax
       touchY = ay
-    elseif(ax <= 120 and ax >= 40 and ay <= 0) then
+    elseif(ax <= 120 and ax >= 40 and ay <= -20) then
       ctouchX = ax
       ctouchY = ay
     end
@@ -77,12 +72,15 @@ function playInput(event, idx, x, y)
     keepInside(cross)
   end
   
-  local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
-  if gameButton then 
-    if (gameButton.name == "pause") then
-      loadMenuLayers()
-      MOAISim.forceGarbageCollection()  
-      gamestate = "pause"  
+  -- Button logic, only on mouse/touch down
+  if(event == MOAITouchSensor.TOUCH_DOWN) then
+    local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
+    if gameButton then
+      if (gameButton.name == "pause") then
+        loadMenuLayers()
+      elseif(gameButton.name == "gunToggle") then
+        gunActive = not gunActive
+      end
     end
   end
 end

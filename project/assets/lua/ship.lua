@@ -1,6 +1,8 @@
 health = 999
 bulletDamage = 100
 
+gunActive = true
+
 function checkHealth() 
   return health
 end
@@ -28,7 +30,7 @@ function newBullet (origX, origY, angle)
 end
 
 function bulletGen(x, y, angle)
-  if(last+interval < clock()) then
+  if(last+interval < clock() and gunActive) then
     newBullet(x, y, angle)
     last = clock()
   end

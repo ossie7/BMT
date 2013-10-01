@@ -72,21 +72,17 @@ function loadFightLayers()
   MOAIRenderMgr.pushRenderPass(textLayer)
   MOAIRenderMgr.pushRenderPass(barlayer)
   
-  texturePause = MOAIImage.new()
-  texturePause:load("resources/wm_pause.png")
-  
-  spritePauseButton = MOAIGfxQuad2D.new()
-	spritePauseButton:setTexture(texturePause)
-	spritePauseButton:setRect(-8, -8, 8, 8)
-  
   propButton = MOAIProp2D.new()
 	propButton:setDeck(spritePauseButton)
 	propButton:setLoc(-130,-70)
   propButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  propButton:setPriority(1000)
+  propButton.name = "pause"
   
-  buttonlayer:insertProp(propButton)
-  buttonlayer:setPriority(1000)
+  gtButton = MOAIProp2D.new()
+	gtButton:setDeck(gtsprite)
+	gtButton:setLoc(0,-70)
+  gtButton:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  gtButton.name = "gunToggle"
   
   textboxGameMode = MOAITextBox.new()
 	textboxGameMode:setStyle(style)
@@ -106,10 +102,11 @@ function loadFightLayers()
 	textLayer:insertProp(textboxHealth)
     
   pausePartition = MOAIPartition.new()
+  pausePartition:insertProp(gtButton)
 	pausePartition:insertProp(propButton)
 	buttonlayer:setPartition(pausePartition)
   gamestate = "playing"
-  propButton.name = "pause"
+  
   
   --Input Help - TEMP - BEGIN
   ihtexture = MOAIImage.new()
