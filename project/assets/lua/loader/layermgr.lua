@@ -144,22 +144,7 @@ function loadMenuLayers()
   basebackprop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   baselayer:insertProp(basebackprop)
   
-  --resource icons
-  propMetal = MOAIProp2D.new()
-	propMetal:setDeck(metalSprite)
-	propMetal:setLoc(78,80)
-  propMetal:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  
-  propPlasma = MOAIProp2D.new()
-	propPlasma:setDeck(plasmaSprite)
-	propPlasma:setLoc(120,80)
-  propPlasma:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  
-  -- resource values
-  textboxMetalAmount = CreateTextBox(98, 82, 35, 15, upgradeMenuStyle, ""..userdata.metal)
-  textboxMetalAmount:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
-  textboxEnergyAmount = CreateTextBox(140, 82, 35, 15, upgradeMenuStyle, ""..userdata.plasma)
-  textboxEnergyAmount:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  ShowPlayerResources()
   
   loadBaseBars()
 	  
@@ -235,21 +220,7 @@ function loadShipUpgradesLayers()
   MOAIRenderMgr.pushRenderPass(upgradeLayer)
   MOAIRenderMgr.pushRenderPass(textLayer)
   
-  --resource icons
-  propMetal = MOAIProp2D.new()
-	propMetal:setDeck(metalSprite)
-	propMetal:setLoc(78,80)
-  propMetal:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  
-  propPlasma = MOAIProp2D.new()
-	propPlasma:setDeck(plasmaSprite)
-	propPlasma:setLoc(120,80)
-  propPlasma:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  
-  textboxMetalAmount = CreateTextBox(98, 82, 35, 15, upgradeMenuStyle, ""..userdata.metal)
-  textboxMetalAmount:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
-  textboxEnergyAmount = CreateTextBox(140, 82, 35, 15, upgradeMenuStyle, ""..userdata.plasma)
-  textboxEnergyAmount:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  ShowPlayerResources()
     
   propUpgradeBackground = MOAIProp2D.new()
 	propUpgradeBackground:setDeck(shipUpgradeScreenSprite)
@@ -287,11 +258,12 @@ function loadShipUpgradesLayers()
   LoadShipUpgradesList()
   
   --Value textboxes
-  textboxMetalValue = CreateTextBox(-75, -66, 64, 15, upgradeMenuStyle, "")
+  local textboxY = -62
+  textboxMetalValue = CreateTextBox(-75, textboxY, 64, 15, upgradeMenuStyle, "")
   textboxMetalValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
-  textboxPlasmaValue = CreateTextBox(73, -66, 64, 15, upgradeMenuStyle, "")
+  textboxPlasmaValue = CreateTextBox(73, textboxY, 64, 15, upgradeMenuStyle, "")
   textboxPlasmaValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
-  textboxTimeValue = CreateTextBox(-1, -66, 64, 15, upgradeMenuStyle, "")
+  textboxTimeValue = CreateTextBox(-1, textboxY, 64, 15, upgradeMenuStyle, "")
   textboxTimeValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   textboxNameValue = CreateTextBox(0, -30, 160, 40, upgradeMenuStyle, "")
   textboxNameValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
@@ -302,7 +274,7 @@ function loadShipUpgradesLayers()
   textLayer:insertProp(textboxNameValue)
   textLayer:setPriority(1001)
   
-  local upgrade = shipUpgradesList[1]
+  local upgrade = currentUpgradesList[1]
   SetBuildButtonVisibility(upgrade)
   textboxNameValue:setString(""..upgrade:GetName())
   textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
@@ -311,6 +283,7 @@ function loadShipUpgradesLayers()
   
   propBackButton.name = "leaveUpgradeScreen"
   propBuildButton.name = "buildUpgrade"
+  upgradeType = "ship"
   gamestate = "upgrading"
 end
 
@@ -355,6 +328,23 @@ function endOfBattle(winningTeam, loot)
   eobpartition:insertProp(textboxBattleResults)
 	eobpartition:insertProp(propGoMenu)
   gamestate = "endOfBattle"
+end
+
+function ShowPlayerResources()
+  propMetal = MOAIProp2D.new()
+	propMetal:setDeck(metalSprite)
+	propMetal:setLoc(78,80)
+  propMetal:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  
+  propPlasma = MOAIProp2D.new()
+	propPlasma:setDeck(plasmaSprite)
+	propPlasma:setLoc(120,80)
+  propPlasma:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  
+  textboxMetalAmount = CreateTextBox(98, 82, 35, 15, upgradeMenuStyle, ""..userdata.metal)
+  textboxMetalAmount:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  textboxEnergyAmount = CreateTextBox(140, 82, 35, 15, upgradeMenuStyle, ""..userdata.plasma)
+  textboxEnergyAmount:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
 end
 
 function clearLayers()

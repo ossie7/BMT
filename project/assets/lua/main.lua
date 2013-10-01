@@ -15,7 +15,7 @@ require 'enemy'
 require 'ship'
 require 'enemy_bullet'
 require 'upgradeItem'
-require 'shipUpgradeScreen'
+require 'upgradesScreen'
 
 require 'loader/start'
 

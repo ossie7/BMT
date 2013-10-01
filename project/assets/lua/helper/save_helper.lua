@@ -11,6 +11,10 @@ function save_userdata()
     userdata.shipUpgrades[i] = shipUpgradesList[i]:IsBuild()
   end
   
+  for i = 1, table.getn(stationUpgradesList), 1 do
+    userdata.stationUpgrades[i] = stationUpgradesList[i]:IsBuild()
+  end
+  
   serializer:serialize(userdata)
   local userdata_Str = serializer:exportToString()
   local userdata_file = io.open(userdata_path, 'wb')
@@ -27,6 +31,7 @@ end
 
 function SetupNewUserdata()
   userdata.shipUpgrades = {}
+  userdata.stationUpgrades = {}
   userdata.warzone = 5
   userdata.metal = 0
   userdata.plasma = 0

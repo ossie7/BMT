@@ -89,10 +89,16 @@ function upgradeInput(event, idx, x, y)
   local pickedProp = upgradePartition:propForPoint( upgradeLayer:wndToWorld(x,y) )
   if pickedProp then 
     if (pickedProp.name == "leaveUpgradeScreen") then
+      if upgradeType == "ship" then
+        shipUpgradesList = currentUpgradesList
+      elseif upgradeType == "station" then
+        stationUpgradesList = currentUpgradesList
+      end
+      
       loadMenuLayers()
     elseif (pickedProp.name == "upgradeItem") then
-      for i = 1, table.getn(shipUpgradesList), 1 do
-        local upgrade = shipUpgradesList[i]
+      for i = 1, table.getn(currentUpgradesList), 1 do
+        local upgrade = currentUpgradesList[i]
         if pickedProp == upgrade:GetProp() then
           local deltaX, deltaY
           local propX, propY = pickedProp:getLoc()
@@ -109,7 +115,7 @@ function upgradeInput(event, idx, x, y)
         end
       end
     elseif (pickedProp.name == "buildUpgrade") then
-      local upgrade = BuildShipUpgrade()
+      local upgrade = BuildUpgrade()
       SetBuildButtonVisibility(upgrade)
     end
   end

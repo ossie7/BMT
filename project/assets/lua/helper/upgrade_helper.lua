@@ -1,5 +1,5 @@
-function BuildShipUpgrade()
-  local upgrade = shipUpgradesList[lastTappedShipUpgrade]
+function BuildUpgrade()
+  local upgrade = currentUpgradesList[lastTappedUpgrade]
   
   if EnoughResources(upgrade) then
     local metal = upgrade:GetRequiredMetal()

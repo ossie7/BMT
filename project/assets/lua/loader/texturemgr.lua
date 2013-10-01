@@ -16,7 +16,8 @@ function initTextures()
   metalSprite  = cs("resources/metal.png",       -4,   -4,  4,   4)  --Metal Icon
   plasmaSprite = cs("resources/energy.png",      -4,   -4,  4,   4)  --Energy Icon
   gtsprite     = cs("resources/gun_toggle.png" , -16,  -8,  16,  8)  --Gun Toggle Button
-  shipUpgradeScreenSprite     = cs("resources/upgrade.png",     -160, -90, 160, 90) -- shipupgrades background
+  shipUpgradeScreenSprite =     cs("resources/ship_upgrade.png",    -160, -90,  160,  90) -- shipupgrades background
+  stationUpgradeScreenSprite =  cs("resources/station_upgrade.png", -160, -90,  160,  90) -- stationupgrades background
   warroomShipUpgradeSprite    = cs("resources/transparent.png", -15,  -23, 15,  23) --Ship upgrades button warroom
   warroomStationUpgradeSprite = cs("resources/transparent.png", -15,  -25, 15,  25) --Station upgrades button warroom
   warroomStartBattleSprite    = cs("resources/transparent.png", -15,  -25, 15,  25) --Start Battle button warroom
