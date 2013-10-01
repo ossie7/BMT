@@ -108,7 +108,6 @@ function damage(obj)
   ebrpartition:removeProp(obj)
   health = health - 1
   SetShipColor(1, 0, 0, 1)
-  textboxHealth:setString("Health = "..health)
   if (health <= 0 ) then
     layer:removeProp(prop)
     print("ouch, hp is now "..health)
