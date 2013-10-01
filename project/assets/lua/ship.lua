@@ -38,9 +38,10 @@ end
 
 function shipThread()
   while true do
+    if(popupActive == false) then
     SetShipColor(1, 1, 1, 1)
     
-    if(gamestate == "pause" or gamestate == "upgrading" or gamestate == "endOfBattle") then
+    if(gamestate ~= "playing") then
       break
     end
     checkBulletCollision()
@@ -48,6 +49,7 @@ function shipThread()
     local cx, cy = cross:getLoc()
     local angle = calcAngle(gx,gy,cx,cy)
     bulletGen(gx, gy, angle)
+    end
     coroutine.yield()
   end
 end
@@ -70,11 +72,17 @@ function checkBulletCollision()
       for i, hit in ipairs(robj) do
         if(hit.owner.source == 1) then
           hit.owner:reflect()
+          if(popupActive == false) then -- POPUP SAMPLE CODE
+            addPopup("Reflection", "You reflected\n a bullet!", "Ok", nil)
+          end
         end
       end
     else
       if(robj.owner.source == 1) then
         robj.owner:reflect()
+        if(popupActive == false) then -- POPUP SAMPLE CODE
+          addPopup("Reflection", "You reflected\n a bullet!", "Ok", nil)
+        end
       end
     end
   end

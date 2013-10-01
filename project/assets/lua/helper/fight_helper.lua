@@ -5,23 +5,15 @@ battleDone = 0
 mission = ""
 
 function createProp(sprite, layer)
-  prop = MOAIProp2D.new()
-  prop:setDeck(sprite)
-  prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  prop = cprop(sprite, 0, 0)
   layer:insertProp(prop)
 end
 
 function createGunTools()
-  cross = MOAIProp2D.new()
-  cross:setDeck(csprite)
-  cross:setLoc(100,0)
-  cross:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  cross = cprop(csprite, 100, 0)
   clayer:insertProp(cross)
 
-  gun = MOAIProp2D.new()
-  gun:setDeck(gunsprite)
-  gun:setLoc(0,0)
-  gun:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  gun = cprop(gunsprite, 0, 0)
   clayer:insertProp(gun)
 end
 
@@ -124,13 +116,13 @@ function startWaves()
     createEnemyLeft()
   end
   if(mission ~= "chased") then
-      timer2 = MOAITimer.new()
-      timer2:setMode(MOAITimer.LOOP)
-      timer2:setSpan(math.random(9,12))
-      timer2:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyRight() end)
-      timer2:start()
-      createEnemyRight()
-    end
+    timer2 = MOAITimer.new()
+    timer2:setMode(MOAITimer.LOOP)
+    timer2:setSpan(math.random(9,12))
+    timer2:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyRight() end)
+    timer2:start()
+    createEnemyRight()
+  end
 end
 
 function checkEndOfBattle()
@@ -199,7 +191,7 @@ end
 
 function powerThread()
   while true do
-    if(gamestate == "pause" or gamestate == "upgrading" or gamestate == "endOfBattle") then
+    if(gamestate ~= "playing") then
       break
     end
     local left = ((amountLeftEnemies-leftKilled)/amountLeftEnemies) * 150
@@ -211,16 +203,10 @@ function powerThread()
 end
 
 function startPowerThread()
-  lb = MOAIProp2D.new()
-  lb:setDeck(lbsprite)
-  lb:setLoc(leftborder + 10,topborder - 5)
-  lb:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  lb = cprop(lbsprite, leftborder + 10, topborder - 5)
   barlayer:insertProp(lb)
 
-  rb = MOAIProp2D.new()
-  rb:setDeck(rbsprite)
-  rb:setLoc(rightborder - 10, topborder - 5)
-  rb:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  rb = cprop(rbsprite, rightborder - 10, topborder - 5)
   barlayer:insertProp(rb)
   
   powerthread = MOAICoroutine.new()

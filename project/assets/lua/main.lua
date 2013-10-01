@@ -1,6 +1,7 @@
 io.output( ):setvbuf("no") -- Fix for console lag
 
 -- Requires
+require 'helper/popup_helper'
 require 'helper/save_helper'
 require 'helper/base_helper'
 require 'helper/data_helper'
@@ -41,6 +42,3 @@ end
 
 -- Start gameloop
 thread = MOAIThread.new ()
-if(gamestate == 'playing') then
-  thread:run(threadDuel)
-end

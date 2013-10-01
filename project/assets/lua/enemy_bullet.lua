@@ -62,13 +62,13 @@ function EnemyBullet.startThread (self)
     local locX,locY = self:getLoc()
     
     while parent:checkIfInside(locX,locY) do
+      if(popupActive == false) then
       if(gamestate ~= "playing") then
         break
       end
-      --checkBulletCollision()
       locX,locY = parent:bulletMovement(locX, locY)
       self:setLoc(locX,locY)
-      
+      end
       coroutine.yield()
     end
     self.thread:stop()

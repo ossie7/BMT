@@ -32,6 +32,3 @@ initSounds()
 
 coins = 0
 gamestate = 'pause'
-
--- Set background colour
---MOAIGfxDevice.getFrameBuffer():setClearColor(0,0,0,0)

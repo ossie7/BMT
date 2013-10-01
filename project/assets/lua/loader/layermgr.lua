@@ -47,7 +47,11 @@ function initLayers()
   eobpartition   = cp(endweeklayer)
   upgradeback    = cl() --Upgrade background
   upgradeLayer   = cl() --UpgradeItem layer
-  upgradePartition = cp(upgradeLayer)--upgrade partition
+  upgradePartition = cp(upgradeLayer)
+  popupLayer       = cl() -- Popup background
+  popupButtonLayer = cl() -- Popup button
+  popupPartition   = cp(popupButtonLayer)
+  popupTextLayer   = cl() -- Popup text
   
   loadMenuLayers()
 end
@@ -67,6 +71,7 @@ function loadFightLayers()
   MOAIRenderMgr.pushRenderPass(clayer)
   MOAIRenderMgr.pushRenderPass(textLayer)
   MOAIRenderMgr.pushRenderPass(barlayer)
+  
   
   currentWave = 1
   week = week + 1

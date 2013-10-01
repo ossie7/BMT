@@ -25,13 +25,14 @@ function Enemy.new(sprite, x, y, team)
 end
 
 function wait ( action )
-    while action:isBusy () do coroutine:yield () end
+    while action:isBusy() do coroutine:yield () end
 end
 
 function Enemy.startThread (self)
   
   function self.prop:moveEnemy(parent)
     while true do
+      if(popupActive == false) then
       if(gamestate ~= "playing") then
         parent:die()
       end
@@ -67,6 +68,7 @@ function Enemy.startThread (self)
         end
         wait(self:moveLoc(newX, newY, 3))
       end
+      end
       coroutine.yield()
     end
   end
@@ -79,6 +81,7 @@ end
 
 function Enemy.hitThread(self)
   while true do
+    if(popupActive == false) then
     if(gamestate ~= "playing") then
       self:die()
     end
@@ -87,6 +90,7 @@ function Enemy.hitThread(self)
     self:checkAllHits(ebpartition:propListForRect(x-6, y-5, x+6, y+5))
     self:checkAllHits(ebrpartition:propListForRect(x-6, y-5, x+6, y+5))
     self:enemyBulletGen(x, y)
+    end
     coroutine.yield()
   end
 end

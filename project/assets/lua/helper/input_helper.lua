@@ -38,14 +38,21 @@ function mouseMove(x, y)
 end
 
 function touchInput(event, idx, x, y, tapCount)
-  if(gamestate == "playing") then
-    playInput(event, idx, x, y)
-  elseif(gamestate == "upgrading") then
-    upgradeInput(event, idx, x, y)
-  elseif(gamestate == "endOfBattle") then
-    eobInput(event, idx, x, y)
-  elseif(gamestate == "pause") then
-    baseInput(event, idx, x, y)
+  if(popupActive) then
+    local hit = popupPartition:propForPoint(popupButtonLayer:wndToWorld(x,y))
+    if(hit) then
+      popupClicked()
+    end
+  else
+    if(gamestate == "playing") then
+      playInput(event, idx, x, y)
+    elseif(gamestate == "upgrading") then
+      upgradeInput(event, idx, x, y)
+    elseif(gamestate == "endOfBattle") then
+      eobInput(event, idx, x, y)
+    elseif(gamestate == "pause") then
+      baseInput(event, idx, x, y)
+    end
   end
 end
 
