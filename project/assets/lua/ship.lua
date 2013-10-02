@@ -80,8 +80,8 @@ function checkBulletCollision()
         if(popupActive == false) then -- POPUP SAMPLE CODE
           --addPopup("Reflection", "You reflected\n a bullet!", "Ok", nil)
           queuePopup({
-            Popup.new("Reflection", "You reflected\n a bullet!", "Ok", nil),
-            Popup.new("Reflection", "Well done!", "Ok", nil),
+            Popup.new("Reflection", "You reflected\n a bullet!", "Ok", nil, spriteGoMenu),
+            Popup.new("Reflection", "Well done!", "Ok", nil, spritePauseButton),
             Popup.new("Reflection", "No really,\nwell done!", "Okay...", nil),
             Popup.new("Reflection", "YOU ARE\nAMAZING", "Shut up", nil)
           })
