@@ -72,16 +72,19 @@ function checkBulletCollision()
       for i, hit in ipairs(robj) do
         if(hit.owner.source == 1) then
           hit.owner:reflect()
-          if(popupActive == false) then -- POPUP SAMPLE CODE
-            --addPopup("Reflection", "You reflected\n a bullet!", "Ok", nil)
-          end
         end
       end
     else
       if(robj.owner.source == 1) then
         robj.owner:reflect()
         if(popupActive == false) then -- POPUP SAMPLE CODE
-          addPopup("Reflection", "You reflected\n a bullet!", "Ok", nil)
+          --addPopup("Reflection", "You reflected\n a bullet!", "Ok", nil)
+          queuePopup({
+            Popup.new("Reflection", "You reflected\n a bullet!", "Ok", nil),
+            Popup.new("Reflection", "Well done!", "Ok", nil),
+            Popup.new("Reflection", "No really,\nwell done!", "Okay...", nil),
+            Popup.new("Reflection", "YOU ARE\nAMAZING", "Shut up", nil)
+          })
         end
       end
     end

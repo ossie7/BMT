@@ -10,6 +10,7 @@ require 'helper/input_helper'
 require 'helper/text_helper'
 require 'helper/upgrade_helper'
 
+require 'popup'
 require 'universe'
 require 'bullet'
 require 'enemy'

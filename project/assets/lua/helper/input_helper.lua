@@ -38,7 +38,7 @@ function mouseMove(x, y)
 end
 
 function touchInput(event, idx, x, y, tapCount)
-  if(popupActive) then
+  if(popupActive and event == MOAITouchSensor.TOUCH_DOWN) then
     local hit = popupPartition:propForPoint(popupButtonLayer:wndToWorld(x,y))
     if(hit) then
       popupClicked()

@@ -1,6 +1,9 @@
 popupActive = false
 currentPopup = nil
 popupAction = nil
+totalPopups = 0
+popupCounter = 1
+popupArray = {}
 
 function addPopup(title, body, button, action)
   MOAIRenderMgr.pushRenderPass(popupLayer)
@@ -28,7 +31,28 @@ function addPopup(title, body, button, action)
   popupPartition:insertProp(popupButtonProp)
 end
 
+function nextPopup()
+  local popup = popupArray[popupCounter]
+  addPopup(popup.title, popup.body, popup.button, popup.action)
+  popupCounter = popupCounter + 1
+end
+
+function queuePopup(array)
+  popupArray = array
+  totalPopups = table.getn(array)
+  popupCounter = 1
+  nextPopup()
+end
+
 function popupClicked()
+  if(popupCounter <= totalPopups) then
+    removePopup()
+    nextPopup()
+    return
+  elseif(popupCounter > totalPopups) then
+    popupCounter = 1
+    totalPopups = 0
+  end
   local f = popupAction
   removePopup()
   if(f ~= nil) then
