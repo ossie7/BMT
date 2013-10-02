@@ -35,6 +35,7 @@ function SetupNewUserdata()
   userdata.warzone = 5
   userdata.metal = 0
   userdata.plasma = 0
+  userdata.mission = ""
 end
 
 -- At the beginning of your application, get the persisted data:

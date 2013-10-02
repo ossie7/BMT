@@ -73,7 +73,7 @@ function checkBulletCollision()
         if(hit.owner.source == 1) then
           hit.owner:reflect()
           if(popupActive == false) then -- POPUP SAMPLE CODE
-            addPopup("Reflection", "You reflected\n a bullet!", "Ok", nil)
+            --addPopup("Reflection", "You reflected\n a bullet!", "Ok", nil)
           end
         end
       end

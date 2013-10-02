@@ -37,9 +37,13 @@ function Enemy.startThread (self)
         parent:die()
       end
       locX,locY = self:getLoc()
-      if(parent.team == 1 and locX < (parent.entryLoc * -1)) then
+      if(parent.team == 1 and locX <= (parent.entryLoc * -1)) then
         locX = locX + 1
         self:setLoc(locX, locY)
+        if(locX == (parent.entryLoc *-1) and mission == "chased" and isArrived == false) then
+          addPopup("Mission", "Oh dear, you are beeing chased!\n Get away by reflecting bullets", "OK", nil)
+          isArrived = true
+          end
       elseif (parent.team == 2 and locX > parent.entryLoc) then
         locX = locX - 1
         self:setLoc(locX, locY)
@@ -132,7 +136,6 @@ function Enemy.enemyBulletGen(self, x, y)
       end
     else
       if(mission == "chased") then
-        print("Hi There")
         if(self.enemyLast+self.enemyInterval < clock()) then
           local tx, ty = prop:getLoc()
           local angle = calcAngle(x, y, tx, ty)

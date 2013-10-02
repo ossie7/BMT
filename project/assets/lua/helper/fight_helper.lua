@@ -2,7 +2,7 @@ week = 0
 waveCounter = 0
 battleDone = 0
 -- chased, sandwiched
-mission = ""
+mission = "chased"
 
 function createProp(sprite, layer)
   prop = cprop(sprite, 0, 0)
@@ -106,8 +106,8 @@ function createEnemyRight()
 end
 
 function startWaves() 
-  mission = ""
   if(mission == "chased" or mission == "") then
+    isArrived = false
     timer = MOAITimer.new()
     timer:setMode(MOAITimer.LOOP)
     timer:setSpan(math.random(9,12))
