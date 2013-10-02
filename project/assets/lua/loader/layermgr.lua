@@ -75,8 +75,7 @@ function loadFightLayers()
   
   
   currentWave = 1
-  week = week + 1
-  userdata.turn = week
+  userdata.turn = userdata.turn + 1
   save_userdata()
   battleDone = 0
   
@@ -84,6 +83,8 @@ function loadFightLayers()
   local winDate
   if(userdata.stationBuild and userdata.warzone == 5) then
     daysBuild = daysBuild + 1
+    userdata.daysBuild = daysBuild
+    save_userdata()
   end
 
   print("current week "..week)
@@ -91,8 +92,8 @@ function loadFightLayers()
     print("timeeeeee "..winDate)
   end
   
-  if(daysBuild == upgradee.requiredTime) then
-      addPopup("You won!", "Congratulations, you managed to\n build the station.", "OK", nil)
+  if(userdata.daysBuild == upgradee.requiredTime) then
+      Popup.new("You won!", "Congratulations, you managed to\n build the station.", "OK", nil)
   end
   
   
@@ -139,6 +140,10 @@ function loadMenuLayers()
   basebackprop = cprop(basesprite, 0, 0)
   baselayer:insertProp(basebackprop)
   
+  engineerprop = cprop(engineer, -65,-50)
+  architectprop = cprop(architect, 65,-40)
+  captainprop = cprop(captain, 0,-15)
+  
   ShowPlayerResources()
   
   loadBaseBars()
@@ -160,6 +165,12 @@ function loadMenuLayers()
   partition:insertProp(propPlasma)
   partition:insertProp(textboxMetalAmount)
   partition:insertProp(textboxEnergyAmount)
+  partition:insertProp(captainprop)
+  if(userdata.showEngineer) then
+    partition:insertProp(architectprop)
+    partition:insertProp(engineerprop)
+  end
+
   
 	gamestate = "pause"
 end

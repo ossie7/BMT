@@ -84,7 +84,7 @@ function playInput(event, idx, x, y)
     local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
     if gameButton then
       if (gameButton.name == "pause") then
-        battleDone = 1
+        --battleDone = 1
         loadMenuLayers()
       elseif(gameButton.name == "gunToggle") then
         gunActive = not gunActive

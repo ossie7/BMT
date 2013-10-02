@@ -10,7 +10,10 @@ function initTextures()
   gunsprite    = cs("resources/weapons.png",     -16,  -16, 16,  16) --Gun
   lbsprite     = cs("resources/blue_bar.png",    0,    0,   150, -8) --Left Bar
   rbsprite     = cs("resources/red_bar.png",     -150, -8,  0,   0)  --Right Bar
-  basesprite   = cs("resources/base.png",        -160, -90, 160, 90) --Base Background
+  basesprite   = cs("resources/base_empty.png",        -160, -90, 160, 90) --Base Background
+  engineer     = cs("resources/engineer.png",    -9.5,  -15,  9.5,  15) --engineer
+  architect    = cs("resources/architect.png",    -5.5,  -14,  5.5,  14) --engineer
+  captain      = cs("resources/captain.png",    -8.5,  -16,  8.5,  16) --engineer
   lfsprite     = cs("resources/blue_fist.png",   -22,  -11, 0,   11) --Left Fist
   rfsprite     = cs("resources/red_fist.png",    0,    -11, 22,  11) --Right Fist
   metalSprite  = cs("resources/metal.png",       -4,   -4,  4,   4)  --Metal Icon

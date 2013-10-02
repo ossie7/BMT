@@ -38,6 +38,10 @@ function SetupNewUserdata()
   userdata.mission = ""
   userdata.turn = 0
   userdata.stationBuild = false
+  userdata.isFirstTime = true
+  userdata.daysBuild = 0
+  -- you have to unlock the engineer in mission 2
+  userdata.showEngineer = false
 end
 
 -- At the beginning of your application, get the persisted data:
