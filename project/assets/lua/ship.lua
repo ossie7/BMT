@@ -39,6 +39,7 @@ function bulletGen(x, y, angle)
   else
     if(last + interval <clock()) then
       health = health + 0.2
+      if health > maxHealth then health = maxHealth end
       last = clock()
     end
   end
@@ -126,6 +127,7 @@ function damage(obj)
   ebpartition:removeProp(obj)
   ebrpartition:removeProp(obj)
   health = health - 1
+  if health < 0 then health = 0 end
   SetShipColor(1, 0, 0, 1)
   if (health <= 0 ) then
     layer:removeProp(prop)

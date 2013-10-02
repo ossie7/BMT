@@ -136,7 +136,7 @@ function checkEndOfBattle()
     local earnedLoot = 100
     local wz = userdata.warzone
     if(leftEnemies == nil) then
-      if(wz >= 1) then userdata.warzone = wz -1 end
+      if(wz > 1) then userdata.warzone = wz -1 end
       save_userdata()
       endOfBattle(1, earnedLoot, "metal")
       battleDone = 1
@@ -145,7 +145,7 @@ function checkEndOfBattle()
       end
       
     elseif (rightEnemies == nil) then
-      if(wz <= 9) then userdata.warzone = wz +1 end
+      if(wz < 9) then userdata.warzone = wz +1 end
       save_userdata()
       endOfBattle(2, earnedLoot, "plasma")
       battleDone = 1
