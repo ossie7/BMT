@@ -43,7 +43,7 @@ function startDuel(sprite, layer)
   rightKilled = 0
   
   currentWaveLeft = 1
-  amountLeftEnemies = 20 -- TODO dynamisch maken
+  amountLeftEnemies = 5 -- TODO dynamisch maken
   totalAmountLeft = 0
   lastWaveLeft = false
   leftKilled = 0
@@ -134,12 +134,12 @@ function checkEndOfBattle()
     if(leftEnemies == nil) then
       if(wz > 1) then userdata.warzone = wz -1 end
       save_userdata()
-      endOfBattle(1, earnedLoot)
+      endOfBattle(1, earnedLoot, "metal")
       battleDone = 1
     elseif (rightEnemies == nil) then
       if(wz < 9) then userdata.warzone = wz +1 end
       save_userdata()
-      endOfBattle(2, earnedLoot)
+      endOfBattle(2, earnedLoot, "plasma")
       battleDone = 1
     end
   end

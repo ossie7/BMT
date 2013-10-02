@@ -207,11 +207,14 @@ function loadUpgradesLayers(upgradeScreenType)
   textboxTimeValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   textboxNameValue = CreateTextBox(0, -30, 160, 40, upgradeMenuStyle, "")
   textboxNameValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  textboxChatBox = CreateTextBox(0, 50, 160, 40, upgradeMenuStyle, "Welcome to my shop")
+  textboxChatBox:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   
   textLayer:insertProp(textboxMetalValue)
   textLayer:insertProp(textboxPlasmaValue)
   textLayer:insertProp(textboxTimeValue)
   textLayer:insertProp(textboxNameValue)
+  textLayer:insertProp(textboxChatBox)
   textLayer:setPriority(1001)
   
   local upgrade = currentUpgradesList[1]
@@ -226,7 +229,7 @@ function loadUpgradesLayers(upgradeScreenType)
   gamestate = "upgrading"
 end
 
-function endOfBattle(winningTeam, loot)
+function endOfBattle(winningTeam, loot, lootname)
   clearLayers()
   MOAIRenderMgr.pushRenderPass(endweeklayer)
   
@@ -238,17 +241,18 @@ function endOfBattle(winningTeam, loot)
   local teamText = ""
   if(winningTeam == 1) then
     teamText = "left"
+    userdata.metal = userdata.metal + loot
   else
     teamText = "right"
+    userdata.plasma = userdata.plasma + loot
   end
 
   if(textboxBattleResults ~= nil) then
     eobpartition:removeProp(textboxBattleResults)
   end
   textboxBattleResults = CreateTextBox(0, 0, 150, 100, upgradeMenuStyle, 
-    "The " .. teamText .. " team has lost this battle, you gained "..amountOfLoot.." plasma")
-
-  userdata.plasma = userdata.plasma + loot
+    "The " .. teamText .. " team has lost this battle, you gained "..amountOfLoot.." "..lootname)
+  
   save_userdata()
 
   eobpartition:insertProp(textboxBattleResults)
