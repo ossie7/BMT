@@ -112,7 +112,7 @@ function loadFightLayers()
   propButton = cprop(spritePauseButton, -130, -70)
   propButton.name = "pause"
   
-  toggleButton = cprop(guiRegenSprite, 0, bottomborder)
+  toggleButton = cprop(guiAutoSprite, 0, bottomborder)
   toggleButton.name = "gunToggle"
   
   guiPartition:insertProp(toggleButton)

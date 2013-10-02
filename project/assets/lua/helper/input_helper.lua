@@ -89,9 +89,9 @@ function playInput(event, idx, x, y)
       elseif(gameButton.name == "gunToggle") then
         gunActive = not gunActive
         if(gunActive) then
-          gameButton:setDeck(guiRegenSprite)
-        else
           gameButton:setDeck(guiAutoSprite)
+        else
+          gameButton:setDeck(guiRegenSprite)
         end
       end
     end
