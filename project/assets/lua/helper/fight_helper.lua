@@ -130,7 +130,7 @@ function startWaves()
 end
 
 function checkEndOfBattle()
-  if(battleDone == 0 and gameState == "playing") then
+  if(battleDone == 0) then
     local leftEnemies = epartition:propListForRect(-180,-90,180,90)
     local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
     local earnedLoot = 100
