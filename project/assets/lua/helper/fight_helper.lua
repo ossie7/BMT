@@ -2,7 +2,9 @@ week = 0
 waveCounter = 0
 battleDone = 0
 -- chased, sandwiched
-mission = ""
+if(userdata.turn < 2) then
+  userdata.mission = "chased"
+end
 -- the weeknumber when station was build 5 days is win
 startBuild = 0
 -- days that you are already building
@@ -110,7 +112,7 @@ function createEnemyRight()
 end
 
 function startWaves() 
-  if(mission == "chased" or mission == "") then
+  if(userdata.mission == "chased" or userdata.mission == "") then
     isArrived = false
     timer = MOAITimer.new()
     timer:setMode(MOAITimer.LOOP)
@@ -119,7 +121,7 @@ function startWaves()
     timer:start()
     createEnemyLeft()
   end
-  if(mission ~= "chased") then
+  if(userdata.mission ~= "chased") then
     timer2 = MOAITimer.new()
     timer2:setMode(MOAITimer.LOOP)
     timer2:setSpan(math.random(9,12))
@@ -136,16 +138,23 @@ function checkEndOfBattle()
     local earnedLoot = 100
     local wz = userdata.warzone
     if(leftEnemies == nil) then
-      if(wz > 1) then userdata.warzone = wz -1 end
+      if(wz > 1 and userdata.turn > 2) then userdata.warzone = wz -1 end
       save_userdata()
       endOfBattle(1, earnedLoot, "metal")
       battleDone = 1
       if(userdata.warzone == 0) then
         addPopup("You lost", "Loooser", "OK", nil)
       end
-      
     elseif (rightEnemies == nil) then
       if(wz < 9) then userdata.warzone = wz +1 end
+      if(userdata.turn == 2) then
+          userdata.showEngineer = true
+          addPopup("Mission Passed", "You saved an engineer!\n He can help you to improve your ship", "OK", "loadMenuLayers")
+          userdata.mission = ""
+          save_userdata()
+      end
+    elseif (rightEnemies == nil and userdata.mission ~= "chased") then
+      if(wz < 9 and userdata.turn > 2) then userdata.warzone = wz +1 end
       save_userdata()
       endOfBattle(2, earnedLoot, "plasma")
       battleDone = 1

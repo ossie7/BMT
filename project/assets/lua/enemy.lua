@@ -40,8 +40,14 @@ function Enemy.startThread (self)
       if(parent.team == 1 and locX <= (parent.entryLoc * -1)) then
         locX = locX + 1
         self:setLoc(locX, locY)
-        if(locX == (parent.entryLoc *-1) and mission == "chased" and isArrived == false) then
-          addPopup("Mission", "Oh dear, you are beeing chased!\n Get away by reflecting bullets", "OK", nil)
+        if(locX == (parent.entryLoc *-1) and userdata.mission == "chased" and isArrived == false) then
+          
+          if(userdata.turn == 1) then
+            queuePopup({Popup.new("Mission", "Oh dear, you are beeing chased!\n Get away by reflecting bullets", "OK", nil)})
+          elseif(userdata.turn == 2) then
+            queuePopup({Popup.new("Mission", "There's someone in need!\n Kill the pursuers and save him ", "OK", nil)})
+          end
+          
           isArrived = true
           end
       elseif (parent.team == 2 and locX > parent.entryLoc) then
@@ -113,7 +119,7 @@ function Enemy.newEnemyBullet (self, origX, origY, angle)
 end
 
 function Enemy.enemyBulletGen(self, x, y)
-    if(mission == "chased") then
+    if(userdata.mission == "chased") then
         self.target = prop
     end
     
@@ -135,7 +141,7 @@ function Enemy.enemyBulletGen(self, x, y)
         end
       end
     else
-      if(mission == "chased") then
+      if(userdata.mission == "chased") then
         if(self.enemyLast+self.enemyInterval < clock()) then
           local tx, ty = prop:getLoc()
           local angle = calcAngle(x, y, tx, ty)
