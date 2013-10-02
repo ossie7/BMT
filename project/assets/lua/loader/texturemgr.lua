@@ -16,8 +16,8 @@ function initTextures()
   metalSprite  = cs("resources/metal.png",       -4,   -4,  4,   4)  --Metal Icon
   plasmaSprite = cs("resources/energy.png",      -4,   -4,  4,   4)  --Energy Icon
   spriteGoMenu = cs("resources/play_button.png", -8,   -8,  8,   8)  --Play Button
-  popupSprite  = cs("resources/popup.png",       -120, -65, 120, 65) --Popup Background
-  popupButtonSprite           = cs("resources/popup_button.png",    -40,  -13,  40,  13)   --Popup Button
+  popupSprite  = cs("resources/popup.png",       -152, -72, 152, 73) --Popup Background
+  popupButtonSprite           = cs("resources/popup_button.png",    -24,  -10,  25,  11)   --Popup Button
   shipUpgradeScreenSprite     = cs("resources/ship_upgrade.png",    -160, -90,  160, 90) -- shipupgrades background
   stationUpgradeScreenSprite  = cs("resources/station_upgrade.png", -160, -90,  160, 90) -- stationupgrades background
   warroomShipUpgradeSprite    = cs("resources/transparent.png",     -15,  -23,  15,  23)   --Ship upgrades button warroom

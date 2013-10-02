@@ -15,7 +15,6 @@ function newBullet (origX, origY, angle)
   if table.getn(shipUpgradesList) > 0 then
     for i = 1, table.getn(shipUpgradesList), 1 do
       local upgrade = shipUpgradesList[i]
-      
       if upgrade:IsBuild() then
         bestGunBuildIndex = i
       end
@@ -86,7 +85,7 @@ function checkBulletCollision()
       if(robj.owner.source == 1) then
         robj.owner:reflect()
         if(popupActive == false) then -- POPUP SAMPLE CODE
-          --addPopup("Reflection", "You reflected\n a bullet!", "Ok", nil)
+          addPopup("Reflection", "You reflected\na bullet!\nYay!", "Ok", nil)
           --[[queuePopup({
             Popup.new("Reflection", "You reflected\n a bullet!", "Ok", nil, spriteGoMenu),
             Popup.new("Reflection", "Well done!", "Ok", nil, spritePauseButton),
