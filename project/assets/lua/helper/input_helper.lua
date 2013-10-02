@@ -1,7 +1,7 @@
-local touchX = 0
-local touchY = 0
-local ctouchX = 0
-local ctouchY = 0
+touchX = 0
+touchY = 0
+ctouchX = 0
+ctouchY = 0
 
 local swipeStartX = 0
 local swipeStartY = 0
@@ -81,13 +81,18 @@ function playInput(event, idx, x, y)
   
   -- Button logic, only on mouse/touch down
   if(event == MOAITouchSensor.TOUCH_DOWN) then
-    local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
+    local gameButton = guiPartition:propForPoint( guiButtonLayer:wndToWorld(x,y) )
     if gameButton then
       if (gameButton.name == "pause") then
         battleDone = 1
         loadMenuLayers()
       elseif(gameButton.name == "gunToggle") then
         gunActive = not gunActive
+        if(gunActive) then
+          gameButton:setDeck(guiRegenSprite)
+        else
+          gameButton:setDeck(guiAutoSprite)
+        end
       end
     end
   end
@@ -159,7 +164,7 @@ end
 function keepInside(p)
   local x, y = p:getLoc()
   if(y>70) then y = 70 end
-  if(y<-80) then y = -80 end
+  if(y<-60) then y = -60 end
   p:setLoc(x,y)
 end
 

@@ -14,7 +14,7 @@ function createProp(sprite, layer)
 end
 
 function createGunTools()
-  cross = cprop(csprite, 100, 0)
+  cross = cprop(csprite, 140, 0)
   clayer:insertProp(cross)
 
   gun = cprop(gunsprite, 0, 0)
@@ -54,7 +54,7 @@ function startDuel(sprite, layer)
   
   startTimer()
   prop:setLoc(0,0)
-  startPowerThread()
+  startGuiThread()
   startShipThread()
 
 end
@@ -160,7 +160,7 @@ end
 function newEnemy (enemyTeam)
   local speed = 1
   local s = nil
-  local x, y = 0, math.random(bottomborder + 10, topborder - 20)
+  local x, y = 0, math.random(bottomborder + 30, topborder - 20)
   --local r = math.random(1,2)
   
   if(enemyTeam==1) then
@@ -200,7 +200,7 @@ function checkCollision()
   end
 end
 
-function powerThread()
+function guiThread()
   while true do
     if(gamestate ~= "playing") then
       break
@@ -209,17 +209,63 @@ function powerThread()
     local right = ((amountRightEnemies-rightKilled)/amountRightEnemies) * -150
     lbsprite:setRect(0,0,left,-8)
     rbsprite:setRect(right,-8,0,0)
+    
+    local px, py = prop:getLoc()
+    local cx, cy = cross:getLoc()
+    
+    if(touchY  > -90) then gs1:setLoc(-70, bottomborder + ((py + 90) / 18)) end
+    if(ctouchY > -90) then gs2:setLoc(70, bottomborder + ((cy + 90) / 18)) end
+    
+    local percent = (health/maxHealth)*100
+    gd1:setIndex(math.floor(percent / 100) + 1)
+    gd2:setIndex(math.floor((percent % 100) / 10) + 1)
+    gd3:setIndex((percent % 10) + 1)
+    
+    if(percent >= 100) then
+      gd1:setLoc(-16, bottomborder+29)
+      gd2:setLoc(0, bottomborder+29)
+      gd3:setLoc(16, bottomborder+29)
+    elseif(percent >= 10) then
+      gd1:setLoc(-400, -400)
+      gd2:setLoc(-8, bottomborder+29)
+      gd3:setLoc(8, bottomborder+29)
+    else
+      gd1:setLoc(-400, -400)
+      gd2:setLoc(-400, -400)
+      gd3:setLoc(0, bottomborder+29)
+    end
+    
+    gd1:setColor(((maxHealth-health)/maxHealth), (health/maxHealth), 0, 1)
+    gd2:setColor(((maxHealth-health)/maxHealth), (health/maxHealth), 0, 1)
+    gd3:setColor(((maxHealth-health)/maxHealth), (health/maxHealth), 0, 1)
+    gl:setColor(((maxHealth-health)/maxHealth), (health/maxHealth), 0, 1)
     coroutine.yield()
   end
 end
 
-function startPowerThread()
-  lb = cprop(lbsprite, leftborder + 10, topborder - 5)
-  barlayer:insertProp(lb)
-
-  rb = cprop(rbsprite, rightborder - 10, topborder - 5)
-  barlayer:insertProp(rb)
+function startGuiThread()
+  lb  = cprop(lbsprite, leftborder + 10, topborder - 5)
+  rb  = cprop(rbsprite, rightborder - 10, topborder - 5)
+  gb1 = cprop(guiBaseSprite, -70, bottomborder)
+  gb2 = cprop(guiBaseSprite, 70, bottomborder)
+  gs1 = cprop(guiStickSprite, -70, bottomborder)
+  gs2 = cprop(guiStickSprite, 70, bottomborder)
+  gl  = cprop(guiLifeSprite, 0, bottomborder+5)
+  gd1 = cprop(digits, -400, -400)
+  gd2 = cprop(digits, -400, -400)
+  gd3 = cprop(digits, -400, -400)
   
-  powerthread = MOAICoroutine.new()
-  powerthread:run(powerThread)
+  guiLayer:insertProp(lb)
+  guiLayer:insertProp(rb)
+  guiLayer:insertProp(gb1)
+  guiLayer:insertProp(gb2)
+  guiLayer:insertProp(gs1)
+  guiLayer:insertProp(gs2)
+  guiLayer:insertProp(gl)
+  guiLayer:insertProp(gd1)
+  guiLayer:insertProp(gd2)
+  guiLayer:insertProp(gd3)
+  
+  guithread = MOAICoroutine.new()
+  guithread:run(guiThread)
 end

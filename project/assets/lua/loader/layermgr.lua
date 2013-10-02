@@ -28,7 +28,9 @@ function initLayers()
   pausePartition = cp(buttonlayer)
   textLayer      = cl() --Text
   menuLayer      = cl() --Menu
-  barlayer       = cl() --Fight progress bars
+  guiLayer       = cl() --GUI
+  guiButtonLayer = cl() --GUI buttons
+  guiPartition   = cp(guiButtonLayer)
   baselayer      = cl() --Base background
   basebarlayer   = cl() --Warzone bars
   blayer         = cl() --Bullets
@@ -42,7 +44,6 @@ function initLayers()
   ebrlayer       = cl() --Reflected enemy bullets
   ebrpartition   = cp(ebrlayer)
   exlayer        = cl() --Explosions
-  ihlayer        = cl() --Input hint
   endweeklayer   = cl() --Reward screen
   eobpartition   = cp(endweeklayer)
   upgradeback    = cl() --Upgrade background
@@ -59,8 +60,6 @@ end
 function loadFightLayers()
   clearLayers()
   MOAIRenderMgr.pushRenderPass(universeLayer)
-  MOAIRenderMgr.pushRenderPass(ihlayer)
-  MOAIRenderMgr.pushRenderPass(buttonlayer)
   MOAIRenderMgr.pushRenderPass(eblayer)
   MOAIRenderMgr.pushRenderPass(ebrlayer)
 	MOAIRenderMgr.pushRenderPass(elayer)
@@ -70,7 +69,8 @@ function loadFightLayers()
   MOAIRenderMgr.pushRenderPass(blayer)
   MOAIRenderMgr.pushRenderPass(clayer)
   MOAIRenderMgr.pushRenderPass(textLayer)
-  MOAIRenderMgr.pushRenderPass(barlayer)
+  MOAIRenderMgr.pushRenderPass(guiLayer)
+  MOAIRenderMgr.pushRenderPass(guiButtonLayer)
   
   
   
@@ -111,23 +111,13 @@ function loadFightLayers()
   propButton = cprop(spritePauseButton, -130, -70)
   propButton.name = "pause"
   
-  gtButton = cprop(gtsprite, 0, -70)
-  gtButton.name = "gunToggle"
+  toggleButton = cprop(guiRegenSprite, 0, bottomborder)
+  toggleButton.name = "gunToggle"
   
-  pausePartition:insertProp(gtButton)
-	pausePartition:insertProp(propButton)
+  guiPartition:insertProp(toggleButton)
+	guiPartition:insertProp(propButton)
   
   gamestate = "playing"
-  
-  --Input Help - TEMP - BEGIN
-  ihsprite = cs("resources/controls.png", 0, 0, -80, -50)
-  
-  ihprop1 = cprop(ihsprite, -40, -40)
-  ihlayer:insertProp(ihprop1)
-  
-  ihprop2 = cprop(ihsprite, 120, -40)
-  ihlayer:insertProp(ihprop2)
-  --Input Help - TEMP - END
 end
 
 function loadMenuLayers()
@@ -291,14 +281,14 @@ end
 
 function clearLayers()
   universeLayer:clear()
-  ihlayer:clear()
   layer:clear()
   clayer:clear()
   buttonlayer:clear()
   textLayer:clear()
   menuLayer:clear()
   upgradeLayer:clear()
-  barlayer:clear()
+  guiLayer:clear()
+  guiButtonLayer:clear()
   baselayer:clear()
   basebarlayer:clear()
   blayer:clear()

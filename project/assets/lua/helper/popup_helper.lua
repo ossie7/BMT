@@ -38,7 +38,7 @@ function addPopup(title, body, button, action, face)
   popupTextLayer:insertProp(popupBody)
   popupTextLayer:insertProp(popupButtonText)
   popupLayer:insertProp(popupProp)
-  popupLayer:insertProp(popupFaceProp)
+  if(popupFaceProp ~= nil) then popupLayer:insertProp(popupFaceProp) end
   popupPartition:insertProp(popupButtonProp)
 end
 

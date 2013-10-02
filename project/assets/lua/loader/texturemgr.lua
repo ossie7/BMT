@@ -15,7 +15,6 @@ function initTextures()
   rfsprite     = cs("resources/red_fist.png",    0,    -11, 22,  11) --Right Fist
   metalSprite  = cs("resources/metal.png",       -4,   -4,  4,   4)  --Metal Icon
   plasmaSprite = cs("resources/energy.png",      -4,   -4,  4,   4)  --Energy Icon
-  gtsprite     = cs("resources/gun_toggle.png" , -16,  -8,  16,  8)  --Gun Toggle Button
   spriteGoMenu = cs("resources/play_button.png", -8,   -8,  8,   8)  --Play Button
   popupSprite  = cs("resources/popup.png",       -120, -65, 120, 65) --Popup Background
   popupButtonSprite           = cs("resources/popup_button.png",    -40,  -13,  40,  13)   --Popup Button
@@ -28,11 +27,26 @@ function initTextures()
 	spritePauseButton           = cs("resources/wm_pause.png",         -8,   -8,  8,    8)   --Pause button
   waterModuleSprite           = cs("resources/waterchip_module.png",-25,  -19,  25,  19)
   
+  --GUI
+  guiBaseSprite  = cs("resources/GUI_base.png",       -15, 0,   16, 16) --Control Base
+  guiLifeSprite  = cs("resources/GUI_life.png",       -20, 0,   20, 16) --Life Base
+  guiAutoSprite  = cs("resources/icon_auto_fire.png", -11, 0,   11, 23) --Auto-fire Button
+  guiRegenSprite = cs("resources/icon_regen.png",     -11, 0,   11, 23) --Regen Button
+  guiStickSprite = cs("resources/stick.png",          -34, 0,   35, 37) --Control Stick
+  
+  
   tileLib = MOAITileDeck2D.new()
   tileLib:setTexture("resources/explo_sprite.png")
   -- aantal afbeeldingen h*b
   tileLib:setSize(4 , 2)
   tileLib:setRect(-16,-16,16,16)
+  
+  guiDigits = MOAIImage.new()
+  guiDigits:load("resources/digits_sprite.png")
+  digits = MOAITileDeck2D.new()
+  digits:setTexture(guiDigits)
+  digits:setSize(5, 2)
+  digits:setRect(-16, -16, 16, 16)
 
 end
 
