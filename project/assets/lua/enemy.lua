@@ -43,7 +43,7 @@ function Enemy.startThread (self)
         if(locX == (parent.entryLoc *-1) and userdata.mission == "chased" and isArrived == false) then
           
           if(userdata.turn == 1) then
-            queuePopup({Popup.new("Mission", "Oh dear, you are beeing chased!\n Get away by reflecting bullets", "OK", nil)})
+            queuePopup({Popup.new("Mission", "Oh dear, you are being chased!\n Get away by reflecting bullets", "OK", nil)})
           elseif(userdata.turn == 2) then
             queuePopup({Popup.new("Mission", "There's someone in need!\n Kill the pursuers and save him ", "OK", nil)})
           end

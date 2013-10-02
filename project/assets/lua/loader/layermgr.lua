@@ -194,11 +194,15 @@ function loadUpgradesLayers(upgradeScreenType)
   upgradeType = upgradeScreenType
   ShowPlayerResources()
   LoadUpgradesList()
-  
+   
   if upgradeType == "ship" then
     propUpgradeBackground = cprop(shipUpgradeScreenSprite, 0, 0)
+    chatboxProp = cprop(chatboxShipSprite, 20, 50)
+    textboxChatBox = CreateTextBox(20, 50, 132, 48, chatboxstyle, "Welcome to my shop. \n Select the item you want.")
   elseif upgradeType == "station" then
     propUpgradeBackground = cprop(stationUpgradeScreenSprite, 0, 0)
+    chatboxProp = cprop(chatboxStationSprite, 0, 50)
+    textboxChatBox = CreateTextBox(0, 50, 132, 48, chatboxstyle, "Welcome to my shop. \n Select the item you want.")
   end
   propBackButton = cprop(warroomButtonSprite, -132, -62)
   propBuildButton = cprop(warroomButtonSprite, 132, -62)
@@ -212,6 +216,8 @@ function loadUpgradesLayers(upgradeScreenType)
   upgradeback:insertProp(propPlasma)
   upgradeback:insertProp(textboxMetalAmount)
   upgradeback:insertProp(textboxEnergyAmount)
+  upgradeback:insertProp(chatboxProp)
+
   
   if upgradeType == "ship" then
     upgradeback:insertProp(propPlayerShip)
@@ -227,7 +233,6 @@ function loadUpgradesLayers(upgradeScreenType)
   textboxTimeValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   textboxNameValue = CreateTextBox(0, -30, 160, 40, upgradeMenuStyle, "")
   textboxNameValue:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
-  textboxChatBox = CreateTextBox(0, 50, 160, 40, upgradeMenuStyle, "Welcome to my shop")
   textboxChatBox:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   
   textLayer:insertProp(textboxMetalValue)

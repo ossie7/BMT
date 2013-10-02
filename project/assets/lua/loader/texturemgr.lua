@@ -10,7 +10,7 @@ function initTextures()
   gunsprite    = cs("resources/weapons.png",     -16,  -16, 16,  16) --Gun
   lbsprite     = cs("resources/blue_bar.png",    0,    0,   150, -8) --Left Bar
   rbsprite     = cs("resources/red_bar.png",     -150, -8,  0,   0)  --Right Bar
-  basesprite   = cs("resources/base_empty.png",        -160, -90, 160, 90) --Base Background
+  basesprite   = cs("resources/base_empty_proper.png",        -160, -90, 160, 90) --Base Background
   engineer     = cs("resources/engineer.png",    -9.5,  -15,  9.5,  15) --engineer
   architect    = cs("resources/architect.png",    -5.5,  -14,  5.5,  14) --engineer
   captain      = cs("resources/captain.png",    -8.5,  -16,  8.5,  16) --engineer
@@ -29,7 +29,8 @@ function initTextures()
   warroomButtonSprite         = cs("resources/transparent.png",     -16,  -18,  16,  18)   --warroom buttons
 	spritePauseButton           = cs("resources/wm_pause.png",         -8,   -8,  8,    8)   --Pause button
   waterModuleSprite           = cs("resources/waterchip_module.png",-25,  -19,  25,  19)
-  
+  chatboxShipSprite           = cs("resources/ship_chatbox.png",    -66,  -24,  66,  24)
+  chatboxStationSprite        = cs("resources/station_chatbox.png", -66,  -24,  66,  24)
   --GUI
   guiBaseSprite  = cs("resources/GUI_base.png",       -15, 0,   16, 16) --Control Base
   guiLifeSprite  = cs("resources/GUI_life.png",       -20, 0,   20, 16) --Life Base

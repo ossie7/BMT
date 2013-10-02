@@ -123,7 +123,8 @@ function upgradeInput(event, idx, x, y)
           textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
           textboxPlasmaValue:setString(""..upgrade:GetRequiredPlasma())
           textboxTimeValue:setString(""..upgrade:GetRequiredTime())
-            
+          textboxChatBox:setString("This is the "..upgrade.name..". \n Do you want to buy it?")
+
           SetBuildButtonVisibility(upgrade)
         end
       end

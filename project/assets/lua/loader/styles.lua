@@ -27,3 +27,7 @@ style11:setSize(11)
 upgradeMenuStyle = MOAITextStyle.new()
 upgradeMenuStyle:setFont(font)
 upgradeMenuStyle:setSize(10)
+
+chatboxstyle = MOAITextStyle.new()
+chatboxstyle:setFont(font)
+chatboxstyle:setSize(8)

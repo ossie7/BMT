@@ -147,12 +147,12 @@ function checkEndOfBattle()
       end
     elseif (rightEnemies == nil) then
       if(wz < 9) then userdata.warzone = wz +1 end
-      if(userdata.turn == 2) then
-          userdata.showEngineer = true
-          addPopup("Mission Passed", "You saved an engineer!\n He can help you to improve your ship", "OK", "loadMenuLayers")
-          userdata.mission = ""
-          save_userdata()
-      end
+        if(userdata.turn == 2) then
+            userdata.showEngineer = true
+            addPopup("Mission Passed", "You saved an engineer!\n He can help you to improve your ship", "OK", "loadMenuLayers")
+            userdata.mission = ""
+            save_userdata()
+        end
     elseif (rightEnemies == nil and userdata.mission ~= "chased") then
       if(wz < 9 and userdata.turn > 2) then userdata.warzone = wz +1 end
       save_userdata()
