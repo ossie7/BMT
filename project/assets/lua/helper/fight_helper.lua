@@ -220,6 +220,24 @@ function checkCollision()
   end
 end
 
+function deadShip()
+  local wz = userdata.warzone
+  if(wz<5 and wz > 1) then userdata.warzone = wz - 1 end
+  if(wz>5 and wz < 9) then userdata.warzone = wz + 1 end
+  if(wz == 1 or wz == 9) then
+    addPopup("You lost", "Loooser", "OK", nil)
+  end
+  if(wz == 5) then
+    local r = math.random()
+    if(r > 0.5) then
+      userdata.warzone = wz + 1
+    else
+      userdata.warzone = wz - 1
+    end
+  end
+  loadMenuLayers()
+end
+
 function guiThread()
   while true do
     if(gamestate ~= "playing") then
@@ -242,9 +260,9 @@ function guiThread()
     gd3:setIndex((percent % 10) + 1)
     
     if(percent >= 100) then
-      gd1:setLoc(-16, bottomborder+29)
+      gd1:setLoc(-12, bottomborder+29)
       gd2:setLoc(0, bottomborder+29)
-      gd3:setLoc(16, bottomborder+29)
+      gd3:setLoc(12, bottomborder+29)
     elseif(percent >= 10) then
       gd1:setLoc(-400, -400)
       gd2:setLoc(-8, bottomborder+29)

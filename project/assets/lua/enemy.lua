@@ -34,7 +34,7 @@ function Enemy.startThread (self)
     while true do
       if(popupActive == false) then
       if(gamestate ~= "playing") then
-        parent:die()
+        parent:remove()
       end
       locX,locY = self:getLoc()
       if(parent.team == 1 and locX <= (parent.entryLoc * -1)) then
@@ -192,6 +192,16 @@ function Enemy.damageTaken(self, obj)
   if (self.health <= 0 ) then
     self:die()
   end
+end
+
+function Enemy.remove(self)
+  elayer:removeProp(self.prop)
+  elayer2:removeProp(self.prop)
+  MOAISim.forceGarbageCollection()
+  self.prop.thread:stop()
+  self.thread:stop()
+  self.prop = nil
+  self = nil
 end
 
 function Enemy.die(self)

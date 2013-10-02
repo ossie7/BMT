@@ -37,7 +37,7 @@ function bulletGen(x, y, angle)
     end
   else
     if(last + interval <clock()) then
-      health = health + 0.2
+      health = health + 0.1
       if health > maxHealth then health = maxHealth end
       last = clock()
     end
@@ -131,8 +131,8 @@ function damage(obj)
   if health < 0 then health = 0 end
   SetShipColor(1, 0, 0, 1)
   if (health <= 0 ) then
-    layer:removeProp(prop)
-    print("ouch, hp is now "..health)
+    battleDone = 1
+    addPopup("You died", "You weren't able to keep\nbalance in the war.\nBut the war went on...","Ok","deadShip")
   end
 end
 
