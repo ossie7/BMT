@@ -36,6 +36,8 @@ function SetupNewUserdata()
   userdata.metal = 0
   userdata.plasma = 0
   userdata.mission = ""
+  userdata.turn = 0
+  userdata.stationBuild = false
 end
 
 -- At the beginning of your application, get the persisted data:

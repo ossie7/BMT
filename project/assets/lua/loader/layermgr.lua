@@ -73,9 +73,28 @@ function loadFightLayers()
   MOAIRenderMgr.pushRenderPass(barlayer)
   
   
+  
   currentWave = 1
   week = week + 1
+  userdata.turn = week
+  save_userdata()
   battleDone = 0
+  
+  upgradee = stationUpgradesList[1]
+  local winDate
+  if(userdata.stationBuild and userdata.warzone == 5) then
+    daysBuild = daysBuild + 1
+  end
+
+  print("current week "..week)
+  if(winDate ~= nil) then
+    print("timeeeeee "..winDate)
+  end
+  
+  if(daysBuild == upgradee.requiredTime) then
+      addPopup("You won!", "Congratulations, you managed to\n build the station.", "OK", nil)
+  end
+  
   
   propExplosion = MOAIProp2D.new()
   propExplosion:setDeck(tileLib)

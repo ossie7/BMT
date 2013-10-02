@@ -2,7 +2,11 @@ week = 0
 waveCounter = 0
 battleDone = 0
 -- chased, sandwiched
-mission = "chased"
+mission = ""
+-- the weeknumber when station was build 5 days is win
+startBuild = 0
+-- days that you are already building
+daysBuild = 0
 
 function createProp(sprite, layer)
   prop = cprop(sprite, 0, 0)
@@ -132,15 +136,22 @@ function checkEndOfBattle()
     local earnedLoot = 100
     local wz = userdata.warzone
     if(leftEnemies == nil) then
-      if(wz > 1) then userdata.warzone = wz -1 end
+      if(wz >= 1) then userdata.warzone = wz -1 end
       save_userdata()
       endOfBattle(1, earnedLoot, "metal")
       battleDone = 1
+      if(userdata.warzone == 0) then
+        addPopup("You lost", "Loooser", "OK", nil)
+      end
+      
     elseif (rightEnemies == nil) then
-      if(wz < 9) then userdata.warzone = wz +1 end
+      if(wz <= 9) then userdata.warzone = wz +1 end
       save_userdata()
       endOfBattle(2, earnedLoot, "plasma")
       battleDone = 1
+      if(userdata.warzone == 9) then
+        addPopup("You lost", "Loooser", "OK", nil)
+      end
     end
   end
   

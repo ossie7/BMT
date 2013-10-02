@@ -16,6 +16,11 @@ function BuildUpgrade()
       userdata.plasma = userdata.plasma - plasma
       
       upgrade:Build(true)
+      if(upgradeType == "station") then
+       userdata.stationBuild = true
+       startBuild = week
+      print("you bought "..upgrade.name.."it ll be ready in "..upgrade.requiredTime.." turns")
+      end
     end
   end
   
