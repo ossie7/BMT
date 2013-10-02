@@ -24,6 +24,10 @@ style11 = MOAITextStyle.new()
 style11:setFont(font)
 style11:setSize(11)
 
+style10 = MOAITextStyle.new()
+style10:setFont(font)
+style10:setSize(10)
+
 upgradeMenuStyle = MOAITextStyle.new()
 upgradeMenuStyle:setFont(font)
 upgradeMenuStyle:setSize(10)

@@ -24,11 +24,11 @@ function addPopup(title, body, button, action, face)
   popupButtonText:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   
   if(face == nil) then
-    popupBody = CreateTextBox(0, 0, 240, 60, style12, body)
+    popupBody = CreateTextBox(0, 0, 240, 60, style10, body)
     popupBody:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   else
     popupFaceProp = cprop(face, -100, 0)
-    popupBody = CreateTextBox(20, 0, 240, 60, style12, body)
+    popupBody = CreateTextBox(20, 0, 240, 60, style10, body)
     popupBody:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   end
   
