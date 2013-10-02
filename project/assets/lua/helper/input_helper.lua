@@ -38,7 +38,7 @@ function mouseMove(x, y)
 end
 
 function touchInput(event, idx, x, y, tapCount)
-  if(popupActive) then
+  if(popupActive and event == MOAITouchSensor.TOUCH_DOWN) then
     local hit = popupPartition:propForPoint(popupButtonLayer:wndToWorld(x,y))
     if(hit) then
       popupClicked()
@@ -84,6 +84,7 @@ function playInput(event, idx, x, y)
     local gameButton = pausePartition:propForPoint( buttonlayer:wndToWorld(x,y) )
     if gameButton then
       if (gameButton.name == "pause") then
+        battleDone = 1
         loadMenuLayers()
       elseif(gameButton.name == "gunToggle") then
         gunActive = not gunActive
