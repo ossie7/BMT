@@ -61,7 +61,7 @@ function Enemy.startThread (self)
         if((newX + locX) >= -110) then
           newX = 0
         end
-        if ((newY + locY) <= -80 or (newY + locY) >= 70) then
+        if ((newY + locY) <= -60 or (newY + locY) >= 70) then
           newY = 0
         end
         wait(self:moveLoc(newX, newY, 3))
@@ -73,7 +73,7 @@ function Enemy.startThread (self)
         if((newX + locX) <= 110) then
           newX = 0
         end
-        if ((newY + locY) <= -80 or (newY + locY) >= 70) then
+        if ((newY + locY) <= -60 or (newY + locY) >= 70) then
           newY = 0
         end
         wait(self:moveLoc(newX, newY, 3))

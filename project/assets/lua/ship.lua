@@ -1,4 +1,5 @@
-health = 999
+health = 30
+maxHealth = 30
 bulletDamage = 100
 
 gunActive = true
@@ -14,7 +15,6 @@ function newBullet (origX, origY, angle)
   if table.getn(shipUpgradesList) > 0 then
     for i = 1, table.getn(shipUpgradesList), 1 do
       local upgrade = shipUpgradesList[i]
-      
       if upgrade:IsBuild() then
         bestGunBuildIndex = i
       end
@@ -30,9 +30,16 @@ function newBullet (origX, origY, angle)
 end
 
 function bulletGen(x, y, angle)
-  if(last+interval < clock() and gunActive) then
-    newBullet(x, y, angle)
-    last = clock()
+  if(gunActive) then
+    if(last + interval < clock()) then
+      newBullet(x, y, angle)
+      last = clock()
+    end
+  else
+    if(last + interval <clock()) then
+      health = health + 0.2
+      last = clock()
+    end
   end
 end
 
@@ -77,14 +84,15 @@ function checkBulletCollision()
     else
       if(robj.owner.source == 1) then
         robj.owner:reflect()
-        --if(popupActive == false) then -- POPUP SAMPLE CODE
-         -- queuePopup({
-         --   Popup.new("Reflection", "You reflected\n a bullet!", "Ok", nil, spriteGoMenu),
-         --   Popup.new("Reflection", "Well done!", "Ok", nil, spritePauseButton),
-         --   Popup.new("Reflection", "No really,\nwell done!", "Okay...", nil),
-         --   Popup.new("Reflection", "YOU ARE\nAMAZING", "Shut up", nil)
-        --  })
-       -- end
+        if(popupActive == false) then -- POPUP SAMPLE CODE
+          addPopup("Reflection", "You reflected\na bullet!\nYay!", "Ok", nil)
+          --[[queuePopup({
+            Popup.new("Reflection", "You reflected\n a bullet!", "Ok", nil, spriteGoMenu),
+            Popup.new("Reflection", "Well done!", "Ok", nil, spritePauseButton),
+            Popup.new("Reflection", "No really,\nwell done!", "Okay...", nil),
+            Popup.new("Reflection", "YOU ARE\nAMAZING", "Shut up", nil)
+          })--]]
+        end
       end
     end
   end

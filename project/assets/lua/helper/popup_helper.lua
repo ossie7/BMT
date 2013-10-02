@@ -18,19 +18,17 @@ function addPopup(title, body, button, action, face)
   local popupFaceProp
   
   local popupBody
-  local popupTitle = CreateTextBox(0, 60, 240, 25, style, title)
+  local popupTitle = CreateTextBox(0, 52, 240, 25, style15, title)
   popupTitle:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
-  local popupButtonText = CreateTextBox(0, -47, 80, 26, style, button)
+  local popupButtonText = CreateTextBox(0, -47, 80, 26, style11, button)
   popupButtonText:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   
   if(face == nil) then
-    popupBody = CreateTextBox(0, 0, 240, 50, style12, body)
+    popupBody = CreateTextBox(0, 0, 240, 60, style12, body)
     popupBody:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
-    
   else
     popupFaceProp = cprop(face, -100, 0)
-    
-    popupBody = CreateTextBox(20, 0, 240, 50, style12, body)
+    popupBody = CreateTextBox(20, 0, 240, 60, style12, body)
     popupBody:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   end
   
@@ -38,7 +36,7 @@ function addPopup(title, body, button, action, face)
   popupTextLayer:insertProp(popupBody)
   popupTextLayer:insertProp(popupButtonText)
   popupLayer:insertProp(popupProp)
-  popupLayer:insertProp(popupFaceProp)
+  if(popupFaceProp ~= nil) then popupLayer:insertProp(popupFaceProp) end
   popupPartition:insertProp(popupButtonProp)
 end
 
