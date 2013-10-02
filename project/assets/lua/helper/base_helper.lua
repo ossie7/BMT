@@ -6,12 +6,20 @@ function LoadUpgradesList()
   end
   
   for i = 1, table.getn(currentUpgradesList), 1 do
-    currentUpgradesList[i]:Load(gunsprite)
+    currentUpgradesList[i]:AddToLayer(upgradeLayer)
     currentUpgradesList[i]:SetLocation((i - 1) * upgradeOffset, 10)
     if i == 1 then
-      currentUpgradesList[i]:SetScale(3)
+      if upgradeType == "ship" then
+        currentUpgradesList[i]:SetScale(3)
+      elseif upgradeType == "station" then
+        currentUpgradesList[i]:SetScale(1)
+      end
     else
-      currentUpgradesList[i]:SetScale(2)
+      if upgradeType == "ship" then
+        currentUpgradesList[i]:SetScale(2)
+      elseif upgradeType == "station" then
+        currentUpgradesList[i]:SetScale(0.5)
+      end
     end
   end
   
@@ -25,11 +33,19 @@ function UpdateUpgradesPositions(deltaX, deltaY, index)
       upgrade:UpdateLocation(deltaX, deltaY)
       
       if i == lastTappedUpgrade then
-        upgrade:UpdateScale(-1)
+        if upgradeType == "ship" then
+          upgrade:UpdateScale(-1)
+        elseif upgradeType == "station" then
+          upgrade:UpdateScale(-0.5)
+        end
       end
       
       if i == index then
-        upgrade:UpdateScale(1)
+        if upgradeType == "ship" then
+          upgrade:UpdateScale(1)
+        elseif upgradeType == "station" then
+          upgrade:UpdateScale(0.5)
+        end
       end
     end
   end

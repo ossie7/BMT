@@ -18,14 +18,15 @@ function initTextures()
   gtsprite     = cs("resources/gun_toggle.png" , -16,  -8,  16,  8)  --Gun Toggle Button
   spriteGoMenu = cs("resources/play_button.png", -8,   -8,  8,   8)  --Play Button
   popupSprite  = cs("resources/popup.png",       -120, -65, 120, 65) --Popup Background
-  popupButtonSprite           = cs("resources/popup_button.png",    -40,  -13, 40,  13)   --Popup Button
-  shipUpgradeScreenSprite     = cs("resources/ship_upgrade.png",    -160, -90,  160,  90) -- shipupgrades background
-  stationUpgradeScreenSprite  = cs("resources/station_upgrade.png", -160, -90,  160,  90) -- stationupgrades background
-  warroomShipUpgradeSprite    = cs("resources/transparent.png",     -15,  -23, 15,  23)   --Ship upgrades button warroom
-  warroomStationUpgradeSprite = cs("resources/transparent.png",     -15,  -25, 15,  25)   --Station upgrades button warroom
-  warroomStartBattleSprite    = cs("resources/transparent.png",     -15,  -25, 15,  25)   --Start Battle button warroom
-  warroomButtonSprite         = cs("resources/transparent.png",     -16,  -18, 16,  18)   --warroom buttons
-	spritePauseButton           = cs("resources/wm_pause.png",         -8,   -8,  8,   8)   --Pause button
+  popupButtonSprite           = cs("resources/popup_button.png",    -40,  -13,  40,  13)   --Popup Button
+  shipUpgradeScreenSprite     = cs("resources/ship_upgrade.png",    -160, -90,  160, 90) -- shipupgrades background
+  stationUpgradeScreenSprite  = cs("resources/station_upgrade.png", -160, -90,  160, 90) -- stationupgrades background
+  warroomShipUpgradeSprite    = cs("resources/transparent.png",     -15,  -23,  15,  23)   --Ship upgrades button warroom
+  warroomStationUpgradeSprite = cs("resources/transparent.png",     -15,  -25,  15,  25)   --Station upgrades button warroom
+  warroomStartBattleSprite    = cs("resources/transparent.png",     -15,  -25,  15,  25)   --Start Battle button warroom
+  warroomButtonSprite         = cs("resources/transparent.png",     -16,  -18,  16,  18)   --warroom buttons
+	spritePauseButton           = cs("resources/wm_pause.png",         -8,   -8,  8,    8)   --Pause button
+  waterModuleSprite           = cs("resources/waterchip_module.png",-25,  -19,  25,  19)
   
   tileLib = MOAITileDeck2D.new()
   tileLib:setTexture("resources/explo_sprite.png")

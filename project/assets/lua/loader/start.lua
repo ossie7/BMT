@@ -30,5 +30,8 @@ initTextures()
 initLayers()
 initSounds()
 
+CreateShipUpgradesList()
+CreateStationUpgradesList()
+
 coins = 0
 gamestate = 'pause'
