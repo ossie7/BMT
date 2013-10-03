@@ -133,7 +133,11 @@ function upgradeInput(event, idx, x, y)
           textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
           textboxPlasmaValue:setString(""..upgrade:GetRequiredPlasma())
           textboxTimeValue:setString(""..upgrade:GetRequiredTime())
-          textboxChatBox:setString("This is the "..upgrade.name..". \n It improves your damage")
+             if(upgradeType == "ship") then
+            textboxChatBox:setString("This is the "..upgrade.name..". \n It improves your damage")
+            elseif(upgradeType == "station") then
+              textboxChatBox:setString("This is the "..upgrade.name..".")
+            end
 
           SetBuildButtonVisibility(upgrade)
         end
@@ -167,7 +171,13 @@ function baseInput(event, idx, x, y)
     elseif (hitButton.name == "shipUpgrades") then
       loadUpgradesLayers("ship")
     elseif (hitButton.name == "stationUpgrades") then
-      loadUpgradesLayers("station")
+      if(userdata.turn < 4 and showEngineer ~= true) then
+        addPopup("Architect", "You still need some more experience!\n Wait till turn 5", "OK", nil, architectSprite)
+      else
+        
+        loadUpgradesLayers("station")
+      
+      end
     end
   end
 end

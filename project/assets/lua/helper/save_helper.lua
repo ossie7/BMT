@@ -42,6 +42,8 @@ function SetupNewUserdata()
   userdata.daysBuild = 0
   -- you have to unlock the engineer in mission 2
   userdata.showEngineer = false
+  -- check if you have ever entered the station upgrade screen
+  userdata.firstTimeStation = true
   
 end
 

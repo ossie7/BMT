@@ -23,12 +23,12 @@ end
 
 function CreateStationUpgradesList()
   local upgradeItem1 = UpgradeItem.new(waterModuleSprite, "Water Module 1", 0, 0, 5)
-  local upgradeItem2 = UpgradeItem.new(waterModuleSprite, "Water Module 2", 200, 2000, 7)
-  local upgradeItem3 = UpgradeItem.new(waterModuleSprite, "Water Module 3", 300, 3000, 9)
+  --local upgradeItem2 = UpgradeItem.new(waterModuleSprite, "Water Module 2", 200, 2000, 7)
+  --local upgradeItem3 = UpgradeItem.new(waterModuleSprite, "Water Module 3", 300, 3000, 9)
   
   table.insert(stationUpgradesList, upgradeItem1)
-  table.insert(stationUpgradesList, upgradeItem2)
-  table.insert(stationUpgradesList, upgradeItem3)
+  --table.insert(stationUpgradesList, upgradeItem2)
+  --table.insert(stationUpgradesList, upgradeItem3)
   
   if table.getn(userdata.stationUpgrades) > 0 then
     for i = 1, table.getn(userdata.stationUpgrades), 1 do

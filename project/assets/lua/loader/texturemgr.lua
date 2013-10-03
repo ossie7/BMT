@@ -21,6 +21,9 @@ function initTextures()
   spriteGoMenu = cs("resources/play_button.png", -8,   -8,  8,   8)  --Play Button
   wzSprite     = cs("resources/warzones.png",    -160, -90, 160, 90) --Warzones
   popupSprite  = cs("resources/popup.png",       -152, -72, 152, 73) --Popup Background
+  engineerSprite  = cs("resources/engineer_portrait.png",       -36, -49, 36, 49) --Engineer portrait
+  architectSprite  = cs("resources/architect_portrait.png",       -36, -49, 36, 49) --Engineer portrait
+  captainSprite  = cs("resources/captain_portrait.png",       -36, -49, 36, 49) --Engineer portrait
 
   popupButtonSprite           = cs("resources/popup_button.png",    -24,  -10,  25,  11)   --Popup Button
   shipUpgradeScreenSprite     = cs("resources/ship_upgrade.png",    -160, -90,  160, 90) -- shipupgrades background

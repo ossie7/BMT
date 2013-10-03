@@ -157,7 +157,7 @@ function checkEndOfBattle()
         addPopup("You lost", "Loooser", "OK", "loadMenuLayers")
       elseif(userdata.turn > 1 and userdata.showEngineer == false) then 
         queuePopup({
-          Popup.new("Mission Passed", "You saved an engineer!\n He can help you to improve your ship", "OK", nil),
+          Popup.new("Mission Passed", "You saved the engineer!\n He can help you to improve your ship", "OK", nil),
           Popup.new("Mission Passed", "You can find him\nin your base.", "OK", nil),
           Popup.new("Mission Passed", "Click on him to add\nupgrades to your ship.", "OK", "loadMenuLayers")
         })

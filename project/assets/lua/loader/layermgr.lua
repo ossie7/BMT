@@ -127,13 +127,26 @@ function loadMenuLayers()
   basebackprop = cprop(basesprite, 0, 0)
   baselayer:insertProp(basebackprop)
   
+  -- start intro conversation
+  if(userdata.isFirstTime) then
+    queuePopup({
+      Popup.new("Captain", "Welcome to my base!\n I'm the captain, click me to start a new adventure", "Next", nil, captainSprite),
+      Popup.new("Captain", "Two cultures are in war,\n to win this war you have to create peace", "Next", nil,captainSprite),
+      Popup.new("Captain", "Balance the power of the two cultures\n and build a tradepost to win", "Next",          nil ,captainSprite            ),
+      Popup.new("Architect", "Hello, I am the architect\n I can help you building the space station", "Next", nil, architectSprite),
+      Popup.new("Architect", "You need some more experience before\n you can start building the staton\n please come back later",            "Next"          , nil, architectSprite),
+    })
+  userdata.isFirstTime = false
+  save_userdata()
+  end
+        
+  
   engineerprop = cprop(engineer, -65,-50)
   engineerprop.name = "shipUpgrades"
   architectprop = cprop(architect, 65,-40)
   architectprop.name = "stationUpgrades"
   captainprop = cprop(captain, 0,-15)
   captainprop.name = "playing"
-  
   textboxTurn = CreateTextBox(-120, 82, 100, 15, upgradeMenuStyle, "Turn "..userdata.turn)
   textboxTurn:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   ShowPlayerResources()
@@ -147,8 +160,8 @@ function loadMenuLayers()
   partition:insertProp(textboxMetalAmount)
   partition:insertProp(textboxEnergyAmount)
   partition:insertProp(captainprop)
+  partition:insertProp(architectprop)
   if(userdata.showEngineer) then
-    partition:insertProp(architectprop)
     partition:insertProp(engineerprop)
   end
 
@@ -217,6 +230,17 @@ function loadUpgradesLayers(upgradeScreenType)
     propUpgradeBackground = cprop(stationUpgradeScreenSprite, 0, 0)
     chatboxProp = cprop(chatboxStationSprite, 2, 50)
     textboxChatBox = CreateTextBox(2, 54, 132, 48, chatboxstyle, "Welcome to my shop. \n Select the item you want.")
+    if(userdata.firstTimeStation and userdata.turn > 4 and showEngineer) then
+     queuePopup({
+      Popup.new("Architect", "Welcome to store!\n You can buy parts for your trade post here", "Next", nil, architectSprite),
+      Popup.new("Architect", "You need enough resources and \n each part needs some time to be build", "Next", nil,architectSprite),
+      Popup.new("Architect", "The first part needs 5 days to be build", "Next",          nil ,architectSprite),
+      Popup.new("Architect", "Because this is a beta version this is the only module for now\n Build it and be in warzone 5 for 5 days.", "Next", nil, architectSprite),
+      Popup.new("Architect", "After that... \n You completed our beta!",            "OK"          , nil, architectSprite),
+    })
+  userdata.firstTimeStation = false
+  save_userdata()
+  end
   end
   propBackButton = cprop(warroomButtonSprite, -132, -62)
   propBuildButton = cprop(warroomButtonSprite, 132, -62)
