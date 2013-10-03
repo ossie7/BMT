@@ -103,7 +103,7 @@ function loadFightLayers()
     
   end
   
-  propButton = cprop(spritePauseButton, -130, -70)
+  propButton = cprop(spritePauseButton, -140, -75)
   propButton.name = "pause"
   
   toggleButton = cprop(guiAutoSprite, 0, bottomborder)
