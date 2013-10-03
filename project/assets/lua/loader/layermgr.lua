@@ -131,26 +131,17 @@ function loadMenuLayers()
   baselayer:insertProp(basebackprop)
   
   engineerprop = cprop(engineer, -65,-50)
+  engineerprop.name = "shipUpgrades"
   architectprop = cprop(architect, 65,-40)
+  architectprop.name = "stationUpgrades"
   captainprop = cprop(captain, 0,-15)
+  captainprop.name = "playing"
   
   ShowPlayerResources()
   
   loadBaseBars()
-	  
-	propStartButton = cprop(warroomStartBattleSprite, 12, -15)
-  propStartButton.name = "playing"
-  
-  propShipUpgradesButton = cprop(warroomShipUpgradeSprite, -65, -50)
-  propShipUpgradesButton.name = "shipUpgrades"
-  
-  propStationUpgradesButton = cprop(warroomStationUpgradeSprite, 65, -38)
-  propStationUpgradesButton.name = "stationUpgrades"
 
 	partition = cp(menuLayer)
-	partition:insertProp(propStartButton)
-  partition:insertProp(propShipUpgradesButton)
-  partition:insertProp(propStationUpgradesButton)
   partition:insertProp(propMetal)
   partition:insertProp(propPlasma)
   partition:insertProp(textboxMetalAmount)
