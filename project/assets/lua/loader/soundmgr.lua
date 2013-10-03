@@ -5,20 +5,20 @@ nextMusic = nil
 
 function csound(file, looping, volume)
   local sound = MOAIUntzSound.new()
-  sound:load(file)
+  sound:load(file, false)
   sound:setVolume(volume)
   sound:setLooping(looping)
   return sound
 end
 
 function initSounds()
-  laserSound1 = csound("resources/sound/laser1.ogg", false, 0.5)
-  laserSound2 = csound("resources/sound/laser2.ogg", false, 0.5)
-  laserSound3 = csound("resources/sound/laser3.ogg", false, 0.5)
+  local laserSound1 = csound("resources/sound/laser1.ogg", false, 0.5)
+  local laserSound2 = csound("resources/sound/laser2.ogg", false, 0.5)
+  local laserSound3 = csound("resources/sound/laser3.ogg", false, 0.5)
   laserSounds = {laserSound1, laserSound2, laserSound3}
   
-  explodeSound1 = csound("resources/sound/explode1.ogg", false, 0.5)
-  explodeSound2 = csound("resources/sound/explode2.ogg", false, 0.5)
+  local explodeSound1 = csound("resources/sound/explode1.ogg", false, 0.5)
+  local explodeSound2 = csound("resources/sound/explode2.ogg", false, 0.5)
   explodeSounds = {explodeSound1, explodeSound2}
   
   battleMusic = csound("resources/sound/battle.ogg", true, 1)
