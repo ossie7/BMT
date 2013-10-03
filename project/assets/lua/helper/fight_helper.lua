@@ -55,6 +55,7 @@ function startDuel(sprite, layer)
   totalAmountRight = 0
   lastWaveRight = false
   rightKilled = 0
+  teamArrived = false
   
   currentWaveLeft = 1
   amountLeftEnemies = 5 -- TODO dynamisch maken
@@ -122,6 +123,7 @@ end
 function startWaves() 
   if(userdata.mission == "chased" or userdata.mission == "") then
     isArrived = false
+    leftArrived = false
     timer = MOAITimer.new()
     timer:setMode(MOAITimer.LOOP)
     timer:setSpan(math.random(9,12))

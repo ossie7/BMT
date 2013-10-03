@@ -25,7 +25,6 @@ function newBullet (origX, origY, angle)
   
   local buffedBulletDamage = bulletDamage + (bulletDamage * (bestGunBuildIndex * 0.05))
   if(shipUpgradesList[1]:IsBuild()) then
-      print("upgrade")
       bulletDamage = bulletDamage + 50
   end
   

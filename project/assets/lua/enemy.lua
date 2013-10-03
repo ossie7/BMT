@@ -12,9 +12,10 @@ function Enemy.new(sprite, x, y, team)
   else
     self.damage = 100
   end
+  self.isArrived = false
   self.enemyLast = clock() + math.random() + math.random()
   self.enemyInterval = 1.5 + math.random() + math.random()
-  self.entryLoc = math.random(130,140)
+  self.entryLoc = 140 --math.random(130,145)
   self.prop = MOAIProp2D.new()
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
@@ -38,10 +39,9 @@ function Enemy.startThread (self)
       end
       locX,locY = self:getLoc()
       if(parent.team == 1 and locX <= (parent.entryLoc * -1)) then
-        locX = locX + 1
-        self:setLoc(locX, locY)
+        
+        parent:moveIn(1, locX, locY)
         if(locX == (parent.entryLoc *-1) and userdata.mission == "chased" and isArrived == false) then
-          
           if(userdata.turn == 1) then
             queuePopup({Popup.new("Mission", "Oh dear, you are being chased!\n Get away by reflecting bullets", "OK", nil)})
           elseif(userdata.turn > 1 and userdata.showEngineer == false) then
@@ -49,13 +49,13 @@ function Enemy.startThread (self)
           end
           
           isArrived = true
-          end
-      elseif (parent.team == 2 and locX > parent.entryLoc) then
-        locX = locX - 1
-        self:setLoc(locX, locY)
+        end
+      elseif (parent.team == 2 and locX > parent.entryLoc) then  
+        parent:moveIn(2, locX, locY)
       end
-      
-      if(parent.team == 1 and locX >= -130) then
+
+      if(parent.team == 1 and locX >= -140) then
+
         local newX = math.random(-10,10)
         local newY = math.random(-10,10)
         if((newX + locX) >= -110) then
@@ -67,9 +67,9 @@ function Enemy.startThread (self)
         wait(self:moveLoc(newX, newY, 3))
       end
       
-      if(parent.team == 2 and locX <= 130) then
-        local newX = math.random(-3,3)
-        local newY = math.random(-3,3)
+      if(parent.team == 2 and locX <= 140) then
+        local newX = math.random(-10,10)
+        local newY = math.random(-10,10)
         if((newX + locX) <= 110) then
           newX = 0
         end
@@ -88,6 +88,28 @@ function Enemy.startThread (self)
   self.thread = MOAICoroutine.new()
   self.thread:run(self.hitThread, self)
 end
+
+function Enemy.moveIn(self, teamId, x, y)
+  
+  if(teamId == 1 and self.isArrived == false) then
+    x = x + 1
+    self.prop:setLoc(x, y)
+    if(x == -140) then
+      self.isArrived = true
+    end
+    
+  end
+  
+  if(teamId == 2 and self.isArrived == false) then
+    x = x - 1
+    self.prop:setLoc(x, y)
+    if(x == 140) then
+      self.isArrived = true
+    end
+  end
+  
+end
+
 
 function Enemy.hitThread(self)
   while true do
