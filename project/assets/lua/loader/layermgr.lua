@@ -54,7 +54,8 @@ function initLayers()
   popupPartition   = cp(popupButtonLayer)
   popupTextLayer   = cl() -- Popup text
   
-  loadMenuLayers()
+  --loadMenuLayers()
+  loadSplashLayers()
 end
 
 function loadFightLayers()
@@ -156,6 +157,24 @@ function loadMenuLayers()
 
   
 	gamestate = "pause"
+end
+
+function loadSplashLayers()
+  clearLayers()
+  MOAIRenderMgr.pushRenderPass(baselayer)
+	
+  backgroundSound(menuMusic)
+
+  background = cprop(universeSprite, 0, 0)
+  splashLogo = cprop(splashLogo, 0, 20)
+  textbox = CreateTextBox(0, -60, 200, 30, style15, "Touch to Continue")
+  textbox:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  
+  baselayer:insertProp(background)
+  baselayer:insertProp(splashLogo)
+  baselayer:insertProp(textbox)
+  
+	gamestate = "splash"
 end
 
 function loadBaseBars()

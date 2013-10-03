@@ -35,4 +35,4 @@ CreateShipUpgradesList()
 CreateStationUpgradesList()
 
 coins = 0
-gamestate = 'pause'
+gamestate = 'splash'
