@@ -1,6 +1,6 @@
 health = 30
 maxHealth = 30
-bulletDamage = 100
+bulletDamage = 50
 gunActive = false
 if(userdata.mission ~= "chased") then
   gunActive = true
@@ -24,7 +24,15 @@ function newBullet (origX, origY, angle)
   end
   
   local buffedBulletDamage = bulletDamage + (bulletDamage * (bestGunBuildIndex * 0.05))
+  if(shipUpgradesList[1]:IsBuild()) then
+      print("upgrade")
+      bulletDamage = bulletDamage + 50
+  end
   
+    
+
+
+    
   local bullet = Bullet.new(bsprite, blayer, origX, origY, epartition, angle, bulletDamage)
   bpartition:insertProp(bullet.prop)
   bullet:startThread()
