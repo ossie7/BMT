@@ -87,16 +87,10 @@ function loadFightLayers()
     userdata.daysBuild = daysBuild
     save_userdata()
   end
-
-  print("current week "..week)
-  if(winDate ~= nil) then
-    print("timeeeeee "..winDate)
-  end
   
   if(userdata.daysBuild == upgradee.requiredTime) then
-      Popup.new("You won!", "Congratulations, you managed to\n build the station.", "OK", nil)
+      addPopup("You won!", "Congratulations, you managed to\n build the station.", "OK", "loadMenuLayers")
   end
-  
   
   propExplosion = MOAIProp2D.new()
   propExplosion:setDeck(tileLib)
@@ -140,6 +134,8 @@ function loadMenuLayers()
   captainprop = cprop(captain, 0,-15)
   captainprop.name = "playing"
   
+  textboxTurn = CreateTextBox(-120, 82, 100, 15, upgradeMenuStyle, "Turn "..userdata.turn)
+  textboxTurn:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
   ShowPlayerResources()
   
   loadBaseBars()
@@ -147,6 +143,7 @@ function loadMenuLayers()
 	partition = cp(menuLayer)
   partition:insertProp(propMetal)
   partition:insertProp(propPlasma)
+  partition:insertProp(textboxTurn)
   partition:insertProp(textboxMetalAmount)
   partition:insertProp(textboxEnergyAmount)
   partition:insertProp(captainprop)

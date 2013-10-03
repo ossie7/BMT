@@ -42,7 +42,21 @@ function SetupNewUserdata()
   userdata.daysBuild = 0
   -- you have to unlock the engineer in mission 2
   userdata.showEngineer = false
+  
 end
+
+function clearUpgrades()
+  
+  for i = 1, table.getn(shipUpgradesList), 1 do
+    shipUpgradesList[i]:Build(false)
+  end
+  
+  for i = 1, table.getn(stationUpgradesList), 1 do
+    stationUpgradesList[i]:Build(false)
+  end
+  
+end
+
 
 -- At the beginning of your application, get the persisted data:
 if (userdata_f ~= nil) then

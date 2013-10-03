@@ -83,7 +83,9 @@ function playInput(event, idx, x, y)
       ctouchY = ay
     end
     keepInside(prop)
-    moveGun(gun, prop, cross)
+    if(userdata.mission ~= "chased") then
+      moveGun(gun, prop, cross)
+    end
     keepInside(cross)
   end
   

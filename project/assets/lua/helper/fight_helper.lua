@@ -16,10 +16,17 @@ function createProp(sprite, layer)
 end
 
 function createGunTools()
-  cross = cprop(csprite, 140, 0)
+  local gunX = 0
+  local crossX = 140
+  if(userdata.mission == "chased") then
+    gunX = 200
+    crossX = 200
+  end
+  
+  cross = cprop(csprite, crossX, 0)
+  gun = cprop(gunsprite, gunX, 0)
+  
   clayer:insertProp(cross)
-
-  gun = cprop(gunsprite, 0, 0)
   clayer:insertProp(gun)
 end
 
@@ -40,6 +47,7 @@ end
 function startDuel(sprite, layer)
   createProp(sprite, layer)
   createGunTools()
+
   createUniverseBackground()
 
   currentWaveRight = 1
@@ -137,32 +145,40 @@ function checkEndOfBattle()
     local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
     local earnedLoot = 100
     local wz = userdata.warzone
-    if(leftEnemies == nil) then
-      if(wz > 1 and userdata.turn > 2) then userdata.warzone = wz -1 end
+    if(leftEnemies == nil and lastWaveLeft) then
+      if(wz > 0 and userdata.showEngineer) then userdata.warzone = wz -1 end
       save_userdata()
-      if(userdata.turn == 2) then 
+      if(userdata.warzone == 0) then
+        SetupNewUserdata()
+        clearUpgrades()
+        save_userdata()
+        addPopup("You lost", "Loooser", "OK", "loadMenuLayers")
+      elseif(userdata.turn > 1 and userdata.showEngineer == false) then 
         addPopup("Mission Passed", "You saved an engineer!\n He can help you to improve your ship", "OK", "loadMenuLayers")
         userdata.mission = ""
         userdata.showEngineer = true
         save_userdata()
        elseif(userdata.turn > 2 or userdata.turn == 1) then
-        addPopup("End of battle", "The left team has lost this battle \n you gained "..earnedLoot.." plasma!", "OK",          "loadMenuLayers")
+        addPopup("End of battle", "The left team has lost this battle \n you gained "..earnedLoot.." metal!", "OK",          "loadMenuLayers")
+        userdata.metal = userdata.metal + earnedLoot
+        save_userdata()
       end
       battleDone = 1
       
-      if(userdata.warzone == 0) then
-        addPopup("You lost", "Loooser", "OK", nil)
-      end
       
     elseif (rightEnemies == nil and userdata.mission ~= "chased") then
       if(wz < 9 and userdata.turn > 2) then userdata.warzone = wz +1 end
       save_userdata()
       if(userdata.warzone == 9) then
-        addPopup("You lost", "Loooser", "OK", nil)
+        SetupNewUserdata()
+        clearUpgrades()
+        save_userdata()
+        addPopup("You lost", "Loooser", "OK", "loadMenuLayers")
       else
         -- needs testing
-        addPopup("End of battle", "The right team has lost this battle \n you gained "..earnedLoot.." metal!", "OK", "loadMenuLayers")
-      
+        addPopup("End of battle", "The right team has lost this battle \n you gained "..earnedLoot.." plasma!", "OK", "loadMenuLayers")
+        userdata.plasma = userdata.plasma + earnedLoot
+        save_userdata()
       end
       battleDone = 1
       
@@ -219,7 +235,10 @@ function deadShip()
   if(wz<5 and wz > 1) then userdata.warzone = wz - 1 end
   if(wz>5 and wz < 9) then userdata.warzone = wz + 1 end
   if(wz == 1 or wz == 9) then
-    addPopup("You lost", "Loooser", "OK", nil)
+    SetupNewUserdata()
+    clearUpgrades()
+    save_userdata()
+    addPopup("You lost", "Loooser", "OK", "loadMenuLayers")
   end
   if(wz == 5) then
     local r = math.random()
