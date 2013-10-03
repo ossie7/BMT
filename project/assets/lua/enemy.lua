@@ -207,6 +207,7 @@ end
 function Enemy.die(self)
   local xDie,yDie = self.prop:getLoc()
 
+  explodeSound()
   elayer:removeProp(self.prop)
   elayer2:removeProp(self.prop)
   if(lastWaveRight == true or lastWaveLeft == true and mission == "") then

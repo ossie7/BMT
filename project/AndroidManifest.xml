@@ -8,7 +8,7 @@
 	package="com.bttf.thethird">
 	
 	<application 
-		android:icon="@drawable/icon" 
+		android:icon="@drawable/logo_white" 
 		android:debuggable="true" 
 		android:enabled="true" 
 		android:persistent="false" 

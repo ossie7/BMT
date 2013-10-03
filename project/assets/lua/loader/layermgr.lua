@@ -54,7 +54,8 @@ function initLayers()
   popupPartition   = cp(popupButtonLayer)
   popupTextLayer   = cl() -- Popup text
   
-  loadMenuLayers()
+  --loadMenuLayers()
+  loadSplashLayers()
 end
 
 function loadFightLayers()
@@ -71,6 +72,8 @@ function loadFightLayers()
   MOAIRenderMgr.pushRenderPass(textLayer)
   MOAIRenderMgr.pushRenderPass(guiLayer)
   MOAIRenderMgr.pushRenderPass(guiButtonLayer)
+  
+  backgroundSound(battleMusic)
   
   currentWave = 1
   userdata.turn = userdata.turn + 1
@@ -118,6 +121,8 @@ function loadMenuLayers()
   MOAIRenderMgr.pushRenderPass(baselayer)
   MOAIRenderMgr.pushRenderPass(basebarlayer)
   MOAIRenderMgr.pushRenderPass(menuLayer)
+  
+  backgroundSound(menuMusic)
 	
   basebackprop = cprop(basesprite, 0, 0)
   baselayer:insertProp(basebackprop)
@@ -151,6 +156,24 @@ function loadMenuLayers()
 	gamestate = "pause"
 end
 
+function loadSplashLayers()
+  clearLayers()
+  MOAIRenderMgr.pushRenderPass(baselayer)
+	
+  backgroundSound(menuMusic)
+
+  background = cprop(universeSprite, 0, 0)
+  splashLogo = cprop(splashLogo, 0, 20)
+  textbox = CreateTextBox(0, -60, 200, 30, style15, "Touch to Continue")
+  textbox:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  
+  baselayer:insertProp(background)
+  baselayer:insertProp(splashLogo)
+  baselayer:insertProp(textbox)
+  
+	gamestate = "splash"
+end
+
 function loadBaseBars()
   local left = ((userdata.warzone - 0.5) / 9) * 212
   local right = ((9.5 - userdata.warzone) / 9) * -212
@@ -176,6 +199,8 @@ function loadUpgradesLayers(upgradeScreenType)
   MOAIRenderMgr.pushRenderPass(upgradeback)
   MOAIRenderMgr.pushRenderPass(upgradeLayer)
   MOAIRenderMgr.pushRenderPass(textLayer)
+  
+  backgroundSound(menuMusic)
   
   upgradeType = upgradeScreenType
   ShowPlayerResources()

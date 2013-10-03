@@ -34,6 +34,7 @@ end
 function bulletGen(x, y, angle)
   if(gunActive) then
     if(last + interval < clock()) then
+      laserSound()
       newBullet(x, y, angle)
       last = clock()
     end

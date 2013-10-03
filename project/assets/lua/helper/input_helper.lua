@@ -44,7 +44,9 @@ function touchInput(event, idx, x, y, tapCount)
       popupClicked()
     end
   else
-    if(gamestate == "playing") then
+    if(gamestate == "splash") then
+      splashInput(event, idx, x, y)
+    elseif(gamestate == "playing") then
       playInput(event, idx, x, y)
     elseif(gamestate == "upgrading") then
       upgradeInput(event, idx, x, y)
@@ -53,6 +55,12 @@ function touchInput(event, idx, x, y, tapCount)
     elseif(gamestate == "pause") then
       baseInput(event, idx, x, y)
     end
+  end
+end
+
+function splashInput(event, idx, x, y)
+  if(event == MOAITouchSensor.TOUCH_UP) then
+    loadMenuLayers()
   end
 end
 
