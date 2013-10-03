@@ -209,9 +209,11 @@ function Enemy.die(self)
 
   elayer:removeProp(self.prop)
   elayer2:removeProp(self.prop)
-  if(lastWaveRight == true or lastWaveLeft == true) then
-    checkEndOfBattle()
-  end
+  if(lastWaveRight == true or lastWaveLeft == true and mission == "") then
+      checkEndOfBattle()
+  elseif(lastWaveLeft == true and mission == "chased") then
+      checkEndOfBattle()
+    end
   if(self.team == 1) then
     leftKilled = leftKilled + 1
   else

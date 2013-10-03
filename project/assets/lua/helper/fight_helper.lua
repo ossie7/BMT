@@ -137,9 +137,9 @@ function checkEndOfBattle()
     local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
     local earnedLoot = 100
     local wz = userdata.warzone
-    if(leftEnemies == nil) then
+    if(leftEnemies == nil and lastWaveLeft) then
       if(wz > 1 and userdata.turn > 2) then userdata.warzone = wz -1 end
-      save_userdata()
+
       if(userdata.turn == 2) then 
         addPopup("Mission Passed", "You saved an engineer!\n He can help you to improve your ship", "OK", "loadMenuLayers")
         userdata.mission = ""
@@ -150,9 +150,6 @@ function checkEndOfBattle()
       end
       battleDone = 1
       
-      if(userdata.warzone == 0) then
-        addPopup("You lost", "Loooser", "OK", nil)
-      end
       
     elseif (rightEnemies == nil and userdata.mission ~= "chased") then
       if(wz < 9 and userdata.turn > 2) then userdata.warzone = wz +1 end
