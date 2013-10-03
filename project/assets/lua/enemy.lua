@@ -92,6 +92,7 @@ end
 function Enemy.hitThread(self)
   while true do
     if(popupActive == false) then
+    self:setShipColor(1, 1, 1, 1)
     if(gamestate ~= "playing") then
       self:die()
     end
@@ -114,6 +115,7 @@ function Enemy.newEnemyBullet (self, origX, origY, angle)
   end
   local enemyBullet = EnemyBullet.new(sprite, origX, origY, angle, self.team, self.damage)
   ebpartition:insertProp(enemyBullet.prop)
+  if(self.team == 1) then enemyBullet:setScl(2) end
   enemyBullet:startThread()
   enemyBullet = nil
 end
@@ -188,10 +190,14 @@ function Enemy.damageTaken(self, obj)
   obj.owner:die()
   
   self.health = self.health - damage
-  
+  self:setShipColor(1, 0, 0, 1)
   if (self.health <= 0 ) then
     self:die()
   end
+end
+
+function Enemy.setShipColor(self, r, g, b, a)
+  self.prop:setColor(r, g, b, a)
 end
 
 function Enemy.remove(self)
