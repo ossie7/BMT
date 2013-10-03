@@ -130,11 +130,11 @@ function loadMenuLayers()
   -- start intro conversation
   if(userdata.isFirstTime) then
     queuePopup({
-      Popup.new("Captain", "Welcome to my base!\n I'm the captain, click me to start a new adventure", "Next", nil, captainSprite),
-      Popup.new("Captain", "Two cultures are in war,\n to win this war you have to create peace", "Next", nil,captainSprite),
-      Popup.new("Captain", "Balance the power of the two cultures\n and build a tradepost to win", "Next",          nil ,captainSprite            ),
-      Popup.new("Architect", "Hello, I am the architect\n I can help you building the space station", "Next", nil, architectSprite),
-      Popup.new("Architect", "You need some more experience before\n you can start building the staton\n please come back later",            "Next"          , nil, architectSprite),
+      Popup.new("Captain", "Welcome to the base!\n I'm the captain, tap me to\n start a new adventure", "Next", nil, captainSprite),
+      Popup.new("Captain", "Two planets are at war.\n Force both fleets to a\n standstill by balancing their power. ", "Next", nil,captainSprite),
+      Popup.new("Captain", "Meanwhile, you must build\n the station in order\n for trade to start. ", "Next", nil ,captainSprite),
+      Popup.new("Architect", "Hello, I am the architect.\n I can build the station,\n but you will need some\n more experience for that.", "Next", nil, architectSprite),
+      Popup.new("Architect", "Speak to me later.", "Next", nil, architectSprite),
     })
   userdata.isFirstTime = false
   save_userdata()
