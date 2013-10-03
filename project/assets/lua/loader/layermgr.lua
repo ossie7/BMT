@@ -195,6 +195,9 @@ function loadBaseBars()
   
   rfprop = cprop(rfsprite, fist, 33)
   basebarlayer:insertProp(rfprop)
+  
+  wzprop = cprop(wzSprite, 0, 0)
+  basebarlayer:insertProp(wzprop)
 end
 
 function loadUpgradesLayers(upgradeScreenType)
@@ -211,12 +214,12 @@ function loadUpgradesLayers(upgradeScreenType)
    
   if upgradeType == "ship" then
     propUpgradeBackground = cprop(shipUpgradeScreenSprite, 0, 0)
-    chatboxProp = cprop(chatboxShipSprite, 20, 50)
-    textboxChatBox = CreateTextBox(20, 50, 132, 48, chatboxstyle, "Welcome to my shop. \n Select the item you want.")
+    chatboxProp = cprop(chatboxShipSprite, -2, 50)
+    textboxChatBox = CreateTextBox(-2, 54, 132, 48, chatboxstyle, "Welcome to my shop. \n Select the item you want.")
   elseif upgradeType == "station" then
     propUpgradeBackground = cprop(stationUpgradeScreenSprite, 0, 0)
-    chatboxProp = cprop(chatboxStationSprite, 0, 50)
-    textboxChatBox = CreateTextBox(0, 50, 132, 48, chatboxstyle, "Welcome to my shop. \n Select the item you want.")
+    chatboxProp = cprop(chatboxStationSprite, 2, 50)
+    textboxChatBox = CreateTextBox(2, 54, 132, 48, chatboxstyle, "Welcome to my shop. \n Select the item you want.")
   end
   propBackButton = cprop(warroomButtonSprite, -132, -62)
   propBuildButton = cprop(warroomButtonSprite, 132, -62)
