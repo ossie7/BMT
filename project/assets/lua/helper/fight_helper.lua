@@ -140,7 +140,14 @@ function checkEndOfBattle()
     if(leftEnemies == nil) then
       if(wz > 1 and userdata.turn > 2) then userdata.warzone = wz -1 end
       save_userdata()
-      endOfBattle(1, earnedLoot, "metal")
+      if(userdata.turn == 2) then 
+        addPopup("Mission Passed", "You saved an engineer!\n He can help you to improve your ship", "OK", "loadMenuLayers")
+        userdata.mission = ""
+        userdata.showEngineer = true
+        save_userdata()
+       elseif(userdata.turn > 2 or userdata.turn == 1) then
+        addPopup("End of battle", "The left team has lost this battle \n you gained "..earnedLoot.." plasma!", "OK",          "loadMenuLayers")
+      end
       battleDone = 1
       
       if(userdata.warzone == 0) then
@@ -150,21 +157,16 @@ function checkEndOfBattle()
     elseif (rightEnemies == nil and userdata.mission ~= "chased") then
       if(wz < 9 and userdata.turn > 2) then userdata.warzone = wz +1 end
       save_userdata()
-      endOfBattle(2, earnedLoot, "plasma")
-      battleDone = 1
-      
       if(userdata.warzone == 9) then
         addPopup("You lost", "Loooser", "OK", nil)
-      end
+      else
+        -- needs testing
+        addPopup("End of battle", "The right team has lost this battle \n you gained "..earnedLoot.." metal!", "OK", "loadMenuLayers")
       
-      elseif (rightEnemies == nil) then
-        if(wz < 9) then userdata.warzone = wz +1 end
-        if(userdata.turn == 2) then
-            userdata.showEngineer = true
-            addPopup("Mission Passed", "You saved an engineer!\n He can help you to improve your ship", "OK", "loadMenuLayers")
-            userdata.mission = ""
-            save_userdata()
-        end
+      end
+      battleDone = 1
+      
+      
     end
   end
 end

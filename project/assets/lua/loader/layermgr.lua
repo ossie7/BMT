@@ -254,37 +254,6 @@ function loadUpgradesLayers(upgradeScreenType)
   gamestate = "upgrading"
 end
 
-function endOfBattle(winningTeam, loot, lootname)
-  clearLayers()
-  MOAIRenderMgr.pushRenderPass(endweeklayer)
-  
-  propGoMenu = cprop(spriteGoMenu, -130,-70)
-  propGoMenu.name = "button"
-
-  amountOfLoot = loot
-  
-  local teamText = ""
-  if(winningTeam == 1) then
-    teamText = "left"
-    userdata.metal = userdata.metal + loot
-  else
-    teamText = "right"
-    userdata.plasma = userdata.plasma + loot
-  end
-
-  if(textboxBattleResults ~= nil) then
-    eobpartition:removeProp(textboxBattleResults)
-  end
-  textboxBattleResults = CreateTextBox(0, 0, 150, 100, upgradeMenuStyle, 
-    "The " .. teamText .. " team has lost this battle, you gained "..amountOfLoot.." "..lootname)
-  
-  save_userdata()
-
-  eobpartition:insertProp(textboxBattleResults)
-	eobpartition:insertProp(propGoMenu)
-  gamestate = "endOfBattle"
-end
-
 function ShowPlayerResources()
   propMetal  = cprop(metalSprite,  78,  80)
   propPlasma = cprop(plasmaSprite, 120, 80)
