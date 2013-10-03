@@ -26,9 +26,10 @@ rightborder = screenWidthScale / 2
 topborder = screenHeightScale / 2
 bottomborder = (screenHeightScale / 2) * -1
 
+initSounds()
 initTextures()
 initLayers()
-initSounds()
+
 
 CreateShipUpgradesList()
 CreateStationUpgradesList()

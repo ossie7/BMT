@@ -72,7 +72,7 @@ function loadFightLayers()
   MOAIRenderMgr.pushRenderPass(guiLayer)
   MOAIRenderMgr.pushRenderPass(guiButtonLayer)
   
-  
+  backgroundSound(battleMusic)
   
   currentWave = 1
   userdata.turn = userdata.turn + 1
@@ -126,6 +126,8 @@ function loadMenuLayers()
   MOAIRenderMgr.pushRenderPass(baselayer)
   MOAIRenderMgr.pushRenderPass(basebarlayer)
   MOAIRenderMgr.pushRenderPass(menuLayer)
+  
+  backgroundSound(menuMusic)
 	
   basebackprop = cprop(basesprite, 0, 0)
   baselayer:insertProp(basebackprop)
@@ -181,6 +183,8 @@ function loadUpgradesLayers(upgradeScreenType)
   MOAIRenderMgr.pushRenderPass(upgradeback)
   MOAIRenderMgr.pushRenderPass(upgradeLayer)
   MOAIRenderMgr.pushRenderPass(textLayer)
+  
+  backgroundSound(menuMusic)
   
   upgradeType = upgradeScreenType
   ShowPlayerResources()
