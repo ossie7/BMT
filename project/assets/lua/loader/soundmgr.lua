@@ -3,26 +3,26 @@ MOAIUntzSystem.setVolume(1)
 backgroundMusic = nil
 nextMusic = nil
 
-function csound(file, looping)
+function csound(file, looping, volume)
   local sound = MOAIUntzSound.new()
   sound:load(file)
-  sound:setVolume(1)
+  sound:setVolume(volume)
   sound:setLooping(looping)
   return sound
 end
 
 function initSounds()
-  laserSound1 = csound("resources/sound/laser1.ogg", false)
-  laserSound2 = csound("resources/sound/laser2.ogg", false)
-  laserSound3 = csound("resources/sound/laser3.ogg", false)
+  laserSound1 = csound("resources/sound/laser1.ogg", false, 0.5)
+  laserSound2 = csound("resources/sound/laser2.ogg", false, 0.5)
+  laserSound3 = csound("resources/sound/laser3.ogg", false, 0.5)
   laserSounds = {laserSound1, laserSound2, laserSound3}
   
-  explodeSound1 = csound("resources/sound/explode1.ogg", false)
-  explodeSound2 = csound("resources/sound/explode2.ogg", false)
+  explodeSound1 = csound("resources/sound/explode1.ogg", false, 0.5)
+  explodeSound2 = csound("resources/sound/explode2.ogg", false, 0.5)
   explodeSounds = {explodeSound1, explodeSound2}
   
-  battleMusic = csound("resources/sound/battle.ogg", true)
-  menuMusic = csound("resources/sound/menu.ogg", true)
+  battleMusic = csound("resources/sound/battle.ogg", true, 1)
+  menuMusic = csound("resources/sound/menu.ogg", true, 1)
   
   startMusicThread()
 end
@@ -39,7 +39,7 @@ function backgroundSound(track)
   if(backgroundMusic == nil) then
     backgroundMusic = track
     backgroundMusic:play()
-  else
+  elseif(backgroundMusic ~= track) then
     nextMusic = track
   end
 end

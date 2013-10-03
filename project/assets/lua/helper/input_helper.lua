@@ -126,7 +126,7 @@ function upgradeInput(event, idx, x, y)
           local deltaX, deltaY
           local propX, propY = pickedProp:getLoc()
           deltaX = 0 - propX
-          deltaY = 10 - propY
+          deltaY = 5 - propY
            
           UpdateUpgradesPositions(deltaX, deltaY, i)
           textboxNameValue:setString(""..upgrade:GetName())

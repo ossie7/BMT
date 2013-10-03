@@ -94,11 +94,13 @@ function checkBulletCollision()
     if(type(robj)=="table") then
       for i, hit in ipairs(robj) do
         if(hit.owner.source == 1) then
+          newReflectBullet(hit.owner)
           hit.owner:reflect()
         end
       end
     else
       if(robj.owner.source == 1) then
+        newReflectBullet(robj.owner)
         robj.owner:reflect()
         if(popupActive == false) then -- POPUP SAMPLE CODE
           --addPopup("Reflection", "You reflected\na bullet!\nYay!", "Ok", nil)
@@ -134,6 +136,16 @@ function checkBulletCollision()
       damage(hobj2)
     end
   end
+end
+
+function newReflectBullet(obullet)
+  local a = obullet.angle - 180
+  local x, y = obullet.prop:getLoc()
+  local bullet = EnemyBullet.new(obullet.sprite, x, y, a, 3, obullet.damage / 2)
+  ebrpartition:insertProp(bullet.prop)
+  bullet:setScl(1)
+  bullet.layer = ebrlayer
+  bullet:startThread()
 end
 
 function damage(obj)

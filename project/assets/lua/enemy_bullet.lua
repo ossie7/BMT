@@ -11,6 +11,7 @@ function EnemyBullet.new(sprite, x, y, angle, source, damage)
   self.speed = 1
   self.source = source
   self.damage = damage
+  self.sprite = sprite
   
   self.prop = MOAIProp2D.new()
   self.prop:setDeck(sprite)
@@ -19,6 +20,10 @@ function EnemyBullet.new(sprite, x, y, angle, source, damage)
   self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   self.prop.owner = self
   return self
+end
+
+function EnemyBullet.setScl(self, scale)
+  self.prop:setScl(scale)
 end
 
 function EnemyBullet.checkIfInside(self, locX,locY)
@@ -41,7 +46,8 @@ function EnemyBullet.reflect(self)
   eblayer:removeProp(self.prop)
   ebrpartition:insertProp(self.prop)
   self.layer = ebrlayer
-  self.damage = self.damage * 2
+  self.damage = self.damage / 2
+  self:setScl(1)
   self.source = 3
   local d = shipDeltaY
   if(d > 20) then
