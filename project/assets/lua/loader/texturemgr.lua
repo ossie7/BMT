@@ -18,7 +18,6 @@ function initTextures()
   rfsprite     = cs("resources/red_fist.png",    0,    -11, 22,  11) --Right Fist
   metalSprite  = cs("resources/metal.png",       -4,   -4,  4,   4)  --Metal Icon
   plasmaSprite = cs("resources/energy.png",      -4,   -4,  4,   4)  --Energy Icon
-  spriteGoMenu = cs("resources/play_button.png", -8,   -8,  8,   8)  --Play Button
   wzSprite     = cs("resources/warzones.png",    -160, -90, 160, 90) --Warzones
   popupSprite  = cs("resources/popup.png",       -152, -72, 152, 73) --Popup Background
   engineerSprite  = cs("resources/engineer_portrait.png",       -36, -49, 36, 49) --Engineer portrait
@@ -32,7 +31,7 @@ function initTextures()
   warroomStationUpgradeSprite = cs("resources/transparent.png",     -15,  -25,  15,  25)   --Station upgrades button warroom
   warroomStartBattleSprite    = cs("resources/transparent.png",     -15,  -25,  15,  25)   --Start Battle button warroom
   warroomButtonSprite         = cs("resources/transparent.png",     -16,  -18,  16,  18)   --warroom buttons
-	spritePauseButton           = cs("resources/wm_pause.png",         -8,   -8,  8,    8)   --Pause button
+	spritePauseButton           = cs("resources/back_button.png",     -14,  -10,  14,  10)   --Pause button
   waterModuleSprite           = cs("resources/waterchip_module.png",-25,  -19,  25,  19)
   chatboxShipSprite           = cs("resources/ship_chatbox.png",    -66,  -24,  66,  24)
   chatboxStationSprite        = cs("resources/station_chatbox.png", -66,  -24,  66,  24)
