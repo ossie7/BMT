@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: E:\\School\\Minor Game Design & Development\\BMT\\project\\src\\com\\android\\vending\\billing\\IMarketBillingService.aidl
+ * Original file: C:\\BMT\\project\\src\\com\\android\\vending\\billing\\IMarketBillingService.aidl
  */
 package com.android.vending.billing;
 public interface IMarketBillingService extends android.os.IInterface
