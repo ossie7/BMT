@@ -8,7 +8,7 @@ function EnemyBullet.new(sprite, x, y, angle, source, damage)
   self.partition = ebpartition
   self.layer = eblayer
   self.angle = angle
-  self.speed = 1
+  self.speed = 1.5
   self.source = source
   self.damage = damage
   self.sprite = sprite

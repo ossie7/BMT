@@ -76,14 +76,13 @@ function loadFightLayers()
   backgroundSound(battleMusic)
   
   currentWave = 1
-  userdata.turn = userdata.turn + 1
   save_userdata()
   battleDone = 0
   
   upgradee = stationUpgradesList[1]
   local winDate
   if(userdata.stationBuild and userdata.warzone == 5) then
-    daysBuild = daysBuild + 1
+    local daysBuild = daysBuild + 1
     userdata.daysBuild = daysBuild
     save_userdata()
   end
@@ -232,7 +231,7 @@ function loadUpgradesLayers(upgradeScreenType)
     textboxChatBox = CreateTextBox(2, 54, 132, 48, chatboxstyle, "Welcome to my shop. \n Select the item you want.")
     if(userdata.firstTimeStation and userdata.turn > 4 and showEngineer) then
      queuePopup({
-      Popup.new("Architect", "Welcome to store!\n You can buy parts for your trade post here", "Next", nil, architectSprite),
+      Popup.new("Architect", "Welcome to my store!\n You can buy parts for your trade post here", "Next", nil, architectSprite),
       Popup.new("Architect", "You need enough resources and \n each part needs some time to be build", "Next", nil,architectSprite),
       Popup.new("Architect", "The first part needs 5 days to be build", "Next",          nil ,architectSprite),
       Popup.new("Architect", "Because this is a beta version this is the only module for now\n Build it and be in warzone 5 for 5 days.", "Next", nil, architectSprite),

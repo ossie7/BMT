@@ -1,14 +1,10 @@
-week = 0
 waveCounter = 0
 battleDone = 0
 -- chased, sandwiched
 if(userdata.turn < 2) then
   userdata.mission = "chased"
 end
--- the weeknumber when station was build 5 days is win
-startBuild = 0
--- days that you are already building
-daysBuild = 0
+
 
 function createProp(sprite, layer)
   prop = cprop(sprite, 0, 0)
@@ -41,7 +37,6 @@ function startTimer()
   last = clock() -- Last bullet spawn
   laste = clock() -- Last enemy spawn
   interval = 0.5 -- Bullet interval
-  intervale = 1 -- Enemy interval
 end
 
 function startDuel(sprite, layer)
@@ -50,15 +45,15 @@ function startDuel(sprite, layer)
 
   createUniverseBackground()
 
+  popupGiven = false --Mission popup
   currentWaveRight = 1
-  amountRightEnemies = 5 -- TODO dynamisch maken
+  amountRightEnemies = math.random(7,13) + (userdata.turn * 2)
   totalAmountRight = 0
   lastWaveRight = false
   rightKilled = 0
-  teamArrived = false
   
   currentWaveLeft = 1
-  amountLeftEnemies = 5 -- TODO dynamisch maken
+  amountLeftEnemies = math.random(7,13) + (userdata.turn * 2) 
   totalAmountLeft = 0
   lastWaveLeft = false
   leftKilled = 0
@@ -71,31 +66,26 @@ function startDuel(sprite, layer)
 end
 
 function createEnemyLeft()
-  currentAmountLeft = math.random(currentWaveLeft, (amountLeftEnemies/10)+currentWaveLeft)
+  currentAmountLeft = math.random(currentWaveLeft, (amountLeftEnemies/20)+currentWaveLeft)
 
   if((totalAmountLeft + currentAmountLeft) > amountLeftEnemies) then
     currentAmountLeft = amountLeftEnemies - totalAmountLeft
     totalAmountLeft = amountLeftEnemies
     lastWaveLeft = true
   else
-      totalAmountLeft = totalAmountLeft + currentAmountLeft
+    totalAmountLeft = totalAmountLeft + currentAmountLeft
   end
-  
   if (totalAmountLeft <= amountLeftEnemies) then
-    
     for x=1, currentAmountLeft do
-        newEnemy(1)
+      newEnemy(1)
     end
-    
     currentWaveLeft = currentWaveLeft + 1
   else
     timer:stop()
   end
-  
 end
 
 function createEnemyRight()
-  --totalWaves = math.random(week , week+2)
   currentAmountRight = math.random(currentWaveRight, (amountRightEnemies/10)+currentWaveRight)
   
   if(totalAmountRight + currentAmountRight > amountRightEnemies) then
@@ -103,27 +93,20 @@ function createEnemyRight()
     totalAmountRight = amountRightEnemies
     lastWaveRight = true
   else
-      totalAmountRight = totalAmountRight + currentAmountRight
+    totalAmountRight = totalAmountRight + currentAmountRight
   end
-  
   if (totalAmountRight <= amountRightEnemies) then
-    
     for x=1, currentAmountRight do
-        newEnemy(2)
-        print(x)
+      newEnemy(2)
     end
-    
     currentWaveRight = currentWaveRight + 1
   else
     timer2:stop()
   end
-  
 end
 
 function startWaves() 
   if(userdata.mission == "chased" or userdata.mission == "") then
-    isArrived = false
-    leftArrived = false
     timer = MOAITimer.new()
     timer:setMode(MOAITimer.LOOP)
     timer:setSpan(math.random(9,12))
@@ -155,7 +138,7 @@ function checkEndOfBattle()
         clearUpgrades()
         save_userdata()
         addPopup("You lost", "Loooser", "OK", "loadMenuLayers")
-      elseif(userdata.turn > 1 and userdata.showEngineer == false) then 
+      elseif(userdata.turn >= 1 and userdata.showEngineer == false) then 
         queuePopup({
           Popup.new("Mission Passed", "You saved the engineer!\n He can help you to improve your ship", "OK", nil),
           Popup.new("Mission Passed", "You can find him\nin your base.", "OK", nil),
@@ -164,16 +147,17 @@ function checkEndOfBattle()
         userdata.mission = ""
         userdata.showEngineer = true
         save_userdata()
-       elseif(userdata.turn > 2 or userdata.turn == 1) then
+       elseif(userdata.showEngineer or userdata.turn == 0) then
         addPopup("End of battle", "The left team has lost this battle \n you gained "..earnedLoot.." metal!", "OK",          "loadMenuLayers")
         userdata.metal = userdata.metal + earnedLoot
+        userdata.turn = userdata.turn + 1
         save_userdata()
       end
       battleDone = 1
       
       
     elseif (rightEnemies == nil and userdata.mission ~= "chased") then
-      if(wz < 9 and userdata.turn > 2) then userdata.warzone = wz +1 end
+      if(wz < 9 and userdata.showEngineer) then userdata.warzone = wz +1 end
       save_userdata()
       if(userdata.warzone == 9) then
         SetupNewUserdata()
@@ -184,6 +168,7 @@ function checkEndOfBattle()
         -- needs testing
         addPopup("End of battle", "The right team has lost this battle \n you gained "..earnedLoot.." plasma!", "OK", "loadMenuLayers")
         userdata.plasma = userdata.plasma + earnedLoot
+        userdata.turn = userdata.turn + 1
         save_userdata()
       end
       battleDone = 1

@@ -1,6 +1,6 @@
 health = 30
 maxHealth = 30
-bulletDamage = 50
+bulletDamage = 100
 gunActive = false
 if(userdata.mission ~= "chased") then
   gunActive = true
@@ -25,13 +25,9 @@ function newBullet (origX, origY, angle)
   
   local buffedBulletDamage = bulletDamage + (bulletDamage * (bestGunBuildIndex * 0.05))
   if(shipUpgradesList[1]:IsBuild()) then
-      bulletDamage = bulletDamage + 50
+      bulletDamage = bulletDamage + 100
   end
   
-    
-
-
-    
   local bullet = Bullet.new(bsprite, blayer, origX, origY, epartition, angle, bulletDamage)
   bpartition:insertProp(bullet.prop)
   bullet:startThread()
@@ -47,7 +43,7 @@ function bulletGen(x, y, angle)
     end
   else
     if(last + interval <clock()) then
-      health = health + 0.1
+      health = health + 0.07
       if health > maxHealth then health = maxHealth end
       last = clock()
     end
@@ -82,13 +78,34 @@ function startShipThread ()
 end
 
 function checkBulletCollision()
-  local obj = ebpartition:propForPoint(prop:getLoc() )
   local x,y = prop:getLoc()
-  local robj = ebpartition:propListForRect(x-16, y-6, x-12, y+5)
+  
+  --Hitbox 1
   local hobj1 = ebpartition:propListForRect(x-11, y-6, x+4, y+5)
+  if(hobj1) then
+    if(type(hobj1)=="table") then
+      for i, hit in ipairs(hobj1) do
+        damage(hit)
+      end
+    else
+      damage(hobj1)
+    end
+  end
+  
+  --Hitbox 2
   local hobj2 = ebpartition:propListForRect(x+3, y-2, x+15, y+1)
+  if(hobj2) then
+    if(type(hobj2)=="table") then
+      for i, hit in ipairs(hobj2) do
+        damage(hit)
+      end
+    else
+      damage(hobj2)
+    end
+  end
   
   --Reflect
+  local robj = ebpartition:propListForRect(x-16, y-5, x-12, y+4)
   if(robj) then
     if(type(robj)=="table") then
       for i, hit in ipairs(robj) do
@@ -101,38 +118,7 @@ function checkBulletCollision()
       if(robj.owner.source == 1) then
         newReflectBullet(robj.owner)
         robj.owner:reflect()
-        if(popupActive == false) then -- POPUP SAMPLE CODE
-          --addPopup("Reflection", "You reflected\na bullet!\nYay!", "Ok", nil)
-          --[[queuePopup({
-            Popup.new("Reflection", "You reflected\n a bullet!", "Ok", nil, spriteGoMenu),
-            Popup.new("Reflection", "Well done!", "Ok", nil, spritePauseButton),
-            Popup.new("Reflection", "No really,\nwell done!", "Okay...", nil),
-            Popup.new("Reflection", "YOU ARE\nAMAZING", "Shut up", nil)
-          })--]]
-        end
       end
-    end
-  end
-  
-  --Hitbox 1
-  if(hobj1) then
-    if(type(hobj1)=="table") then
-      for i, hit in ipairs(hobj1) do
-        damage(hit)
-      end
-    else
-      damage(hobj1)
-    end
-  end
-  
-  --Hitbox 2
-  if(hobj2) then
-    if(type(hobj2)=="table") then
-      for i, hit in ipairs(hobj2) do
-        damage(hit)
-      end
-    else
-      damage(hobj2)
     end
   end
 end
@@ -156,6 +142,8 @@ function damage(obj)
   SetShipColor(1, 0, 0, 1)
   if (health <= 0 ) then
     battleDone = 1
+    userdata.turn = userdata.turn + 1
+    save_userdata()
     addPopup("You died", "You weren't able to keep\nbalance in the war.\nBut the war went on...","Ok","deadShip")
   end
 end

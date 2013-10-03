@@ -6,15 +6,17 @@ function Enemy.new(sprite, x, y, team)
 
   self.team = team
   self.target = nil
-  self.health = 100
+  
   if(team == 1) then
     self.damage = 50
+    self.health = 100
   else
     self.damage = 100
+    self.health = 200
   end
   self.isArrived = false
   self.enemyLast = clock() + math.random() + math.random()
-  self.enemyInterval = 1.5 + math.random() + math.random()
+  self.enemyInterval = 0.5 + math.random() + math.random()
   self.entryLoc = 140 --math.random(130,145)
   self.prop = MOAIProp2D.new()
   self.prop:setDeck(sprite)
@@ -41,42 +43,41 @@ function Enemy.startThread (self)
       if(parent.team == 1 and locX <= (parent.entryLoc * -1)) then
         
         parent:moveIn(1, locX, locY)
-        if(locX == (parent.entryLoc *-1) and userdata.mission == "chased" and isArrived == false) then
-          if(userdata.turn == 1) then
+        if(locX == (parent.entryLoc *-1)-1 and userdata.mission == "chased" and parent.isArrived == false and popupGiven == false) then
+          if(userdata.turn == 0) then
             queuePopup({Popup.new("Mission", "Oh dear, you are being chased!\n Get away by reflecting bullets", "OK", nil)})
-          elseif(userdata.turn > 1 and userdata.showEngineer == false) then
+            popupGiven = true
+          elseif(userdata.turn > 0 and userdata.showEngineer == false) then
             queuePopup({Popup.new("Mission", "There's someone in need!\n Kill the pursuers and save him ", "OK", nil)})
+            popupGiven = true
           end
-          
-          isArrived = true
         end
-      elseif (parent.team == 2 and locX > parent.entryLoc) then  
+      elseif (parent.team == 2 and locX >= parent.entryLoc) then  
         parent:moveIn(2, locX, locY)
       end
 
-      if(parent.team == 1 and locX >= -140) then
-
+      if(parent.team == 1 and parent.isArrived) then
         local newX = math.random(-10,10)
-        local newY = math.random(-10,10)
-        if((newX + locX) >= -110) then
+        local newY = math.random(-20,20)
+        if((newX + locX) >= -110 or (newX + locX) <= -150) then
           newX = 0
         end
         if ((newY + locY) <= -60 or (newY + locY) >= 70) then
           newY = 0
         end
-        wait(self:moveLoc(newX, newY, 3))
+        wait(self:moveLoc(newX, newY, math.random() + math.random(1,2)))
       end
       
-      if(parent.team == 2 and locX <= 140) then
+      if(parent.team == 2 and parent.isArrived) then
         local newX = math.random(-10,10)
-        local newY = math.random(-10,10)
-        if((newX + locX) <= 110) then
+        local newY = math.random(-20,20)
+        if((newX + locX) <= 110 or (newX + locX) >= 150) then
           newX = 0
         end
         if ((newY + locY) <= -60 or (newY + locY) >= 70) then
           newY = 0
         end
-        wait(self:moveLoc(newX, newY, 3))
+        wait(self:moveLoc(newX, newY, math.random() + math.random(1,2)))
       end
       end
       coroutine.yield()
@@ -90,24 +91,17 @@ function Enemy.startThread (self)
 end
 
 function Enemy.moveIn(self, teamId, x, y)
-  
   if(teamId == 1 and self.isArrived == false) then
-    x = x + 1
-    self.prop:setLoc(x, y)
-    if(x == -140) then
+    self.prop:setLoc(x + 1, y)
+    if(x >= -140) then
       self.isArrived = true
     end
-    
-  end
-  
-  if(teamId == 2 and self.isArrived == false) then
-    x = x - 1
-    self.prop:setLoc(x, y)
-    if(x == 140) then
+  elseif(teamId == 2 and self.isArrived == false) then
+    self.prop:setLoc(x - 1, y)
+    if(x <= 140) then
       self.isArrived = true
     end
   end
-  
 end
 
 
@@ -168,7 +162,7 @@ function Enemy.enemyBulletGen(self, x, y)
       if(userdata.mission == "chased") then
         if(self.enemyLast+self.enemyInterval < clock()) then
           local tx, ty = prop:getLoc()
-          local angle = calcAngle(x, y, tx, ty)
+          local angle = calcAngle(x, y, tx, math.random(ty - 10, ty + 10))
           self:newEnemyBullet(x, y, angle)
           self.enemyLast = clock()
         end
@@ -176,7 +170,7 @@ function Enemy.enemyBulletGen(self, x, y)
         if(self.target.owner.health > 0) then
           if(self.enemyLast+self.enemyInterval < clock()) then
             local tx, ty = self.target:getLoc()
-            local angle = calcAngle(x, y, tx, ty)
+            local angle = calcAngle(x, y, tx, math.random(ty - 10, ty + 10))
             self:newEnemyBullet(x, y, angle)
             self.enemyLast = clock()
           end
@@ -238,11 +232,11 @@ function Enemy.die(self)
   explodeSound()
   elayer:removeProp(self.prop)
   elayer2:removeProp(self.prop)
-  if(lastWaveRight == true or lastWaveLeft == true and mission == "") then
-      checkEndOfBattle()
-  elseif(lastWaveLeft == true and userdata.mission == "chased") then
-      checkEndOfBattle()
-    end
+  if(lastWaveLeft == true and userdata.mission == "chased") then
+    checkEndOfBattle()
+  elseif((lastWaveRight and self.team == 2) or (lastWaveLeft and self.team == 1)) then
+    checkEndOfBattle()
+  end
   if(self.team == 1) then
     leftKilled = leftKilled + 1
   else

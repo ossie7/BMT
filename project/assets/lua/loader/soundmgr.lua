@@ -39,7 +39,7 @@ function backgroundSound(track)
   if(backgroundMusic == nil) then
     backgroundMusic = track
     backgroundMusic:play()
-  elseif(backgroundMusic ~= track) then
+  elseif(backgroundMusic ~= track or (nextMusic ~= track and nextMusic ~= nil)) then
     nextMusic = track
   end
 end
