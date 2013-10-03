@@ -44,7 +44,7 @@ function Enemy.startThread (self)
           
           if(userdata.turn == 1) then
             queuePopup({Popup.new("Mission", "Oh dear, you are being chased!\n Get away by reflecting bullets", "OK", nil)})
-          elseif(userdata.turn == 2) then
+          elseif(userdata.turn > 1 and userdata.showEngineer == false) then
             queuePopup({Popup.new("Mission", "There's someone in need!\n Kill the pursuers and save him ", "OK", nil)})
           end
           
@@ -211,7 +211,7 @@ function Enemy.die(self)
   elayer2:removeProp(self.prop)
   if(lastWaveRight == true or lastWaveLeft == true and mission == "") then
       checkEndOfBattle()
-  elseif(lastWaveLeft == true and mission == "chased") then
+  elseif(lastWaveLeft == true and userdata.mission == "chased") then
       checkEndOfBattle()
     end
   if(self.team == 1) then

@@ -1,8 +1,10 @@
 health = 30
 maxHealth = 30
 bulletDamage = 100
-
-gunActive = true
+gunActive = false
+if(userdata.mission ~= "chased") then
+  gunActive = true
+end
 
 function checkHealth() 
   return health
@@ -64,7 +66,9 @@ end
 
 function startShipThread ()
   health = maxHealth
-  gunActive = true
+  if(userdata.mission ~= "chased") then
+    gunActive = true
+  end
   shipthread = MOAICoroutine.new()
   shipthread:run(shipThread)
 end
