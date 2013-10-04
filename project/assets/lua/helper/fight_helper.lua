@@ -53,7 +53,7 @@ function startDuel(sprite, layer)
   lastWaveLeft = false
   leftKilled = 0
   
-  if(userdata.turn < 2 or showEngineer == false) then
+  if(userdata.turn < 2 and showEngineer == false) then
     userdata.mission = "chased"
   end
   
@@ -215,6 +215,11 @@ function checkCollision()
 end
 
 function deadShip()
+  if(userdata.turn <= 1) then
+    loadMenuLayers()
+    return
+  end
+  
   local wz = userdata.warzone
   if(wz<5 and wz > 1) then userdata.warzone = wz - 1 end
   if(wz>5 and wz < 9) then userdata.warzone = wz + 1 end
@@ -236,6 +241,7 @@ function deadShip()
       userdata.warzone = wz - 1
     end
   end
+  userdata.turn = userdata.turn + 1
   loadMenuLayers()
 end
 
@@ -253,7 +259,7 @@ function guiThread()
     local cx, cy = cross:getLoc()
     
     if(touchY  > -90) then gs1:setLoc(-70, bottomborder + ((py + 90) / 18)) end
-    if(ctouchY > -90 and userdata.mission ~= "chased") then
+    if(ctouchY > -90 and userdata.mission ~= "chased" and gs2 ~= nil) then
       gs2:setLoc(70, bottomborder + ((cy + 90) / 18))
     end
     

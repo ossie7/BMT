@@ -16,8 +16,11 @@ function Enemy.new(sprite, x, y, team)
   end
   self.isArrived = false
   self.enemyLast = clock() + math.random() + math.random()
-  --self.enemyInterval = 0.5 + math.random() + math.random()
-  self.enemyInterval = 1
+  if(team == 1) then
+    self.enemyInterval = 0.5 + math.random() + math.random()
+  else
+    self.enemyInterval = 1.2 + math.random() + math.random()
+  end
   self.entryLoc = 140 --math.random(130,145)
   self.prop = MOAIProp2D.new()
   self.prop:setDeck(sprite)

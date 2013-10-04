@@ -142,7 +142,6 @@ function damage(obj)
   SetShipColor(1, 0, 0, 1)
   if (health <= 0 ) then
     battleDone = 1
-    userdata.turn = userdata.turn + 1
     save_userdata()
     addPopup("You died", "You weren't able to keep\nbalance in the war.\nBut the war went on...","Ok","deadShip")
   end
