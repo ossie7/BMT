@@ -123,7 +123,7 @@ function checkEndOfBattle()
       addPopup("GAME OVER", "The left team lost the war.\nStart a new adventure and try\n to keep the balance next time.", "OK", "loadMenuLayers")
     elseif(userdata.turn >= 1 and userdata.showEngineer == false) then 
       queuePopup({
-        Popup.new("Mission Passed", "You saved the engineer!\n He can help you to improve your ship", "OK", nil),
+        Popup.new("Mission Passed", "You saved the engineer!\n He can help you to improve your ship.", "OK", nil),
         Popup.new("Mission Passed", "You can find him\nin your base.", "OK", "loadMenuLayers")
       })
       userdata.mission = ""
