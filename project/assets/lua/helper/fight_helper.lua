@@ -153,7 +153,7 @@ function checkEndOfBattle()
       
       
     elseif ((amountRightEnemies - rightKilled == 0) and userdata.mission ~= "chased") then
-      if(wz < 9 and userdata.showEngineer) then userdata.warzone = wz +1 end
+      if(wz < 10 and userdata.showEngineer) then userdata.warzone = wz +1 end
       save_userdata()
       if(userdata.warzone == 10) then
         SetupNewUserdata()
