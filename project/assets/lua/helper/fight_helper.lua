@@ -153,7 +153,7 @@ function checkEndOfBattle()
       
       
     elseif ((amountRightEnemies - rightKilled == 0) and userdata.mission ~= "chased") then
-      if(wz < 9 and userdata.showEngineer) then userdata.warzone = wz +1 end
+      if(wz < 10 and userdata.showEngineer) then userdata.warzone = wz +1 end
       save_userdata()
       if(userdata.warzone == 10) then
         SetupNewUserdata()
@@ -253,7 +253,9 @@ function guiThread()
     local cx, cy = cross:getLoc()
     
     if(touchY  > -90) then gs1:setLoc(-70, bottomborder + ((py + 90) / 18)) end
-    if(ctouchY > -90) then gs2:setLoc(70, bottomborder + ((cy + 90) / 18)) end
+    if(ctouchY > -90 and userdata.mission ~= "chased") then
+      gs2:setLoc(70, bottomborder + ((cy + 90) / 18))
+    end
     
     local percent = (health/maxHealth)*100
     gd1:setIndex(math.floor(percent / 100) + 1)
@@ -286,20 +288,23 @@ function startGuiThread()
   lb  = cprop(lbsprite, leftborder + 10, topborder - 5)
   rb  = cprop(rbsprite, rightborder - 10, topborder - 5)
   gb1 = cprop(guiBaseSprite, -70, bottomborder)
-  gb2 = cprop(guiBaseSprite, 70, bottomborder)
   gs1 = cprop(guiStickSprite, -70, bottomborder)
-  gs2 = cprop(guiStickSprite, 70, bottomborder)
   gl  = cprop(guiLifeSprite, 0, bottomborder+5)
   gd1 = cprop(digits, -400, -400)
   gd2 = cprop(digits, -400, -400)
   gd3 = cprop(digits, -400, -400)
   
+  if(userdata.mission ~= "chased") then
+    gb2 = cprop(guiBaseSprite, 70, bottomborder)
+    gs2 = cprop(guiStickSprite, 70, bottomborder)
+    guiLayer:insertProp(gb2)
+    guiLayer:insertProp(gs2)
+  end
+  
   guiLayer:insertProp(lb)
   guiLayer:insertProp(rb)
   guiLayer:insertProp(gb1)
-  guiLayer:insertProp(gb2)
   guiLayer:insertProp(gs1)
-  guiLayer:insertProp(gs2)
   guiLayer:insertProp(gl)
   guiLayer:insertProp(gd1)
   guiLayer:insertProp(gd2)
