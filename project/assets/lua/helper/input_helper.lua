@@ -159,7 +159,7 @@ end
 
 function baseInput(event, idx, x, y)
   local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
-  if hitButton then 
+  if hitButton and event == MOAITouchSensor.TOUCH_UP then 
     if (hitButton.name == "playing") then
       thread:run(threadDuel)
         
