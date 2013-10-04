@@ -22,7 +22,7 @@ function CreateShipUpgradesList()
 end
 
 function CreateStationUpgradesList()
-  local upgradeItem1 = UpgradeItem.new(waterModuleSprite, "Water Module", 0, 0, 5)
+  local upgradeItem1 = UpgradeItem.new(waterModuleSprite, "Water Module", 0, 0, 2)
   --local upgradeItem2 = UpgradeItem.new(waterModuleSprite, "Water Module 2", 200, 2000, 7)
   --local upgradeItem3 = UpgradeItem.new(waterModuleSprite, "Water Module 3", 300, 3000, 9)
   
