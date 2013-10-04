@@ -237,12 +237,12 @@ function loadUpgradesLayers(upgradeScreenType)
       Popup.new("Architect", "Because this is a beta version this is the only module for now\n Build it and stay in warzone 5 for 5 days.", "Next", nil, architectSprite),
       Popup.new("Architect", "After that... \n You completed our beta!",            "OK"          , nil, architectSprite),
     })
-  userdata.firstTimeStation = false
-  save_userdata()
+      userdata.firstTimeStation = false
+      save_userdata()
+    end
   end
-  end
-  propBackButton = cprop(warroomButtonSprite, -132, -62)
-  propBuildButton = cprop(warroomButtonSprite, 132, -62)
+  propBackButton = cprop(backButtonSprite, -132, -62)
+  propBuildButton = cprop(buildButtonSprite, 133, -62)
   propPlayerShip = cprop(sprite, 0, 5, 2)
   
   upgradePartition:insertProp(propBuildButton)

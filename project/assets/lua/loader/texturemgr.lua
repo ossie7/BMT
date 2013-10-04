@@ -27,14 +27,12 @@ function initTextures()
   popupButtonSprite           = cs("resources/popup_button.png",    -24,  -10,  25,  11)   --Popup Button
   shipUpgradeScreenSprite     = cs("resources/ship_upgrade.png",    -160, -90,  160, 90) -- shipupgrades background
   stationUpgradeScreenSprite  = cs("resources/station_upgrade.png", -160, -90,  160, 90) -- stationupgrades background
-  warroomShipUpgradeSprite    = cs("resources/transparent.png",     -15,  -23,  15,  23)   --Ship upgrades button warroom
-  warroomStationUpgradeSprite = cs("resources/transparent.png",     -15,  -25,  15,  25)   --Station upgrades button warroom
-  warroomStartBattleSprite    = cs("resources/transparent.png",     -15,  -25,  15,  25)   --Start Battle button warroom
-  warroomButtonSprite         = cs("resources/transparent.png",     -16,  -18,  16,  18)   --warroom buttons
 	spritePauseButton           = cs("resources/back_button.png",     -14,  -10,  14,  10)   --Pause button
   waterModuleSprite           = cs("resources/waterchip_module.png",-25,  -19,  25,  19)
   chatboxShipSprite           = cs("resources/ship_chatbox.png",    -66,  -24,  66,  24)
   chatboxStationSprite        = cs("resources/station_chatbox.png", -66,  -24,  66,  24)
+  backButtonSprite            = cs("resources/back_button.png",    -10.5, -10, 10.5, 10)
+  buildButtonSprite          = cs("resources/build_button.png",   -10, -10, 10, 10)
   --GUI
   guiBaseSprite  = cs("resources/GUI_base.png",       -15, 0,   16, 16) --Control Base
   guiLifeSprite  = cs("resources/GUI_life.png",       -20, 0,   20, 16) --Life Base
