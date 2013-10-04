@@ -82,13 +82,13 @@ function loadFightLayers()
   upgradee = stationUpgradesList[1]
   local winDate
   if(userdata.stationBuild and userdata.warzone == 5) then
-    local daysBuild = daysBuild + 1
+    local daysBuild = userdata.daysBuild + 1
     userdata.daysBuild = daysBuild
     save_userdata()
   end
   
   if(userdata.daysBuild == upgradee.requiredTime) then
-      addPopup("You won!", "Congratulations, you managed to\n build the station.", "OK", "loadMenuLayers")
+      addPopup("You won!", "Congratulations, you managed to\n build the station.\n You completed our beta", "OK", "loadMenuLayers")
   end
   
   propExplosion = MOAIProp2D.new()
@@ -229,12 +229,12 @@ function loadUpgradesLayers(upgradeScreenType)
     propUpgradeBackground = cprop(stationUpgradeScreenSprite, 0, 0)
     chatboxProp = cprop(chatboxStationSprite, 2, 50)
     textboxChatBox = CreateTextBox(2, 54, 132, 48, chatboxstyle, "Welcome to my shop. \n Select the item you want.")
-    if(userdata.firstTimeStation and userdata.turn > 4 and showEngineer) then
+    if(userdata.firstTimeStation and userdata.turn > 4 and userdata.showEngineer) then
      queuePopup({
       Popup.new("Architect", "Welcome to my store!\n You can buy parts for your trade post here", "Next", nil, architectSprite),
       Popup.new("Architect", "You need enough resources and \n each part needs some time to be build", "Next", nil,architectSprite),
       Popup.new("Architect", "The first part needs 5 days to be build", "Next",          nil ,architectSprite),
-      Popup.new("Architect", "Because this is a beta version this is the only module for now\n Build it and be in warzone 5 for 5 days.", "Next", nil, architectSprite),
+      Popup.new("Architect", "Because this is a beta version this is the only module for now\n Build it and stay in warzone 5 for 5 days.", "Next", nil, architectSprite),
       Popup.new("Architect", "After that... \n You completed our beta!",            "OK"          , nil, architectSprite),
     })
   userdata.firstTimeStation = false
