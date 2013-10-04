@@ -18,7 +18,7 @@ function BuildUpgrade()
       upgrade:Build(true)
       if(upgradeType == "station") then
         userdata.stationBuild = true
-        print("you bought "..upgrade.name.."it ll be ready in "..upgrade.requiredTime.." turns")
+        print("You bought "..upgrade.name.."it will be ready in "..upgrade.requiredTime.." turns.")
       end
       
       textboxChatBox:setString("You bought a "..upgrade.name..".")

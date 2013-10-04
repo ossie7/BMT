@@ -88,7 +88,10 @@ function loadFightLayers()
   end
   
   if(userdata.daysBuild == upgradee.requiredTime) then
-      addPopup("You won!", "Congratulations, you managed to\n build the station.\n You completed the beta", "OK", "loadMenuLayers")
+    SetupNewUserdata()
+    clearUpgrades()
+    save_userdata()
+    addPopup("You won!", "Congratulations, you managed to\n build the station.\n You completed the beta! ^^", "OK", "loadMenuLayers")
   end
   
   propExplosion = MOAIProp2D.new()
@@ -129,11 +132,11 @@ function loadMenuLayers()
   -- start intro conversation
   if(userdata.isFirstTime) then
     queuePopup({
-      Popup.new("Captain", "Welcome to the base!\n I'm the captain, tap me to\n start a new adventure", "Next", nil, captainSprite),
-      Popup.new("Captain", "Two planets are at war.\n Force both fleets to a\n standstill by balancing their power. ", "Next", nil,captainSprite),
+      Popup.new("Captain", "Welcome, I'm the captain.\n Tap me on the base screen\n to start.", "Next", nil, captainSprite),
+      Popup.new("Captain", "Two planets are at war,\n their fleets are at warzone 5.\n Try to keep them there.", "Next", nil,captainSprite),
       Popup.new("Captain", "Meanwhile, you must build\n the station in order\n for trade to start. ", "Next", nil ,captainSprite),
-      Popup.new("Architect", "Hello, I am the architect.\n I can build the station,\n but you will need some\n more experience for that.", "Next", nil, architectSprite),
-      Popup.new("Architect", "Speak to me later.", "Next", nil, architectSprite),
+      Popup.new("Architect", "Hello, I am the architect.\n I can build the station,\n but you will need \n more experience for that.", "Next", nil, architectSprite),
+      Popup.new("Architect", "Speak to me later.", "OK", nil, architectSprite),
     })
   userdata.isFirstTime = false
   save_userdata()
@@ -228,14 +231,14 @@ function loadUpgradesLayers(upgradeScreenType)
   elseif upgradeType == "station" then
     propUpgradeBackground = cprop(stationUpgradeScreenSprite, 0, 0)
     chatboxProp = cprop(chatboxStationSprite, 2, 50)
-    textboxChatBox = CreateTextBox(2, 54, 132, 48, chatboxstyle, "Welcome to my shop. \n Select the item you want.")
+    textboxChatBox = CreateTextBox(2, 54, 132, 48, chatboxstyle, "Welcome to my office. \n Select the module you want.")
     if(userdata.firstTimeStation and userdata.turn > 4 and userdata.showEngineer) then
      queuePopup({
-      Popup.new("Architect", "Welcome to my store!\n You can buy parts for your trade post here", "Next", nil, architectSprite),
-      Popup.new("Architect", "You need enough resources and \n each part needs some time to be build", "Next", nil,architectSprite),
-      Popup.new("Architect", "The first part needs 5 days to be build", "Next",          nil ,architectSprite),
-      Popup.new("Architect", "Because this is a beta version this is the only module for now\n Build it and stay in warzone 5 for 5 days.", "Next", nil, architectSprite),
-      Popup.new("Architect", "After that... \n You completed our beta!",            "OK"          , nil, architectSprite),
+      Popup.new("Architect", "Welcome to my office!\n You can buy modules for the station.", "Next", nil, architectSprite),
+      Popup.new("Architect", "You need enough resources and \n each module needs some time to be built.", "Next", nil,architectSprite),
+      Popup.new("Architect", "The first part needs 5 days to be built", "Next",          nil ,architectSprite),
+      Popup.new("Architect", "Because this is a beta version this is the only module for now.\n Build it and stay in warzone 5 for 2 turns.", "Next", nil, architectSprite),
+      Popup.new("Architect", "After that... \n You completed the beta!",            "OK"          , nil, architectSprite),
     })
       userdata.firstTimeStation = false
       save_userdata()

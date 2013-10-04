@@ -142,7 +142,7 @@ function damage(obj)
   SetShipColor(1, 0, 0, 1)
   if (health <= 0 ) then
     save_userdata()
-    addPopup("You died", "You weren't able to keep\nbalance in the war.\nBut the war went on...","Ok","deadShip")
+    addPopup("You died", "You weren't able to keep\nbalance in the war.\nBut the war continues...","Ok","deadShip")
   end
 end
 

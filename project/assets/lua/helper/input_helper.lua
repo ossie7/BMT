@@ -130,8 +130,9 @@ function upgradeInput(event, idx, x, y)
           UpdateUpgradesPositions(deltaX, deltaY, i)
           SetUpgradeScreenInfo(upgrade)
           if(upgradeType == "ship") then
-            textboxChatBox:setString("This is the "..upgrade.name..". \n It improves your damage")
+            textboxChatBox:setString("This is the "..upgrade.name..". \n It improves your damage.")
           elseif(upgradeType == "station") then
+            -- add upgrade time
             textboxChatBox:setString("This is the "..upgrade.name..".")
           end
 
@@ -168,7 +169,7 @@ function baseInput(event, idx, x, y)
       loadUpgradesLayers("ship")
     elseif (hitButton.name == "stationUpgrades") then
       if(userdata.turn < 4 and showEngineer ~= true) then
-        addPopup("Architect", "You still need some more experience!\n Wait till turn 5", "OK", nil, architectSprite)
+        addPopup("Architect", "You still need some more experience.\n Wait till turn 5.", "OK", nil, architectSprite)
       else
         
         loadUpgradesLayers("station")

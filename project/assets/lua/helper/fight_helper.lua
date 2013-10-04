@@ -123,15 +123,15 @@ function checkEndOfBattle()
       addPopup("GAME OVER", "The left team lost the war.\nStart a new adventure and try\n to keep the balance next time.", "OK", "loadMenuLayers")
     elseif(userdata.turn >= 1 and userdata.showEngineer == false) then 
       queuePopup({
-        Popup.new("Mission Passed", "You saved the engineer!\n He can help you to improve your ship", "OK", nil),
-        Popup.new("Mission Passed", "You can find him\nin your base.", "OK", "loadMenuLayers")
+        Popup.new("Mission Passed", "You saved the engineer!\n He can improve your ship.", "OK", nil),
+        Popup.new("Mission Passed", "You can find him\nat your base.", "OK", "loadMenuLayers")
       })
       userdata.mission = ""
       userdata.showEngineer = true
       userdata.turn = userdata.turn + 1
       save_userdata()
      elseif(userdata.showEngineer or userdata.turn == 0) then
-      addPopup("End of battle", "The left team has lost this battle \n you gained "..earnedLoot.." metal!", "OK", "loadMenuLayers")
+      addPopup("End of battle", "The left team has lost this battle \n you earned "..earnedLoot.." metal!", "OK", "loadMenuLayers")
       userdata.metal = userdata.metal + earnedLoot
       userdata.turn = userdata.turn + 1
       save_userdata()
@@ -148,7 +148,7 @@ function checkEndOfBattle()
       userdata.plasma = userdata.plasma + earnedLoot
       userdata.turn = userdata.turn + 1
       save_userdata()
-      addPopup("End of battle", "The right team has lost this battle \n you gained "..earnedLoot.." plasma!", "OK", "loadMenuLayers")
+      addPopup("End of battle", "The right team has lost this battle \n you earned "..earnedLoot.." plasma!", "OK", "loadMenuLayers")
     end
   end
 end
@@ -209,9 +209,9 @@ function deadShip()
     clearUpgrades()
     save_userdata()
     if(wz == 1) then
-      addPopup("GAME OVER", "While your ship was being repaired\nthe left team lost the war.", "OK", "loadMenuLayers")
+      addPopup("GAME OVER", "While your ship was being repaired,\nthe left team lost the war.", "OK", "loadMenuLayers")
     else
-      addPopup("GAME OVER", "While your ship was being repaired\nthe right team lost the war.", "OK", "loadMenuLayers")
+      addPopup("GAME OVER", "While your ship was being repaired,\nthe right team lost the war.", "OK", "loadMenuLayers")
     end
   end
   if(wz == 5) then

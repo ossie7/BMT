@@ -49,10 +49,10 @@ function Enemy.startThread (self)
         parent:moveIn(1, locX, locY)
         if(locX == (parent.entryLoc *-1)-1 and userdata.mission == "chased" and parent.isArrived == false and popupGiven == false) then
           if(userdata.turn == 0) then
-            queuePopup({Popup.new("Mission", "Oh dear, you are being chased!\n Get away by reflecting bullets", "OK", nil)})
+            queuePopup({Popup.new("Escape!", "Oh dear, you are being chased!\n Get away by reflecting bullets!", "OK", nil)})
             popupGiven = true
           elseif(userdata.turn > 0 and userdata.showEngineer == false) then
-            queuePopup({Popup.new("Mission", "There's someone in need!\n Kill the pursuers and save him ", "OK", nil)})
+            queuePopup({Popup.new("Rescue Mission", "There's someone in need!\n Kill the pursuers and save him.", "OK", nil)})
             popupGiven = true
           end
         end
