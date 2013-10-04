@@ -88,7 +88,7 @@ function loadFightLayers()
   end
   
   if(userdata.daysBuild == upgradee.requiredTime) then
-      addPopup("You won!", "Congratulations, you managed to\n build the station.\n You completed our beta", "OK", "loadMenuLayers")
+      addPopup("You won!", "Congratulations, you managed to\n build the station.\n You completed the beta", "OK", "loadMenuLayers")
   end
   
   propExplosion = MOAIProp2D.new()

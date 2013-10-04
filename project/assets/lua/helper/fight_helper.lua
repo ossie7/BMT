@@ -134,7 +134,7 @@ function checkEndOfBattle()
         SetupNewUserdata()
         clearUpgrades()
         save_userdata()
-        addPopup("GAME OVER", "The left team lost the war.\nYour game data will reset.", "OK", "loadMenuLayers")
+        addPopup("GAME OVER", "The left team lost the war.\nStart a new adventure and try\n to keep the balance next time.", "OK", "loadMenuLayers")
       elseif(userdata.turn >= 1 and userdata.showEngineer == false) then 
         queuePopup({
           Popup.new("Mission Passed", "You saved the engineer!\n He can help you to improve your ship", "OK", nil),
@@ -159,7 +159,7 @@ function checkEndOfBattle()
         SetupNewUserdata()
         clearUpgrades()
         save_userdata()
-        addPopup("GAME OVER", "The right team lost the war.\nYour game data will reset.", "OK", "loadMenuLayers")
+        addPopup("GAME OVER", "The right team lost the war.\nStart a new adventure and try\n to keep the balance next time.", "OK", "loadMenuLayers")
       else
         userdata.plasma = userdata.plasma + earnedLoot
         userdata.turn = userdata.turn + 1
