@@ -155,6 +155,7 @@ function eobInput(event, idx, x, y)
 end
 
 function baseInput(event, idx, x, y)
+  if(popupActive == false) then
   local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
   if hitButton and event == MOAITouchSensor.TOUCH_UP then 
     if (hitButton.name == "playing") then
@@ -171,11 +172,10 @@ function baseInput(event, idx, x, y)
       if(userdata.turn < 4 and showEngineer ~= true) then
         addPopup("Architect", "You still need some more experience.\n Wait till turn 5.", "OK", nil, architectSprite)
       else
-        
         loadUpgradesLayers("station")
-      
       end
     end
+  end
   end
 end
 
