@@ -58,12 +58,12 @@ function startDuel(sprite, layer)
   prop:setLoc(0,0)
   startGuiThread()
   startShipThread()
+  startWaves()
 
 end
 
 function createEnemy(team, currentWave, totalAmount, amount, tim)
   currentAmount = math.random(math.floor(currentWave / 2) + 1, (amount / 20) + math.floor(currentWave / 2) + 1)
-  print(team .. " +" .. currentAmount )
   if(totalAmount + currentAmount > amount) then
     currentAmount = amount - totalAmount
     totalAmount = amount
@@ -85,21 +85,25 @@ function startWaves()
   timer:setSpan(math.random(9,12))
   timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN,
     function()
-      currentWaveLeft, totalAmountLeft, amountLeftEnemies =
-        createEnemy(1, currentWaveLeft, totalAmountLeft, amountLeftEnemies, timer)
+      if(popupActive == false) then
+        currentWaveLeft, totalAmountLeft, amountLeftEnemies =
+          createEnemy(1, currentWaveLeft, totalAmountLeft, amountLeftEnemies, timer)
+      end
     end)
   timer:start()
   currentWaveLeft, totalAmountLeft, amountLeftEnemies =
     createEnemy(1, currentWaveLeft, totalAmountLeft, amountLeftEnemies, timer)
   
-  if(userdata.mission ~= "chased") then
+  if(userdata.mission ~= "chased" and userdata.turn >1) then
     timer2 = MOAITimer.new()
     timer2:setMode(MOAITimer.LOOP)
     timer2:setSpan(math.random(9,12))
     timer2:setListener(MOAITimer.EVENT_TIMER_END_SPAN,
       function()
-        currentWaveRight, totalAmountRight, amountRightEnemies =
-          createEnemy(2, currentWaveRight, totalAmountRight, amountRightEnemies, timer2)
+        if(popupActive == false) then
+          currentWaveRight, totalAmountRight, amountRightEnemies =
+            createEnemy(2, currentWaveRight, totalAmountRight, amountRightEnemies, timer2)
+        end
       end)
     timer2:start()
     currentWaveRight, totalAmountRight, amountRightEnemies =
@@ -114,6 +118,8 @@ function checkEndOfBattle()
   local earnedLoot = math.random(60,140)
   local wz = userdata.warzone
   if((amountLeftEnemies - leftKilled == 0)) then
+    timer:stop()
+    if(timer2 ~= nil) then timer2:stop() end
     if(wz > 0 and userdata.showEngineer) then userdata.warzone = wz -1 end
     save_userdata()
     if(userdata.warzone == 0) then
@@ -121,22 +127,25 @@ function checkEndOfBattle()
       clearUpgrades()
       save_userdata()
       addPopup("GAME OVER", "The left team lost the war.\nStart a new adventure and try\n to keep the balance next time.", "OK", "loadMenuLayers")
+      return
     elseif(userdata.turn >= 1 and userdata.showEngineer == false) then 
-      queuePopup({
-        Popup.new("Mission Passed", "You saved the engineer!\n He can improve your ship.", "OK", nil),
-        Popup.new("Mission Passed", "You can find him\nat your base.", "OK", "loadMenuLayers")
-      })
       userdata.mission = ""
       userdata.showEngineer = true
       userdata.turn = userdata.turn + 1
       save_userdata()
+      queuePopup({
+        Popup.new("Mission Passed", "You saved the engineer!\n He can improve your ship.", "OK", nil),
+        Popup.new("Mission Passed", "You can find him\nat your base.", "OK", "loadMenuLayers")
+      })
      elseif(userdata.showEngineer or userdata.turn == 0) then
-      addPopup("End of battle", "The left team has lost this battle \n you earned "..earnedLoot.." metal!", "OK", "loadMenuLayers")
       userdata.metal = userdata.metal + earnedLoot
       userdata.turn = userdata.turn + 1
       save_userdata()
+      addPopup("End of battle", "The left team has lost this battle \n you earned "..earnedLoot.." metal!", "OK", "loadMenuLayers")
     end
   elseif ((amountRightEnemies - rightKilled == 0) and userdata.mission ~= "chased") then
+    timer:stop()
+    if(timer2 ~= nil) then timer2:stop() end
     if(wz < 10 and userdata.showEngineer) then userdata.warzone = wz +1 end
     save_userdata()
     if(userdata.warzone == 10) then
@@ -196,6 +205,8 @@ function checkCollision()
 end
 
 function deadShip()
+  timer:stop()
+  if(timer2 ~= nil) then timer2:stop() end
   if(userdata.turn <= 1) then
     loadMenuLayers()
     return
@@ -210,8 +221,10 @@ function deadShip()
     save_userdata()
     if(wz == 1) then
       addPopup("GAME OVER", "While your ship was being repaired,\nthe left team lost the war.", "OK", "loadMenuLayers")
+      return
     else
       addPopup("GAME OVER", "While your ship was being repaired,\nthe right team lost the war.", "OK", "loadMenuLayers")
+      return
     end
   end
   if(wz == 5) then
@@ -223,6 +236,7 @@ function deadShip()
     end
   end
   userdata.turn = userdata.turn + 1
+  save_userdata()
   loadMenuLayers()
 end
 

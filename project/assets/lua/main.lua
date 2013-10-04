@@ -23,7 +23,6 @@ require 'loader/start'
 
 function threadDuel () -- DUEL gamemode thread
   startDuel(sprite, layer)
-  startWaves()
   while true do
     if(gamestate ~= "playing") then
       timer:stop()

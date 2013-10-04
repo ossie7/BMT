@@ -130,7 +130,7 @@ function loadMenuLayers()
   baselayer:insertProp(basebackprop)
   
   -- start intro conversation
-  if(userdata.isFirstTime) then
+  if(userdata.isFirstTime and popupActive == false) then
     queuePopup({
       Popup.new("Captain", "Welcome, I'm the captain.\n Tap me on the base screen\n to start.", "Next", nil, captainSprite),
       Popup.new("Captain", "Two planets are at war,\n their fleets are at warzone 5.\n Try to keep them there.", "Next", nil,captainSprite),
