@@ -1,5 +1,4 @@
 waveCounter = 0
-battleDone = 0
 
 function createProp(sprite, layer)
   prop = cprop(sprite, 0, 0)
@@ -44,13 +43,11 @@ function startDuel(sprite, layer)
   currentWaveRight = 1
   amountRightEnemies = math.random(7,13) + (userdata.turn * 2)
   totalAmountRight = 0
-  lastWaveRight = false
   rightKilled = 0
   
   currentWaveLeft = 1
   amountLeftEnemies = math.random(7,13) + (userdata.turn * 2) 
   totalAmountLeft = 0
-  lastWaveLeft = false
   leftKilled = 0
   
   if(userdata.turn < 2 and showEngineer == false) then
@@ -70,7 +67,6 @@ function createEnemyLeft()
   if((totalAmountLeft + currentAmountLeft) > amountLeftEnemies) then
     currentAmountLeft = amountLeftEnemies - totalAmountLeft
     totalAmountLeft = amountLeftEnemies
-    lastWaveLeft = true
   else
     totalAmountLeft = totalAmountLeft + currentAmountLeft
   end
@@ -85,12 +81,11 @@ function createEnemyLeft()
 end
 
 function createEnemyRight()
-  currentAmountRight = math.random(currentWaveRight, (amountRightEnemies/10)+currentWaveRight)
+  currentAmountRight = math.random(currentWaveRight, (amountRightEnemies/20)+currentWaveRight)
   
   if(totalAmountRight + currentAmountRight > amountRightEnemies) then
     currentAmountRight = amountRightEnemies - totalAmountRight
     totalAmountRight = amountRightEnemies
-    lastWaveRight = true
   else
     totalAmountRight = totalAmountRight + currentAmountRight
   end
@@ -105,14 +100,12 @@ function createEnemyRight()
 end
 
 function startWaves() 
-  if(userdata.mission == "chased" or userdata.mission == "") then
-    timer = MOAITimer.new()
-    timer:setMode(MOAITimer.LOOP)
-    timer:setSpan(math.random(9,12))
-    timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyLeft() end)
-    timer:start()
-    createEnemyLeft()
-  end
+  timer = MOAITimer.new()
+  timer:setMode(MOAITimer.LOOP)
+  timer:setSpan(math.random(9,12))
+  timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyLeft() end)
+  timer:start()
+  createEnemyLeft()
   if(userdata.mission ~= "chased") then
     timer2 = MOAITimer.new()
     timer2:setMode(MOAITimer.LOOP)
@@ -124,49 +117,47 @@ function startWaves()
 end
 
 function checkEndOfBattle()
-  if(battleDone == 0) then
-    local earnedLoot = 100
-    local wz = userdata.warzone
-    if((amountLeftEnemies - leftKilled == 0)) then
-      if(wz > 0 and userdata.showEngineer) then userdata.warzone = wz -1 end
+  if(gamestate ~= "playing") then
+    return
+  end
+  local earnedLoot = 100
+  local wz = userdata.warzone
+  if((amountLeftEnemies - leftKilled == 0)) then
+    if(wz > 0 and userdata.showEngineer) then userdata.warzone = wz -1 end
+    save_userdata()
+    if(userdata.warzone == 0) then
+      SetupNewUserdata()
+      clearUpgrades()
       save_userdata()
-      if(userdata.warzone == 0) then
-        SetupNewUserdata()
-        clearUpgrades()
-        save_userdata()
-        addPopup("GAME OVER", "The left team lost the war.\nStart a new adventure and try\n to keep the balance next time.", "OK", "loadMenuLayers")
-      elseif(userdata.turn >= 1 and userdata.showEngineer == false) then 
-        queuePopup({
-          Popup.new("Mission Passed", "You saved the engineer!\n He can help you to improve your ship", "OK", nil),
-          Popup.new("Mission Passed", "You can find him\nin your base.", "OK", "loadMenuLayers")
-        })
-        userdata.mission = ""
-        userdata.showEngineer = true
-        save_userdata()
-       elseif(userdata.showEngineer or userdata.turn == 0) then
-        addPopup("End of battle", "The left team has lost this battle \n you gained "..earnedLoot.." metal!", "OK", "loadMenuLayers")
-        userdata.metal = userdata.metal + earnedLoot
-        userdata.turn = userdata.turn + 1
-        save_userdata()
-      end
-      battleDone = 1
-      
-      
-    elseif ((amountRightEnemies - rightKilled == 0) and userdata.mission ~= "chased") then
-      if(wz < 10 and userdata.showEngineer) then userdata.warzone = wz +1 end
+      addPopup("GAME OVER", "The left team lost the war.\nStart a new adventure and try\n to keep the balance next time.", "OK", "loadMenuLayers")
+    elseif(userdata.turn >= 1 and userdata.showEngineer == false) then 
+      queuePopup({
+        Popup.new("Mission Passed", "You saved the engineer!\n He can help you to improve your ship", "OK", nil),
+        Popup.new("Mission Passed", "You can find him\nin your base.", "OK", "loadMenuLayers")
+      })
+      userdata.mission = ""
+      userdata.showEngineer = true
       save_userdata()
-      if(userdata.warzone == 10) then
-        SetupNewUserdata()
-        clearUpgrades()
-        save_userdata()
-        addPopup("GAME OVER", "The right team lost the war.\nStart a new adventure and try\n to keep the balance next time.", "OK", "loadMenuLayers")
-      else
-        userdata.plasma = userdata.plasma + earnedLoot
-        userdata.turn = userdata.turn + 1
-        save_userdata()
-        addPopup("End of battle", "The right team has lost this battle \n you gained "..earnedLoot.." plasma!", "OK", "loadMenuLayers")
-      end
-      battleDone = 1
+     elseif(userdata.showEngineer or userdata.turn == 0) then
+      addPopup("End of battle", "The left team has lost this battle \n you gained "..earnedLoot.." metal!", "OK", "loadMenuLayers")
+      userdata.metal = userdata.metal + earnedLoot
+      userdata.turn = userdata.turn + 1
+      save_userdata()
+    end
+     
+  elseif ((amountRightEnemies - rightKilled == 0) and userdata.mission ~= "chased") then
+    if(wz < 10 and userdata.showEngineer) then userdata.warzone = wz +1 end
+    save_userdata()
+    if(userdata.warzone == 10) then
+      SetupNewUserdata()
+      clearUpgrades()
+      save_userdata()
+      addPopup("GAME OVER", "The right team lost the war.\nStart a new adventure and try\n to keep the balance next time.", "OK", "loadMenuLayers")
+    else
+      userdata.plasma = userdata.plasma + earnedLoot
+      userdata.turn = userdata.turn + 1
+      save_userdata()
+      addPopup("End of battle", "The right team has lost this battle \n you gained "..earnedLoot.." plasma!", "OK", "loadMenuLayers")
     end
   end
 end
