@@ -16,7 +16,8 @@ function Enemy.new(sprite, x, y, team)
   end
   self.isArrived = false
   self.enemyLast = clock() + math.random() + math.random()
-  self.enemyInterval = 0.5 + math.random() + math.random()
+  --self.enemyInterval = 0.5 + math.random() + math.random()
+  self.enemyInterval = 1
   self.entryLoc = 140 --math.random(130,145)
   self.prop = MOAIProp2D.new()
   self.prop:setDeck(sprite)
@@ -232,16 +233,13 @@ function Enemy.die(self)
   explodeSound()
   elayer:removeProp(self.prop)
   elayer2:removeProp(self.prop)
-  if(lastWaveLeft == true and userdata.mission == "chased") then
-    checkEndOfBattle()
-  elseif((lastWaveRight and self.team == 2) or (lastWaveLeft and self.team == 1)) then
-    checkEndOfBattle()
-  end
+  
   if(self.team == 1) then
     leftKilled = leftKilled + 1
   else
     rightKilled = rightKilled + 1
   end
+  checkEndOfBattle()
   
   runExplosion(xDie, yDie)
   

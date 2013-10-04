@@ -35,14 +35,12 @@ function SetupNewUserdata()
   userdata.warzone = 5
   userdata.metal = 0
   userdata.plasma = 0
-  userdata.mission = ""
+  userdata.mission = "chased"
   userdata.turn = 0
   userdata.stationBuild = false
   userdata.isFirstTime = true
   userdata.daysBuild = 0
-  -- you have to unlock the engineer in mission 2
   userdata.showEngineer = false
-  -- check if you have ever entered the station upgrade screen
   userdata.firstTimeStation = true
   
 end
@@ -63,6 +61,18 @@ end
 -- At the beginning of your application, get the persisted data:
 if (userdata_f ~= nil) then
   userdata = userdata_f()
+  if(userdata.shipUpgrades == nil) then userdata.shipUpgrades = {} end
+  if(userdata.stationUpgrades == nil) then userdata.stationUpgrades = {} end
+  if(userdata.warzone == nil) then userdata.warzone = 5 end
+  if(userdata.metal == nil) then userdata.metal = 0 end
+  if(userdata.plasma == nil) then userdata.plasma = 0 end
+  if(userdata.mission == nil) then userdata.mission = "chased" end
+  if(userdata.turn == nil) then userdata.turn = 0 end
+  if(userdata.stationBuild == nil) then userdata.stationBuild = false end
+  if(userdata.isFirstTime == nil) then userdata.isFirstTime = true end
+  if(userdata.daysBuild == nil) then userdata.daysBuild = 0 end
+  if(userdata.showEngineer == nil) then userdata.showEngineer = false end
+  if(userdata.firstTimeStation == nil) then userdata.firstTimeStation = true end
 else
   SetupNewUserdata()
 end

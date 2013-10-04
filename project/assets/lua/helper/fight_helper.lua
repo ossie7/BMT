@@ -1,10 +1,5 @@
 waveCounter = 0
 battleDone = 0
--- chased, sandwiched
-if(userdata.turn < 2) then
-  userdata.mission = "chased"
-end
-
 
 function createProp(sprite, layer)
   prop = cprop(sprite, 0, 0)
@@ -57,6 +52,10 @@ function startDuel(sprite, layer)
   totalAmountLeft = 0
   lastWaveLeft = false
   leftKilled = 0
+  
+  if(userdata.turn < 2 or showEngineer == false) then
+    userdata.mission = "chased"
+  end
   
   startTimer()
   prop:setLoc(0,0)
@@ -126,29 +125,26 @@ end
 
 function checkEndOfBattle()
   if(battleDone == 0) then
-    local leftEnemies = epartition:propListForRect(-180,-90,180,90)
-    local rightEnemies = epartition2:propListForRect(-180,-90,180,90)
     local earnedLoot = 100
     local wz = userdata.warzone
-    if(leftEnemies == nil and lastWaveLeft) then
+    if((amountLeftEnemies - leftKilled == 0)) then
       if(wz > 0 and userdata.showEngineer) then userdata.warzone = wz -1 end
       save_userdata()
       if(userdata.warzone == 0) then
         SetupNewUserdata()
         clearUpgrades()
         save_userdata()
-        addPopup("You lost", "Loooser", "OK", "loadMenuLayers")
+        addPopup("GAME OVER", "The left team lost the war.\nYour game data will reset.", "OK", "loadMenuLayers")
       elseif(userdata.turn >= 1 and userdata.showEngineer == false) then 
         queuePopup({
           Popup.new("Mission Passed", "You saved the engineer!\n He can help you to improve your ship", "OK", nil),
-          Popup.new("Mission Passed", "You can find him\nin your base.", "OK", nil),
-          Popup.new("Mission Passed", "Click on him to add\nupgrades to your ship.", "OK", "loadMenuLayers")
+          Popup.new("Mission Passed", "You can find him\nin your base.", "OK", "loadMenuLayers")
         })
         userdata.mission = ""
         userdata.showEngineer = true
         save_userdata()
        elseif(userdata.showEngineer or userdata.turn == 0) then
-        addPopup("End of battle", "The left team has lost this battle \n you gained "..earnedLoot.." metal!", "OK",          "loadMenuLayers")
+        addPopup("End of battle", "The left team has lost this battle \n you gained "..earnedLoot.." metal!", "OK", "loadMenuLayers")
         userdata.metal = userdata.metal + earnedLoot
         userdata.turn = userdata.turn + 1
         save_userdata()
@@ -156,24 +152,21 @@ function checkEndOfBattle()
       battleDone = 1
       
       
-    elseif (rightEnemies == nil and userdata.mission ~= "chased") then
+    elseif ((amountRightEnemies - rightKilled == 0) and userdata.mission ~= "chased") then
       if(wz < 9 and userdata.showEngineer) then userdata.warzone = wz +1 end
       save_userdata()
-      if(userdata.warzone == 9) then
+      if(userdata.warzone == 10) then
         SetupNewUserdata()
         clearUpgrades()
         save_userdata()
-        addPopup("You lost", "Loooser", "OK", "loadMenuLayers")
+        addPopup("GAME OVER", "The right team lost the war.\nYour game data will reset.", "OK", "loadMenuLayers")
       else
-        -- needs testing
-        addPopup("End of battle", "The right team has lost this battle \n you gained "..earnedLoot.." plasma!", "OK", "loadMenuLayers")
         userdata.plasma = userdata.plasma + earnedLoot
         userdata.turn = userdata.turn + 1
         save_userdata()
+        addPopup("End of battle", "The right team has lost this battle \n you gained "..earnedLoot.." plasma!", "OK", "loadMenuLayers")
       end
       battleDone = 1
-      
-      
     end
   end
 end
@@ -229,7 +222,11 @@ function deadShip()
     SetupNewUserdata()
     clearUpgrades()
     save_userdata()
-    addPopup("You lost", "Loooser", "OK", "loadMenuLayers")
+    if(wz == 1) then
+      addPopup("GAME OVER", "While your ship was being repaired\nthe left team lost the war.", "OK", "loadMenuLayers")
+    else
+      addPopup("GAME OVER", "While your ship was being repaired\nthe right team lost the war.", "OK", "loadMenuLayers")
+    end
   end
   if(wz == 5) then
     local r = math.random()
