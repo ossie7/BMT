@@ -35,3 +35,7 @@ upgradeMenuStyle:setSize(10)
 chatboxstyle = MOAITextStyle.new()
 chatboxstyle:setFont(font)
 chatboxstyle:setSize(8)
+
+function SetTextboxColor(textbox, r, g, b, a)
+  textbox:setColor(r, g, b, a)
+end

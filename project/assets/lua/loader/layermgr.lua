@@ -281,10 +281,7 @@ function loadUpgradesLayers(upgradeScreenType)
   
   local upgrade = currentUpgradesList[1]
   SetBuildButtonVisibility(upgrade)
-  textboxNameValue:setString(""..upgrade:GetName())
-  textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
-  textboxPlasmaValue:setString(""..upgrade:GetRequiredPlasma())
-  textboxTimeValue:setString(""..upgrade:GetRequiredTime())
+  SetUpgradeScreenInfo(upgrade)
   
   propBackButton.name = "leaveUpgradeScreen"
   propBuildButton.name = "buildUpgrade"

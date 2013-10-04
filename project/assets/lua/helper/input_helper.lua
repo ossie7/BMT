@@ -128,15 +128,12 @@ function upgradeInput(event, idx, x, y)
           deltaY = 5 - propY
            
           UpdateUpgradesPositions(deltaX, deltaY, i)
-          textboxNameValue:setString(""..upgrade:GetName())
-          textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
-          textboxPlasmaValue:setString(""..upgrade:GetRequiredPlasma())
-          textboxTimeValue:setString(""..upgrade:GetRequiredTime())
-             if(upgradeType == "ship") then
+          SetUpgradeScreenInfo(upgrade)
+          if(upgradeType == "ship") then
             textboxChatBox:setString("This is the "..upgrade.name..". \n It improves your damage")
-            elseif(upgradeType == "station") then
+          elseif(upgradeType == "station") then
               textboxChatBox:setString("This is the "..upgrade.name..".")
-            end
+          end
 
           SetBuildButtonVisibility(upgrade)
         end

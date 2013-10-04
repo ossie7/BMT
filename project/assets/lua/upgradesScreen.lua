@@ -36,3 +36,22 @@ function CreateStationUpgradesList()
     end
   end
 end
+
+function SetUpgradeScreenInfo(upgrade)
+  textboxNameValue:setString(""..upgrade:GetName())
+  textboxMetalValue:setString(""..upgrade:GetRequiredMetal())
+  if userdata.metal < upgrade:GetRequiredMetal() then
+    SetTextboxColor(textboxMetalValue, 1, 0, 0, 1)
+  else
+    SetTextboxColor(textboxMetalValue, 1, 1, 1, 1)
+  end
+  
+  textboxPlasmaValue:setString(""..upgrade:GetRequiredPlasma())
+  if userdata.plasma < upgrade:GetRequiredPlasma() then
+    SetTextboxColor(textboxPlasmaValue, 1, 0, 0, 1)
+  else
+    SetTextboxColor(textboxPlasmaValue, 1, 1, 1, 1)
+  end
+  
+  textboxTimeValue:setString(""..upgrade:GetRequiredTime())
+end
