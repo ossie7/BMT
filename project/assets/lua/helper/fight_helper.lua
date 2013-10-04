@@ -61,58 +61,49 @@ function startDuel(sprite, layer)
 
 end
 
-function createEnemyLeft()
-  currentAmountLeft = math.random(currentWaveLeft, (amountLeftEnemies/20)+currentWaveLeft)
-
-  if((totalAmountLeft + currentAmountLeft) > amountLeftEnemies) then
-    currentAmountLeft = amountLeftEnemies - totalAmountLeft
-    totalAmountLeft = amountLeftEnemies
+function createEnemy(team, currentWave, totalAmount, amount, tim)
+  currentAmount = math.random(math.floor(currentWave / 2) + 1, (amount / 20) + math.floor(currentWave / 2) + 1)
+  print(team .. " +" .. currentAmount )
+  if(totalAmount + currentAmount > amount) then
+    currentAmount = amount - totalAmount
+    totalAmount = amount
   else
-    totalAmountLeft = totalAmountLeft + currentAmountLeft
+    totalAmount = totalAmount + currentAmount
   end
-  if (totalAmountLeft <= amountLeftEnemies) then
-    for x=1, currentAmountLeft do
-      newEnemy(1)
-    end
-    currentWaveLeft = currentWaveLeft + 1
+  if (totalAmount <= amount) then
+    for x=1, currentAmount do newEnemy(team) end
+    currentWave = currentWave + 1
   else
-    timer:stop()
+    tim:stop()
   end
-end
-
-function createEnemyRight()
-  currentAmountRight = math.random(currentWaveRight, (amountRightEnemies/20)+currentWaveRight)
-  
-  if(totalAmountRight + currentAmountRight > amountRightEnemies) then
-    currentAmountRight = amountRightEnemies - totalAmountRight
-    totalAmountRight = amountRightEnemies
-  else
-    totalAmountRight = totalAmountRight + currentAmountRight
-  end
-  if (totalAmountRight <= amountRightEnemies) then
-    for x=1, currentAmountRight do
-      newEnemy(2)
-    end
-    currentWaveRight = currentWaveRight + 1
-  else
-    timer2:stop()
-  end
+  return currentWave, totalAmount, amount
 end
 
 function startWaves() 
   timer = MOAITimer.new()
   timer:setMode(MOAITimer.LOOP)
   timer:setSpan(math.random(9,12))
-  timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyLeft() end)
+  timer:setListener(MOAITimer.EVENT_TIMER_END_SPAN,
+    function()
+      currentWaveLeft, totalAmountLeft, amountLeftEnemies =
+        createEnemy(1, currentWaveLeft, totalAmountLeft, amountLeftEnemies, timer)
+    end)
   timer:start()
-  createEnemyLeft()
+  currentWaveLeft, totalAmountLeft, amountLeftEnemies =
+    createEnemy(1, currentWaveLeft, totalAmountLeft, amountLeftEnemies, timer)
+  
   if(userdata.mission ~= "chased") then
     timer2 = MOAITimer.new()
     timer2:setMode(MOAITimer.LOOP)
     timer2:setSpan(math.random(9,12))
-    timer2:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() createEnemyRight() end)
+    timer2:setListener(MOAITimer.EVENT_TIMER_END_SPAN,
+      function()
+        currentWaveRight, totalAmountRight, amountRightEnemies =
+          createEnemy(2, currentWaveRight, totalAmountRight, amountRightEnemies, timer2)
+      end)
     timer2:start()
-    createEnemyRight()
+    currentWaveRight, totalAmountRight, amountRightEnemies =
+      createEnemy(2, currentWaveRight, totalAmountRight, amountRightEnemies, timer2)
   end
 end
 
@@ -120,7 +111,7 @@ function checkEndOfBattle()
   if(gamestate ~= "playing") then
     return
   end
-  local earnedLoot = 100
+  local earnedLoot = math.random(60,140)
   local wz = userdata.warzone
   if((amountLeftEnemies - leftKilled == 0)) then
     if(wz > 0 and userdata.showEngineer) then userdata.warzone = wz -1 end
@@ -137,6 +128,7 @@ function checkEndOfBattle()
       })
       userdata.mission = ""
       userdata.showEngineer = true
+      userdata.turn = userdata.turn + 1
       save_userdata()
      elseif(userdata.showEngineer or userdata.turn == 0) then
       addPopup("End of battle", "The left team has lost this battle \n you gained "..earnedLoot.." metal!", "OK", "loadMenuLayers")
@@ -144,7 +136,6 @@ function checkEndOfBattle()
       userdata.turn = userdata.turn + 1
       save_userdata()
     end
-     
   elseif ((amountRightEnemies - rightKilled == 0) and userdata.mission ~= "chased") then
     if(wz < 10 and userdata.showEngineer) then userdata.warzone = wz +1 end
     save_userdata()
@@ -166,7 +157,6 @@ function newEnemy (enemyTeam)
   local speed = 1
   local s = nil
   local x, y = 0, math.random(bottomborder + 30, topborder - 20)
-  --local r = math.random(1,2)
   
   if(enemyTeam==1) then
     x = -180
