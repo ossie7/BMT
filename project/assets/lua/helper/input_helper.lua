@@ -132,7 +132,7 @@ function upgradeInput(event, idx, x, y)
           if(upgradeType == "ship") then
             textboxChatBox:setString("This is the "..upgrade.name..". \n It improves your damage")
           elseif(upgradeType == "station") then
-              textboxChatBox:setString("This is the "..upgrade.name..".")
+            textboxChatBox:setString("This is the "..upgrade.name..".")
           end
 
           SetBuildButtonVisibility(upgrade)

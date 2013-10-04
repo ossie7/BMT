@@ -8,7 +8,7 @@ function BuildUpgrade()
       allowBuild = false
     end
     
-    if allowBuild then
+    if allowBuild and upgrade:IsBuild() == false then
       local metal = upgrade:GetRequiredMetal()
       local plasma = upgrade:GetRequiredPlasma()
       
@@ -17,13 +17,15 @@ function BuildUpgrade()
       
       upgrade:Build(true)
       if(upgradeType == "station") then
-       userdata.stationBuild = true
-      print("you bought "..upgrade.name.."it ll be ready in "..upgrade.requiredTime.." turns")
+        userdata.stationBuild = true
+        print("you bought "..upgrade.name.."it ll be ready in "..upgrade.requiredTime.." turns")
       end
+      
+      textboxChatBox:setString("You bought a "..upgrade.name..".")
+      
+      save_userdata()
     end
   end
-  
-  save_userdata()
   
   textboxMetalAmount:setString(""..userdata.metal)
   textboxEnergyAmount:setString(""..userdata.plasma)
