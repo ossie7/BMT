@@ -49,6 +49,7 @@ function initTextures()
   
   --Enemies
   blueDroneGun   = cs("resources/drone_gun.png",      -5,     -2.5,   5,    2.5)
+  blueSniperGun  = cs("resources/sniper_gun.png",     -10.5,  -2.5,   10.5, 2.5)
   blueTankGun    = cs("resources/tank_gun.png",       -8.5,   -6,     8.5,  6)
   
   
@@ -62,6 +63,11 @@ function initTextures()
   blueDroneTileLib:setTexture("resources/drone_sprite.png")
   blueDroneTileLib:setSize(5, 3)
   blueDroneTileLib:setRect(-16, -16, 16, 16)
+  
+  blueSniperTileLib = MOAITileDeck2D.new()
+  blueSniperTileLib:setTexture("resources/sniper_main.png")
+  blueSniperTileLib:setSize(1, 1)
+  blueSniperTileLib:setRect(-16, -16, 16, 16)
   
   blueTankTileLib = MOAITileDeck2D.new()
   blueTankTileLib:setTexture("resources/tank_sprite.png")

@@ -34,8 +34,7 @@ function Enemy.new(sprite, x, y, team, ship)
   self.gun:setLoc(x, y)
   self.gun:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   
-  if team == 1 and ship == 1
-    or team == 1 and ship == 3 then
+  if team == 1 then
     self.prop = GetEnemyAnimationProp(team, ship)
     self.prop:setLoc(x, y)
     self.animation = GetEnemyAnimation(self.prop, team, ship)
