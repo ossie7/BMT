@@ -1,25 +1,26 @@
 Enemy = {}
 Enemy.__index = Enemy
 
-function Enemy.new(sprite, x, y, team)
+function Enemy.new(sprite, x, y, team, ship)
   self = setmetatable({}, Enemy)
 
   self.team = team
   self.target = nil
+  self.ship = ship
   
-  if(team == 1) then
-    self.damage = 50
-    self.health = 100
-  else
-    self.damage = 100
-    self.health = 200
-  end
+  if(    team == 1 and ship == 1) then self:stats(50,   100, 0.5)
+  elseif(team == 1 and ship == 2) then self:stats(50,   600, 3)
+  elseif(team == 1 and ship == 3) then self:stats(600,  200, 1.5)
+  elseif(team == 2 and ship == 1) then self:stats(100,  200, 1.2)
+  elseif(team == 2 and ship == 2) then self:stats(100,  600, 3)
+  elseif(team == 2 and ship == 3) then self:stats(1200, 400, 3) end
+  
   self.isArrived = false
   self.enemyLast = clock() + math.random() + math.random()
   if(team == 1) then
-    self.enemyInterval = 0.5 + math.random() + math.random()
+    self.enemyInterval = self.intervalBase + math.random() + math.random()
   else
-    self.enemyInterval = 1.2 + math.random() + math.random()
+    self.enemyInterval = self.intervalBase + math.random() + math.random()
   end
   self.entryLoc = 140 --math.random(130,145)
   self.prop = MOAIProp2D.new()
@@ -29,6 +30,12 @@ function Enemy.new(sprite, x, y, team)
   self.prop.owner = self
   
   return self
+end
+
+function Enemy.stats(self, health, damage, interval)
+  self.health = health
+  self.damage = damage
+  self.intervalBase = interval
 end
 
 function wait ( action )
@@ -116,10 +123,19 @@ function Enemy.hitThread(self)
     if(gamestate ~= "playing") then
       self:die()
     end
+    
+    local sa
+    if(    self.team == 1 and self.ship == 1) then sa = {-6,  -5,  6,  5}
+    elseif(self.team == 1 and self.ship == 2) then sa = {-6,  -5,  6,  5}
+    elseif(self.team == 1 and self.ship == 3) then sa = {-6,  -5,  6,  5}
+    elseif(self.team == 2 and self.ship == 1) then sa = {-6,  -5,  6,  5}
+    elseif(self.team == 2 and self.ship == 2) then sa = {-6,  -5,  6,  5}
+    elseif(self.team == 2 and self.ship == 3) then sa = {-6,  -5,  6,  5} end
+    
     local x, y = self.prop:getLoc()
-    self:checkAllHits(bpartition:propListForRect(x-6, y-5, x+6, y+5))
-    self:checkAllHits(ebpartition:propListForRect(x-6, y-5, x+6, y+5))
-    self:checkAllHits(ebrpartition:propListForRect(x-6, y-5, x+6, y+5))
+    self:checkAllHits(bpartition:propListForRect(  x + sa[1], y + sa[2], x + sa[3], y + sa[4]))
+    self:checkAllHits(ebpartition:propListForRect( x + sa[1], y + sa[2], x + sa[3], y + sa[4]))
+    self:checkAllHits(ebrpartition:propListForRect(x + sa[1], y + sa[2], x + sa[3], y + sa[4]))
     self:enemyBulletGen(x, y)
     end
     coroutine.yield()

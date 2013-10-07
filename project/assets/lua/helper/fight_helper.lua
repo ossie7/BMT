@@ -163,21 +163,27 @@ function checkEndOfBattle()
   end
 end
 
-function newEnemy (enemyTeam)
-  local speed = 1
+function newEnemy (team)
   local s = nil
   local x, y = 0, math.random(bottomborder + 30, topborder - 20)
+  local ship = 1
   
-  if(enemyTeam==1) then
+  if(team == 1) then
     x = -180
-    s = e1sprite
   else
     x = 180
-    s= e2sprite
   end
   
-  local newEnemy = Enemy.new(s, x, y, enemyTeam)
-  if(enemyTeam == 1) then
+  if(    team == 1 and ship == 1) then s = e1sprite
+  elseif(team == 1 and ship == 2) then s = e1sprite
+  elseif(team == 1 and ship == 3) then s = e1sprite
+  elseif(team == 2 and ship == 1) then s = e2sprite
+  elseif(team == 2 and ship == 2) then s = e2sprite
+  elseif(team == 2 and ship == 3) then s = e2sprite end
+    
+  
+  local newEnemy = Enemy.new(s, x, y, team, ship)
+  if(team == 1) then
     epartition:insertProp(newEnemy.prop)
   else
     epartition2:insertProp(newEnemy.prop)
