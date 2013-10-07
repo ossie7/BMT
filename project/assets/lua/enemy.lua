@@ -22,17 +22,28 @@ function Enemy.new(sprite, x, y, team, ship)
   else
     self.enemyInterval = self.intervalBase + math.random() + math.random()
   end
+  
   self.entryLoc = 140 --math.random(130,145)
   self.prop = MOAIProp2D.new()
   self.prop:setDeck(sprite)
   self.prop:setLoc(x, y)
   self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  self.prop.owner = self
   
   self.gun = MOAIProp2D.new()
   self.gun:setDeck(gunsprite)
   self.gun:setLoc(x, y)
   self.gun:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  
+  if team == 1 and ship == 1 then
+    self.prop = GetEnemyAnimationProp(team, ship)
+    self.prop:setLoc(x, y)
+    self.animation = GetEnemyAnimation(self.prop, team, ship)
+    self.animation:start()
+    
+    self.gun = GetEnemyGun(team, ship, x, y)
+  end
+  
+  self.prop.owner = self
   self.gun.owner = self
   
   return self
