@@ -168,7 +168,7 @@ function newEnemy (team)
   local s = nil
   local layer = nil
   local x, y = 0, math.random(bottomborder + 30, topborder - 20)
-  local ship = 1
+  local ship = math.random(1, 3)
   
   if(team == 1) then
     x = -180

@@ -3,6 +3,8 @@ function GetEnemyAnimationProp(team, ship)
   
   if team == 1 and ship == 1 then
     prop:setDeck(blueDroneTileLib)
+  elseif team == 1 and ship == 3 then
+    prop:setDeck(blueTankTileLib)
   end
   
   return prop
@@ -14,6 +16,9 @@ function GetEnemyAnimation(prop, team, ship)
   
   if team == 1 and ship == 1 then
     frames = 13
+    curve:reserveKeys(frames)
+  elseif team == 1 and ship == 3 then
+    frames = 3
     curve:reserveKeys(frames)
   end
   
@@ -36,6 +41,8 @@ function GetEnemyGun(team, ship, x, y)
   
   if team == 1 and ship == 1 then
     gun:setDeck(blueDroneGun)
+  elseif team == 1 and ship == 3 then
+    gun:setDeck(blueTankGun)
   else
     gun:setDeck(gunsprite)
   end

@@ -48,7 +48,8 @@ function initTextures()
   battleOverlay  = cs("resources/battle_overlay.png", -160, -90, 160, 90) -- Battle start overlay
   
   --Enemies
-  blueDroneGun   = cs("resources/drone_gun.png",      -5,   -2.5,   5,    2.5)
+  blueDroneGun   = cs("resources/drone_gun.png",      -5,     -2.5,   5,    2.5)
+  blueTankGun    = cs("resources/tank_gun.png",       -8.5,   -6,     8.5,  6)
   
   
   tileLib = MOAITileDeck2D.new()
@@ -61,6 +62,11 @@ function initTextures()
   blueDroneTileLib:setTexture("resources/drone_sprite.png")
   blueDroneTileLib:setSize(5, 3)
   blueDroneTileLib:setRect(-16, -16, 16, 16)
+  
+  blueTankTileLib = MOAITileDeck2D.new()
+  blueTankTileLib:setTexture("resources/tank_sprite.png")
+  blueTankTileLib:setSize(3, 1)
+  blueTankTileLib:setRect(-32, -32, 32, 32)
   
   guiDigits = MOAIImage.new()
   guiDigits:load("resources/digits_sprite.png")
