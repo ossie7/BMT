@@ -40,6 +40,24 @@ function addPopup(title, body, button, action, face)
   popupPartition:insertProp(popupButtonProp)
 end
 
+function addOverlay(sprite, button, action)
+  MOAIRenderMgr.pushRenderPass(popupLayer)
+  MOAIRenderMgr.pushRenderPass(popupButtonLayer)
+  MOAIRenderMgr.pushRenderPass(popupTextLayer)
+  
+  popupActive = true
+  popupAction = action
+  
+  local popupProp = cprop(sprite, 0, 0)
+  local popupButtonProp = cprop(popupButtonSprite, rightborder - 25, bottomborder + 15)
+  local popupButtonText = CreateTextBox(rightborder - 25, bottomborder + 18, 80, 26, style11, button)
+  popupButtonText:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+
+  popupLayer:insertProp(popupProp)
+  popupPartition:insertProp(popupButtonProp)
+  popupTextLayer:insertProp(popupButtonText)
+end
+
 function nextPopup()
   local popup = popupArray[popupCounter]
   addPopup(popup.title, popup.body, popup.button, popup.action, popup.face)

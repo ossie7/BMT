@@ -59,6 +59,7 @@ function startDuel(sprite, layer)
   startGuiThread()
   startShipThread()
   startWaves()
+  addOverlay(battleOverlay, "Ok", nil)
 
 end
 

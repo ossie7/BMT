@@ -42,6 +42,9 @@ function initTextures()
   --splash
   splashLogo     = cs("resources/icon.png",           -48, -48, 48, 48) -- splash logo
   
+  --Overlays
+  battleOverlay  = cs("resources/battle_overlay.png", -160, -90, 160, 90) -- Battle start overlay
+  
   
   tileLib = MOAITileDeck2D.new()
   tileLib:setTexture("resources/explo_sprite.png")
