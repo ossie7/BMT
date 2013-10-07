@@ -287,7 +287,6 @@ end
 
 function startGuiThread()
   lb  = cprop(lbsprite, leftborder + 10, topborder - 5)
-  rb  = cprop(rbsprite, rightborder - 10, topborder - 5)
   gb1 = cprop(guiBaseSprite, -70, bottomborder)
   gs1 = cprop(guiStickSprite, -70, bottomborder)
   gl  = cprop(guiLifeSprite, 0, bottomborder+5)
@@ -296,14 +295,15 @@ function startGuiThread()
   gd3 = cprop(digits, -400, -400)
   
   if(userdata.mission ~= "chased") then
+    rb  = cprop(rbsprite, rightborder - 10, topborder - 5)
     gb2 = cprop(guiBaseSprite, 70, bottomborder)
     gs2 = cprop(guiStickSprite, 70, bottomborder)
+    guiLayer:insertProp(rb)
     guiLayer:insertProp(gb2)
     guiLayer:insertProp(gs2)
   end
   
   guiLayer:insertProp(lb)
-  guiLayer:insertProp(rb)
   guiLayer:insertProp(gb1)
   guiLayer:insertProp(gs1)
   guiLayer:insertProp(gl)

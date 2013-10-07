@@ -169,7 +169,7 @@ function baseInput(event, idx, x, y)
     elseif (hitButton.name == "shipUpgrades") then
       loadUpgradesLayers("ship")
     elseif (hitButton.name == "stationUpgrades") then
-      if(userdata.turn < 4 and showEngineer ~= true) then
+      if(userdata.turn < 5 and showEngineer ~= true) then
         addPopup("Architect", "You still need some more experience.\n Wait till turn 5.", "OK", nil, architectSprite)
       else
         loadUpgradesLayers("station")
