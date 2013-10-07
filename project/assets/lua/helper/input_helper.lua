@@ -41,7 +41,7 @@ function touchInput(event, idx, x, y, tapCount)
   if(popupActive and event == MOAITouchSensor.TOUCH_DOWN) then
     local hit = popupPartition:propForPoint(popupButtonLayer:wndToWorld(x,y))
     if(hit) then
-      popupClicked()
+      popupClicked(hit)
     end
   else
     if(gamestate == "splash") then
@@ -50,8 +50,6 @@ function touchInput(event, idx, x, y, tapCount)
       playInput(event, idx, x, y)
     elseif(gamestate == "upgrading") then
       upgradeInput(event, idx, x, y)
-    elseif(gamestate == "endOfBattle") then
-      eobInput(event, idx, x, y)
     elseif(gamestate == "pause") then
       baseInput(event, idx, x, y)
     end
@@ -59,7 +57,7 @@ function touchInput(event, idx, x, y, tapCount)
 end
 
 function splashInput(event, idx, x, y)
-  if(event == MOAITouchSensor.TOUCH_UP) then
+  if(event == MOAITouchSensor.TOUCH_DOWN) then
     loadMenuLayers()
   end
 end
@@ -94,7 +92,7 @@ function playInput(event, idx, x, y)
     local gameButton = guiPartition:propForPoint( guiButtonLayer:wndToWorld(x,y) )
     if gameButton then
       if (gameButton.name == "pause") then
-        loadMenuLayers()
+        addPausePopup()
       elseif(gameButton.name == "gunToggle") then
         gunActive = not gunActive
         if(gunActive) then
@@ -109,7 +107,7 @@ end
 
 function upgradeInput(event, idx, x, y)
   local pickedProp = upgradePartition:propForPoint( upgradeLayer:wndToWorld(x,y) )
-  if pickedProp then 
+  if pickedProp and event == MOAITouchSensor.TOUCH_DOWN then 
     if (pickedProp.name == "leaveUpgradeScreen") then
       if upgradeType == "ship" then
         shipUpgradesList = currentUpgradesList
@@ -146,18 +144,10 @@ function upgradeInput(event, idx, x, y)
   end
 end
 
-function eobInput(event, idx, x, y)
-  local goToMenuButton = eobpartition:propForPoint( endweeklayer:wndToWorld(x,y) )
-  if goToMenuButton then
-    loadMenuLayers()
-    gamestate = "pause"
-  end
-end
-
 function baseInput(event, idx, x, y)
   if(popupActive == false) then
   local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
-  if hitButton and event == MOAITouchSensor.TOUCH_UP then 
+  if hitButton and event == MOAITouchSensor.TOUCH_DOWN then
     if (hitButton.name == "playing") then
       thread:run(threadDuel)
         
@@ -184,30 +174,6 @@ function keepInside(p)
   if(y>70) then y = 70 end
   if(y<-60) then y = -60 end
   p:setLoc(x,y)
-end
-
-function SwipingInUpgradeMenu(x, y, eventType)
-  local worldX, worldY = upgradeLayer:wndToWorld(x, y*-1)
-  
-  if eventType == MOAITouchSensor.TOUCH_DOWN then
-    swipeStartX = worldX
-    swipeStartY = worldY
-    swipeLastX = worldX
-    swipeLastY = worldY
-  elseif eventType == MOAITouchSensor.TOUCH_MOVE then
-    local deltaStartX = math.abs(worldX - swipeStartX)
-    
-    if(deltaStartX > minSwipeDistance) then
-      local deltaX = worldX - swipeLastX
-      
-      UpdateShipUpgradesPositionsBySwipe(deltaX, 0)
-    end
-    
-    swipeLastX = worldX
-    swipeLastY = worldY
-  elseif eventType == MOAITouchSensor.TOUCH_UP then
-    SnapToClosestUpgrade()
-  end
 end
 
 if MOAIInputMgr.device.pointer then

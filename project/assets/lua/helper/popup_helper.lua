@@ -58,6 +58,38 @@ function addOverlay(sprite, button, action)
   popupTextLayer:insertProp(popupButtonText)
 end
 
+function addPausePopup()
+  MOAIRenderMgr.pushRenderPass(popupLayer)
+  MOAIRenderMgr.pushRenderPass(popupButtonLayer)
+  MOAIRenderMgr.pushRenderPass(popupTextLayer)
+  
+  popupActive = true
+  popupAction = "loadMenuLayers"
+  
+  local popupProp = cprop(popupSprite, 0, 0)
+  local popupButtonProp1 = cprop(popupButtonSprite, -80, -50)
+  local popupButtonProp2 = cprop(popupButtonSprite, 80, -50)
+  popupButtonProp2.action = "continue"
+  local popupFaceProp
+  
+  local popupBody = CreateTextBox(0, 0, 240, 60, style10, "Game paused.\nTake your time...")
+  popupBody:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  local popupTitle = CreateTextBox(0, 52, 240, 25, style15, "GAME PAUSED")
+  popupTitle:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  local popupButtonText1 = CreateTextBox(-80, -47, 80, 26, style11, "Main Menu")
+  popupButtonText1:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  local popupButtonText2 = CreateTextBox(80, -47, 80, 26, style11, "Continue")
+  popupButtonText2:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  
+  popupTextLayer:insertProp(popupTitle)
+  popupTextLayer:insertProp(popupBody)
+  popupTextLayer:insertProp(popupButtonText1)
+  popupTextLayer:insertProp(popupButtonText2)
+  popupLayer:insertProp(popupProp)
+  popupPartition:insertProp(popupButtonProp1)
+  popupPartition:insertProp(popupButtonProp2)
+end
+
 function nextPopup()
   local popup = popupArray[popupCounter]
   addPopup(popup.title, popup.body, popup.button, popup.action, popup.face)
@@ -71,7 +103,7 @@ function queuePopup(array)
   nextPopup()
 end
 
-function popupClicked()
+function popupClicked(prop)
   if(popupCounter <= totalPopups) then
     removePopup()
     nextPopup()
@@ -80,10 +112,14 @@ function popupClicked()
     popupCounter = 1
     totalPopups = 0
   end
+  
   local f = popupAction
   removePopup()
-  if(f ~= nil) then
-    _G[f]()
+  
+  if(prop.action ~= "continue") then
+    if(f ~= nil) then
+      _G[f]()
+    end
   end
 end
 
