@@ -1,4 +1,5 @@
 waveCounter = 0
+armVerticalOffset = 5
 
 function createProp(sprite, layer)
   prop = cprop(sprite, 0, 0)
@@ -14,7 +15,7 @@ function createGunTools()
   end
   
   cross = cprop(csprite, crossX, 0)
-  gun = cprop(gunsprite, gunX, 0)
+  gun = cprop(playerarm, gunX, armVerticalOffset)
   
   clayer:insertProp(cross)
   clayer:insertProp(gun)
@@ -198,6 +199,7 @@ end
 
 function moveGun(gun, ship, cross)
   local gx, gy = ship:getLoc()
+  gy = gy + armVerticalOffset
   local cx, cy = cross:getLoc()
   gun:setRot(calcAngle(gx,gy,cx,cy))
   gun:setLoc(gx,gy)

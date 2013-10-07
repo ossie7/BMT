@@ -1,6 +1,8 @@
 function initTextures()
   --name          path                         x1    y1   x2   y2
   sprite       = cs("resources/ship.png",        -16,  -16, 16,  16) --Player
+  player       = cs("resources/ship2.png",       -32,  -32, 32,  32) --new player ship
+  playerarm    = cs("resources/arm.png",         0,    0,   12,  4) --new player ship arm
   bsprite      = cs("resources/bullet_1.png",    -2,   -2,  2,   2)  --Bullet
   eb1sprite    = cs("resources/bullet_2.png",    -2,   -2,  2,   2)  --Enemy Bullet Left
   eb2sprite    = cs("resources/bullet_3.png",    -2,   -2,  2,   2)  --Enemy Bullet Right

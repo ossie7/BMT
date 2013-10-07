@@ -28,7 +28,7 @@ function newBullet (origX, origY, angle)
       bulletDamage = bulletDamage + 100
   end
   
-  local bullet = Bullet.new(bsprite, blayer, origX, origY, epartition, angle, bulletDamage)
+  local bullet = Bullet.new(bsprite, blayer, origX, origY + 2, epartition, angle, bulletDamage)
   bpartition:insertProp(bullet.prop)
   bullet:startThread()
   bullet = nil
@@ -81,43 +81,33 @@ function checkBulletCollision()
   local x,y = prop:getLoc()
   
   --Hitbox 1
-  local hobj1 = ebpartition:propListForRect(x-11, y-6, x+4, y+5)
-  if(hobj1) then
-    if(type(hobj1)=="table") then
-      for i, hit in ipairs(hobj1) do
-        damage(hit)
-      end
-    else
-      damage(hobj1)
-    end
-  end
-  
-  --Hitbox 2
-  local hobj2 = ebpartition:propListForRect(x+3, y-2, x+15, y+1)
-  if(hobj2) then
-    if(type(hobj2)=="table") then
-      for i, hit in ipairs(hobj2) do
-        damage(hit)
-      end
-    else
-      damage(hobj2)
-    end
-  end
+  local hobj1 = ebpartition:propListForRect(x - 24, y - 10, x + 26, y + 2)
+  CheckProps(hobj1)
   
   --Reflect
-  local robj = ebpartition:propListForRect(x-16, y-5, x-12, y+4)
-  if(robj) then
-    if(type(robj)=="table") then
-      for i, hit in ipairs(robj) do
-        if(hit.owner.source == 1) then
+  local robj = ebpartition:propListForRect(x - 26, y - 8, x - 24, y + 2)
+  CheckProps(robj, true)
+end
+
+function CheckProps(props, reflect)
+  local reflectHitbox = reflect or false
+  
+  if(props) then
+    if(type(props) == "table") then
+      for i, hit in ipairs(props) do
+        if reflectHitbox == false then
+          damage(hit)
+        elseif(hit.owner.source == 1) then
           newReflectBullet(hit.owner)
           hit.owner:reflect()
         end
       end
     else
-      if(robj.owner.source == 1) then
-        newReflectBullet(robj.owner)
-        robj.owner:reflect()
+      if reflectHitbox == false then
+        damage(props)
+      elseif(props.owner.source == 1) then
+        newReflectBullet(props.owner)
+        props.owner:reflect()
       end
     end
   end
