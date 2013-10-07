@@ -166,6 +166,7 @@ end
 
 function newEnemy (team)
   local s = nil
+  local layer = nil
   local x, y = 0, math.random(bottomborder + 30, topborder - 20)
   local ship = 1
   
@@ -186,8 +187,10 @@ function newEnemy (team)
   local newEnemy = Enemy.new(s, x, y, team, ship)
   if(team == 1) then
     epartition:insertProp(newEnemy.prop)
+    elayer:insertProp(newEnemy.gun)
   else
     epartition2:insertProp(newEnemy.prop)
+    elayer2:insertProp(newEnemy.gun)
   end
   newEnemy:startThread()
   newEnemy = nil

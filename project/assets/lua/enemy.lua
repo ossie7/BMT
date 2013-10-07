@@ -29,6 +29,12 @@ function Enemy.new(sprite, x, y, team, ship)
   self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   self.prop.owner = self
   
+  self.gun = MOAIProp2D.new()
+  self.gun:setDeck(gunsprite)
+  self.gun:setLoc(x, y)
+  self.gun:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  self.gun.owner = self
+  
   return self
 end
 
@@ -38,8 +44,11 @@ function Enemy.stats(self, health, damage, interval)
   self.intervalBase = interval
 end
 
-function wait ( action )
-    while action:isBusy() do coroutine:yield () end
+function Enemy.wait(self, action )
+  while action:isBusy() do
+    self:rotGun()
+    coroutine:yield()
+  end
 end
 
 function Enemy.startThread (self)
@@ -76,7 +85,7 @@ function Enemy.startThread (self)
         if ((newY + locY) <= -60 or (newY + locY) >= 70) then
           newY = 0
         end
-        wait(self:moveLoc(newX, newY, math.random() + math.random(1,2)))
+        parent:wait(self:moveLoc(newX, newY, math.random() + math.random(1,2)))
       end
       
       if(parent.team == 2 and parent.isArrived) then
@@ -88,8 +97,9 @@ function Enemy.startThread (self)
         if ((newY + locY) <= -60 or (newY + locY) >= 70) then
           newY = 0
         end
-        wait(self:moveLoc(newX, newY, math.random() + math.random(1,2)))
+        parent:wait(self:moveLoc(newX, newY, math.random() + math.random(1,2)))
       end
+      parent.rotGun(parent)
       end
       coroutine.yield()
     end
@@ -202,6 +212,17 @@ function Enemy.enemyBulletGen(self, x, y)
   end
 end
 
+function Enemy.rotGun(self)
+  local gx, gy = self.prop:getLoc()
+  if(self.target ~= nil) then
+    local cx, cy = self.target:getLoc()
+    self.gun:setRot(calcAngle(gx,gy,cx,cy))
+  else
+    self.gun:setRot(0)
+  end
+  self.gun:setLoc(gx,gy)
+end
+
 function Enemy.checkAllHits(self, objs)
   if(objs) then
     if(type(objs)=="table") then
@@ -252,6 +273,8 @@ function Enemy.die(self)
   explodeSound()
   elayer:removeProp(self.prop)
   elayer2:removeProp(self.prop)
+  elayer:removeProp(self.gun)
+  elayer2:removeProp(self.gun)
   
   if(self.team == 1) then
     leftKilled = leftKilled + 1
@@ -266,6 +289,7 @@ function Enemy.die(self)
   self.prop.thread:stop()
   self.thread:stop()
   self.prop = nil
+  self.gun = nil
   self = nil
 
 end
