@@ -16,7 +16,7 @@ function Enemy.new(sprite, x, y, team, ship)
   elseif(team == 2 and ship == 3) then self:stats(1200, 400, 3) end
   
   self.isArrived = false
-  self.enemyLast = clock() + math.random() + math.random()
+  self.enemyLast = clock() + math.random()
   if(team == 1) then
     self.enemyInterval = self.intervalBase + math.random() + math.random()
   else
@@ -178,7 +178,7 @@ function Enemy.newEnemyBullet (self, origX, origY, angle)
 end
 
 function Enemy.enemyBulletGen(self, x, y)
-    if(userdata.mission == "chased") then
+    if(userdata.mission == "chased" or self.ship == 2) then
         self.target = prop
     end
     
@@ -200,7 +200,7 @@ function Enemy.enemyBulletGen(self, x, y)
         end
       end
     else
-      if(userdata.mission == "chased") then
+      if(self.target == prop) then
         if(self.enemyLast+self.enemyInterval < clock()) then
           local tx, ty = prop:getLoc()
           local angle = calcAngle(x, y, tx, math.random(ty - 10, ty + 10))

@@ -127,7 +127,7 @@ function damage(obj)
   obj.thread:stop()
   ebpartition:removeProp(obj)
   ebrpartition:removeProp(obj)
-  health = health - 1
+  health = health - (obj.owner.damage/100)
   if health < 0 then health = 0 end
   SetShipColor(1, 0, 0, 1)
   if (health <= 0 ) then
