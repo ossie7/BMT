@@ -15,7 +15,7 @@ function GenerateShip(team)
     else
       leftTeamSnipersAmount = leftTeamSnipersAmount + 1
     end
-  else
+  elseif team == 1 and ship == 2 then
     ship = 1
   end
   
@@ -25,7 +25,7 @@ function GenerateShip(team)
     else
       leftTeamTanksAmount = leftTeamTanksAmount + 1
     end
-  else
+  elseif team == 1 and ship == 3 then
     ship = 1
   end
   
@@ -36,7 +36,7 @@ function GenerateShip(team)
     else
       rightTeamSnipersAmount = rightTeamSnipersAmount + 1
     end
-  else
+  elseif team == 2 and ship == 2 then
     ship = 1
   end
   
@@ -46,7 +46,7 @@ function GenerateShip(team)
     else
       rightTeamTanksAmount = rightTeamTanksAmount + 1
     end
-  else
+  elseif team == 2 and ship == 3 then
     ship = 1
   end
   
