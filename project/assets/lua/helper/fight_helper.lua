@@ -175,7 +175,7 @@ function newEnemy (team)
   local s = nil
   local layer = nil
   local x, y = 0, math.random(bottomborder + 30, topborder - 20)
-  local ship = math.random(1, 3)
+  local ship = GenerateShip(team)
   
   if(team == 1) then
     x = -180
@@ -183,15 +183,7 @@ function newEnemy (team)
     x = 180
   end
   
-  if(    team == 1 and ship == 1) then s = e1sprite
-  elseif(team == 1 and ship == 2) then s = e1sprite
-  elseif(team == 1 and ship == 3) then s = e1sprite
-  elseif(team == 2 and ship == 1) then s = e2sprite
-  elseif(team == 2 and ship == 2) then s = e2sprite
-  elseif(team == 2 and ship == 3) then s = e2sprite end
-    
-  
-  local newEnemy = Enemy.new(s, x, y, team, ship)
+  local newEnemy = Enemy.new(x, y, team, ship)
   if(team == 1) then
     epartition:insertProp(newEnemy.prop)
     elayer:insertProp(newEnemy.gun)

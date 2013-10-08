@@ -1,7 +1,7 @@
 Enemy = {}
 Enemy.__index = Enemy
 
-function Enemy.new(sprite, x, y, team, ship)
+function Enemy.new(x, y, team, ship)
   self = setmetatable({}, Enemy)
 
   self.team = team
@@ -261,13 +261,22 @@ function Enemy.die(self)
   
   runExplosion(xDie, yDie)
   
+  if self.team == 1 and self.ship == 2 then
+    leftTeamSnipersAmount = leftTeamSnipersAmount - 1
+  elseif self.team == 1 and self.ship == 3 then
+    leftTeamTanksAmount = leftTeamTanksAmount - 1
+  elseif self.team == 2 and self.ship == 2 then
+    rightTeamSnipersAmount = rightTeamSnipersAmount - 1
+  elseif self.team == 2 and self.ship == 3 then
+    rightTeamTanksAmount = rightTeamTanksAmount - 1
+  end
+  
   MOAISim.forceGarbageCollection()
   self.prop.thread:stop()
   self.thread:stop()
   self.prop = nil
   self.gun = nil
   self = nil
-
 end
 
 function runExplosion(xDie, yDie)

@@ -1,3 +1,47 @@
+maxSnipersActivePerSide = 2
+maxTanksActivePerSide = 1
+leftTeamTanksAmount = 0
+leftTeamSnipersAmount = 0
+rightTeamTanksAmount = 0
+rightTeamSnipersAmount = 0
+
+function GenerateShip(team)
+  local ship = math.random(1, 3)
+  
+  --left team restrictions
+  if team == 1 and ship == 2 and leftTeamSnipersAmount >= maxSnipersActivePerSide then
+    ship = 1
+  elseif team == 1 and ship == 2 then
+    leftTeamSnipersAmount = leftTeamSnipersAmount + 1
+  end
+  
+  if team == 1 and ship == 3 and leftTeamTanksAmount >= maxTanksActivePerSide then
+    ship = 1
+  elseif team == 1 and ship == 3 then
+    leftTeamTanksAmount = leftTeamTanksAmount + 1
+  end
+  
+  --right team restrictions
+  if team == 2 and ship == 2 and rightTeamSnipersAmount >= maxSnipersActivePerSide then
+    ship = 1
+  elseif team == 2 and ship == 2 then
+    rightTeamSnipersAmount = rightTeamSnipersAmount + 1
+  end
+  
+  if team == 2 and ship == 3 and rightTeamTanksAmount >= maxTanksActivePerSide then
+    ship = 1
+  elseif team == 2 and ship == 3 then
+    rightTeamTanksAmount = rightTeamTanksAmount + 1
+  end
+  
+  print("leftTeamSnipersAmount: "..leftTeamSnipersAmount)
+  print("leftTeamTanksAmount: "..leftTeamTanksAmount)
+  print("rightTeamSnipersAmount: "..rightTeamSnipersAmount)
+  print("rightTeamTanksAmount: "..rightTeamTanksAmount)
+  
+  return ship
+end
+
 function GetEnemyAnimationProp(team, ship)
   local prop = MOAIProp2D.new()
   
