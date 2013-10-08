@@ -259,10 +259,12 @@ function guiThread()
     if(gamestate ~= "playing") then
       break
     end
-    local left = ((amountLeftEnemies-leftKilled)/amountLeftEnemies) * 150
-    local right = ((amountRightEnemies-rightKilled)/amountRightEnemies) * -150
-    lbsprite:setRect(0,0,left,-8)
-    rbsprite:setRect(right,-8,0,0)
+    local left = ((amountLeftEnemies-leftKilled)/amountLeftEnemies) * -137
+    local right = ((amountRightEnemies-rightKilled)/amountRightEnemies) * 137
+    local pwr = ((power/100) * 30)
+    glbsprite:setRect(left, -4, 0, 0)
+    grbsprite:setRect(0, 0, right, -4)
+    pbsprite:setRect(0, 0, pwr, -12)
     
     local px, py = prop:getLoc()
     local cx, cy = cross:getLoc()
@@ -300,16 +302,21 @@ function guiThread()
 end
 
 function startGuiThread()
-  lb  = cprop(lbsprite, leftborder + 10, topborder - 5)
+  pm  = cprop(powerMainSprite, 0, 0)
+  guiLayer:insertProp(pm)
+  
+  lb  = cprop(glbsprite, -20, 79)
+  pb  = cprop(pbsprite, -15, 83)
   gb1 = cprop(guiBaseSprite, -70, bottomborder)
   gs1 = cprop(guiStickSmallSprite, -70, bottomborder)
   gl  = cprop(guiLifeSprite, 0, bottomborder+5)
   gd1 = cprop(digits, -400, -400)
   gd2 = cprop(digits, -400, -400)
   gd3 = cprop(digits, -400, -400)
+  ps  = cprop(powerSplitSprite, 0, 77)
   
   if(userdata.mission ~= "chased") then
-    rb  = cprop(rbsprite, rightborder - 10, topborder - 5)
+    rb  = cprop(grbsprite, 20, 79)
     gb2 = cprop(guiBaseSprite, 70, bottomborder)
     gs2 = cprop(guiStickSmallSprite, 70, bottomborder)
     guiLayer:insertProp(rb)
@@ -317,13 +324,16 @@ function startGuiThread()
     guiLayer:insertProp(gs2)
   end
   
+  
   guiLayer:insertProp(lb)
+  guiLayer:insertProp(pb)
   guiLayer:insertProp(gb1)
   guiLayer:insertProp(gs1)
   guiLayer:insertProp(gl)
   guiLayer:insertProp(gd1)
   guiLayer:insertProp(gd2)
   guiLayer:insertProp(gd3)
+  guiLayer:insertProp(ps)
   
   guithread = MOAICoroutine.new()
   guithread:run(guiThread)
