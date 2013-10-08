@@ -59,3 +59,21 @@ function GetEnemyGun(team, ship, x, y)
   
   return gun
 end
+
+function newTarget(team)
+  local ot = nil
+  if(team == 2) then
+    ot = epartition
+  else
+    ot = epartition2
+  end
+  local e = ot:propListForRect(-160, -90, 160, 90)
+  if(e) then
+    if(type(e) == "table") then
+      local n = table.getn(e)
+      return e[math.random(1,n)]
+    else
+      return e
+    end
+  end
+end

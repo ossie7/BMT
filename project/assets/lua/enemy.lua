@@ -178,48 +178,21 @@ function Enemy.newEnemyBullet (self, origX, origY, angle)
 end
 
 function Enemy.enemyBulletGen(self, x, y)
-    if(userdata.mission == "chased" or self.ship == 2) then
-        self.target = prop
+  if(userdata.mission == "chased" or self.ship == 2) then
+    self.target = prop
+  end
+    
+  if(self.target == nil) then
+    self.target = newTarget(self.team)
+  elseif(self.target == prop or self.target.owner.health > 0) then
+    if(self.enemyLast+self.enemyInterval < clock()) then
+      local tx, ty = self.target:getLoc()
+      local angle = calcAngle(x, y, tx, math.random(ty - 10, ty + 10))
+      self:newEnemyBullet(x, y, angle)
+      self.enemyLast = clock()
     end
-    
-    if(self.target == nil) then
-      local ot = nil
-      if(self.team == 2) then
-        ot = epartition
-      else
-        ot = epartition2
-      end
-    
-      local e = ot:propListForRect(-160, -90, 160, 90)
-      if(e) then
-        if(type(e)=="table") then
-          local n = table.getn(e)
-          self.target = e[math.random(1,n)]
-        else
-          self.target = e
-        end
-      end
-    else
-      if(self.target == prop) then
-        if(self.enemyLast+self.enemyInterval < clock()) then
-          local tx, ty = prop:getLoc()
-          local angle = calcAngle(x, y, tx, math.random(ty - 10, ty + 10))
-          self:newEnemyBullet(x, y, angle)
-          self.enemyLast = clock()
-        end
-      else
-        if(self.target.owner.health > 0) then
-          if(self.enemyLast+self.enemyInterval < clock()) then
-            local tx, ty = self.target:getLoc()
-            local angle = calcAngle(x, y, tx, math.random(ty - 10, ty + 10))
-            self:newEnemyBullet(x, y, angle)
-            self.enemyLast = clock()
-          end
-      else
-        self.target = nil
-      end
-    end
-    
+  else
+    self.target = nil
   end
 end
 
