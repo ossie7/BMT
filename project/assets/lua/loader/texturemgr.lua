@@ -41,6 +41,7 @@ function initTextures()
   guiAutoSprite  = cs("resources/icon_auto_fire.png", -11, 0,   11, 23) --Auto-fire Button
   guiRegenSprite = cs("resources/icon_regen.png",     -11, 0,   11, 23) --Regen Button
   guiStickSprite = cs("resources/stick.png",          -34, 0,   35, 37) --Control Stick
+  guiStickSmallSprite = cs("resources/stick_small.png", -24.5, -17, 24.5, 17) --Control Stick
   --splash
   splashLogo     = cs("resources/icon.png",           -48, -48, 48, 48) -- splash logo
   
