@@ -24,24 +24,16 @@ function Enemy.new(sprite, x, y, team, ship)
   end
   
   self.entryLoc = 140 --math.random(130,145)
-  self.prop = MOAIProp2D.new()
-  self.prop:setDeck(sprite)
+  
+  self.prop = GetEnemyAnimationProp(team, ship)
   self.prop:setLoc(x, y)
-  self.prop:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
+  self.animation = GetEnemyAnimation(self.prop, team, ship)
+  self.animation:start()
   
-  self.gun = MOAIProp2D.new()
-  self.gun:setDeck(gunsprite)
-  self.gun:setLoc(x, y)
-  self.gun:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  
-  if team == 1 then
-    self.prop = GetEnemyAnimationProp(team, ship)
-    self.prop:setLoc(x, y)
-    self.animation = GetEnemyAnimation(self.prop, team, ship)
-    self.animation:start()
-    
-    self.gun = GetEnemyGun(team, ship, x, y)
-  end
+  self.gun = GetEnemyGun(team, ship, x, y)
+  local offsetX, offsetY = GetEnemyGunOffset(team, ship)
+  self.gunOffsetX = offsetX 
+  self.gunOffsetY = offsetY
   
   self.prop.owner = self
   self.gun.owner = self
@@ -204,7 +196,7 @@ function Enemy.rotGun(self)
   else
     self.gun:setRot(0)
   end
-  self.gun:setLoc(gx,gy)
+  self.gun:setLoc(gx + self.gunOffsetX, gy + self.gunOffsetY)
 end
 
 function Enemy.checkAllHits(self, objs)

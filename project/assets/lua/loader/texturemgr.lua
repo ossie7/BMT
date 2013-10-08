@@ -52,6 +52,9 @@ function initTextures()
   blueDroneGun   = cs("resources/drone_gun.png",      -5,     -2.5,   5,    2.5)
   blueSniperGun  = cs("resources/sniper_gun.png",     -10.5,  -2.5,   10.5, 2.5)
   blueTankGun    = cs("resources/tank_gun.png",       -8.5,   -6,     8.5,  6)
+  redDroneGun   = cs("resources/drone_gun.png",      -5,     -2.5,   5,    2.5)
+  redSniperGun  = cs("resources/sniper_gun.png",     -10.5,  -2.5,   10.5, 2.5)
+  redTankGun    = cs("resources/tank_gun.png",       -8.5,   -6,     8.5,  6)
   
   
   tileLib = MOAITileDeck2D.new()
@@ -74,6 +77,21 @@ function initTextures()
   blueTankTileLib:setTexture("resources/tank_sprite.png")
   blueTankTileLib:setSize(3, 1)
   blueTankTileLib:setRect(-32, -32, 32, 32)
+  
+  redDroneTileLib = MOAITileDeck2D.new()
+  redDroneTileLib:setTexture("resources/drone_sprite.png")
+  redDroneTileLib:setSize(5, 3)
+  redDroneTileLib:setRect(-16, -16, 16, 16)
+  
+  redSniperTileLib = MOAITileDeck2D.new()
+  redSniperTileLib:setTexture("resources/sniper_main.png")
+  redSniperTileLib:setSize(1, 1)
+  redSniperTileLib:setRect(-16, -16, 16, 16)
+  
+  redTankTileLib = MOAITileDeck2D.new()
+  redTankTileLib:setTexture("resources/tank_sprite.png")
+  redTankTileLib:setSize(3, 1)
+  redTankTileLib:setRect(-32, -32, 32, 32)
   
   guiDigits = MOAIImage.new()
   guiDigits:load("resources/digits_sprite.png")

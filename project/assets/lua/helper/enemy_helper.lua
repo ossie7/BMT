@@ -7,6 +7,12 @@ function GetEnemyAnimationProp(team, ship)
     prop:setDeck(blueSniperTileLib)
   elseif team == 1 and ship == 3 then
     prop:setDeck(blueTankTileLib)
+  elseif team == 2 and ship == 1 then
+    prop:setDeck(redDroneTileLib)
+  elseif team == 2 and ship == 2 then
+    prop:setDeck(redSniperTileLib)
+  elseif team == 2 and ship == 3 then
+    prop:setDeck(redTankTileLib)
   end
   
   return prop
@@ -18,14 +24,19 @@ function GetEnemyAnimation(prop, team, ship)
   
   if team == 1 and ship == 1 then
     frames = 13
-    curve:reserveKeys(frames)
   elseif team == 1 and ship == 2 then
     frames = 1
-    curve:reserveKeys(frames)
   elseif team == 1 and ship == 3 then
     frames = 3
-    curve:reserveKeys(frames)
+  elseif team == 2 and ship == 1 then
+    frames = 13
+  elseif team == 2 and ship == 2 then
+    frames = 1
+  elseif team == 2 and ship == 3 then
+    frames = 3
   end
+  
+  curve:reserveKeys(frames)
   
   for i = 1, frames, 1 do
     -- index, time, hoeveelste plaatje
@@ -50,6 +61,12 @@ function GetEnemyGun(team, ship, x, y)
     gun:setDeck(blueSniperGun)
   elseif team == 1 and ship == 3 then
     gun:setDeck(blueTankGun)
+  elseif team == 2 and ship == 1 then
+    gun:setDeck(redDroneGun)
+  elseif team == 2 and ship == 2 then
+    gun:setDeck(redSniperGun)
+  elseif team == 2 and ship == 3 then
+    gun:setDeck(redTankGun)
   else
     gun:setDeck(gunsprite)
   end
@@ -76,4 +93,27 @@ function newTarget(team)
       return e
     end
   end
+end
+  
+function GetEnemyGunOffset(team, ship)
+  local offsetX = 0
+  local offsetY = 0
+  
+  if team == 1 and ship == 1 then
+    offsetY = -5
+  elseif team == 1 and ship == 2 then
+    offsetX = 5
+  elseif team == 1 and ship == 3 then
+    offsetX = 3
+    offsetY = -10
+  elseif team == 2 and ship == 1 then
+    offsetY = -5
+  elseif team == 2 and ship == 2 then
+    offsetX = -5
+  elseif team == 2 and ship == 3 then
+    offsetX = -3
+    offsetY = -10
+  end
+  
+  return offsetX, offsetY
 end
