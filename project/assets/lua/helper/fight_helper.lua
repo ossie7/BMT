@@ -1,6 +1,6 @@
 waveCounter = 0
 armVerticalOffset = 5
-leftWon = nil
+leftWon = false
 
 function createProp(sprite, layer)
   prop = cprop(sprite, 0, 0)
@@ -45,12 +45,14 @@ function startDuel(sprite, layer)
 
   popupGiven = false --Mission popup
   currentWaveRight = 1
-  amountRightEnemies = math.random(7,13) + (userdata.turn * 2)
+  --amountRightEnemies = math.random(7,13) + (userdata.turn * 2)
+  amountRightEnemies = 2
   totalAmountRight = 0
   rightKilled = 0
   
   currentWaveLeft = 1
-  amountLeftEnemies = math.random(7,13) + (userdata.turn * 2) 
+  --amountLeftEnemies = math.random(7,13) + (userdata.turn * 2) 
+  amountLeftEnemies= 2
   totalAmountLeft = 0
   leftKilled = 0
   

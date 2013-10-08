@@ -195,21 +195,29 @@ function loadBaseBars()
   local left = ((userdata.warzone - 0.5) / 9) * 212
   local right = ((9.5 - userdata.warzone) / 9) * -212
   local fist = ((userdata.warzone - 5) / 9 ) * 212
-  
-  local leftOld = 0
-  
+  leftOld = ((userdata.warzone - 0.5) / 9) * 212
+  rightOld = ((9.5 - userdata.warzone) / 9) * -212
+  local fistOld = 0
+
    if(leftWon ~= nil) then
-    elseif(leftWon) then
-      fistOld = (((userdata.warzone-1) - 0.5) / 9) * 212
+     if(leftWon) then
+      leftOld = ((userdata.warzone - 1) / 9) * 212
+      fistOld = ((userdata.warzone - 6) / 9) * 212
+      rightOld = ((10.85 - userdata.warzone) / 9) * -212
+    else
+      leftOld = ((userdata.warzone - 1) / 9) * 212
+      fistOld = ((userdata.warzone - 6) / 9) * 212
+      rightOld = ((11 - userdata.warzone) / 9) * -212
+      end
   end
   
   lbprop = cprop(lbsprite, -128, 38)
   basebarlayer:insertProp(lbprop)
-  lbsprite:setRect(0,0,left,-11)
+  lbsprite:setRect(0,0,leftOld,-11)
   
   rbprop = cprop(rbsprite, 128,38)
   basebarlayer:insertProp(rbprop)
-  rbsprite:setRect(right,-11,0,0)
+  rbsprite:setRect(rightOld,-11,0,0)
   
   lfprop = cprop(lfsprite, fistOld, 33)
   basebarlayer:insertProp(lfprop)
@@ -220,8 +228,49 @@ function loadBaseBars()
   wzprop = cprop(wzSprite, 0, 0)
   basebarlayer:insertProp(wzprop)
   
-  lfprop:moveLoc(fist, 0,3)
-  rfprop:moveLoc(fist,0,3)
+  if(leftWon == false) then
+        left = left - 30
+        
+      end
+  
+  local fistTimer = MOAITimer.new()
+  fistTimer:setMode(MOAITimer.LOOP)
+  fistTimer:setSpan(0.1)
+  fistTimer:setListener(MOAITimer.EVENT_TIMER_LOOP ,
+    function()
+      
+      
+      local distance = left - leftOld
+      if(math.floor(leftOld) ~= math.floor(left)) then
+        if(leftWon) then
+            leftOld = leftOld + 1
+            lbsprite:setRect(0,0,leftOld,-11)
+
+            rightOld = rightOld + 1
+            rbsprite:setRect(rightOld,-11,0,0)
+          elseif(leftWon == false) then
+            leftOld = leftOld - 1
+            lbsprite:setRect(0,0,leftOld,-11)
+            print("dfsf"..leftOld.."ddfsfds"..left)
+            rightOld = rightOld - 1
+            rbsprite:setRect(rightOld,-11,0,0)
+          end
+      else
+        fistTimer:stop()
+      end
+      
+    end)
+  fistTimer:start()
+
+  if(leftWon ~= nil) then
+    if(leftWon) then
+    lfprop:moveLoc(fist-fistOld, 0,3)
+    rfprop:moveLoc(fist-fistOld, 0,3)
+  else
+    lfprop:moveLoc(fistOld-fist, 0,3)
+    rfprop:moveLoc(fistOld-fist, 0,3)
+  end
+  end
 end
 
 function loadUpgradesLayers(upgradeScreenType)
