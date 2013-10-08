@@ -9,35 +9,46 @@ function GenerateShip(team)
   local ship = math.random(1, 3)
   
   --left team restrictions
-  if team == 1 and ship == 2 and leftTeamSnipersAmount >= maxSnipersActivePerSide then
+  if team == 1 and ship == 2 and userdata.turn >= 5 then
+    if leftTeamSnipersAmount >= maxSnipersActivePerSide then
+      ship = 1
+    else
+      leftTeamSnipersAmount = leftTeamSnipersAmount + 1
+    end
+  else
     ship = 1
-  elseif team == 1 and ship == 2 then
-    leftTeamSnipersAmount = leftTeamSnipersAmount + 1
   end
   
-  if team == 1 and ship == 3 and leftTeamTanksAmount >= maxTanksActivePerSide then
+  if team == 1 and ship == 3 and userdata.turn >= 7 then
+    if leftTeamTanksAmount >= maxTanksActivePerSide then
+      ship = 1
+    else
+      leftTeamTanksAmount = leftTeamTanksAmount + 1
+    end
+  else
     ship = 1
-  elseif team == 1 and ship == 3 then
-    leftTeamTanksAmount = leftTeamTanksAmount + 1
   end
   
   --right team restrictions
-  if team == 2 and ship == 2 and rightTeamSnipersAmount >= maxSnipersActivePerSide then
+  if team == 2 and ship == 2 and userdata.turn >= 5 then
+    if rightTeamSnipersAmount >= maxSnipersActivePerSide then
+      ship = 1
+    else
+      rightTeamSnipersAmount = rightTeamSnipersAmount + 1
+    end
+  else
     ship = 1
-  elseif team == 2 and ship == 2 then
-    rightTeamSnipersAmount = rightTeamSnipersAmount + 1
   end
   
-  if team == 2 and ship == 3 and rightTeamTanksAmount >= maxTanksActivePerSide then
+  if team == 2 and ship == 3 and userdata.turn >= 7 then
+    if rightTeamTanksAmount >= maxTanksActivePerSide then
+      ship = 1
+    else
+      rightTeamTanksAmount = rightTeamTanksAmount + 1
+    end
+  else
     ship = 1
-  elseif team == 2 and ship == 3 then
-    rightTeamTanksAmount = rightTeamTanksAmount + 1
   end
-  
-  print("leftTeamSnipersAmount: "..leftTeamSnipersAmount)
-  print("leftTeamTanksAmount: "..leftTeamTanksAmount)
-  print("rightTeamSnipersAmount: "..rightTeamSnipersAmount)
-  print("rightTeamTanksAmount: "..rightTeamTanksAmount)
   
   return ship
 end
