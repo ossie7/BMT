@@ -1,5 +1,5 @@
-health = 30
-maxHealth = 30
+health = 50
+maxHealth = 50
 bulletDamage = 100
 gunActive = false
 if(userdata.mission ~= "chased") then
