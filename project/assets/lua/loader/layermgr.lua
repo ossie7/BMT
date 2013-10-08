@@ -23,6 +23,7 @@ end
 function initLayers()
   universeLayer  = cl() --Universe background
   layer          = cl() --Ship
+  spartition     = cp(layer)
   clayer         = cl() --Crosshair/gun
   buttonlayer    = cl() --Menu buttons
   pausePartition = cp(buttonlayer)

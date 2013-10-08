@@ -39,6 +39,10 @@ function bulletGen(x, y, angle)
     if(last + interval < clock()) then
       laserSound()
       newBullet(x, y, angle)
+      if(currentPower(1, 1)) then
+        newBullet(x, y, angle+10)
+        newBullet(x, y, angle-10)
+      end
       last = clock()
     end
   else
@@ -53,7 +57,11 @@ end
 function shipThread()
   while true do
     if(popupActive == false) then
-    SetShipColor(1, 1, 1, 1)
+    if(currentPower(0, 1)) then
+      SetShipColor(0.5, 0.5, 1, 0.2)
+    else
+      SetShipColor(1, 1, 1, 1)
+    end
     
     if(gamestate ~= "playing") then
       break

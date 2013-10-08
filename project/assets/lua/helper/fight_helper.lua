@@ -4,7 +4,8 @@ leftWon = nil
 
 function createProp(sprite, layer)
   prop = cprop(sprite, 0, 0)
-  layer:insertProp(prop)
+  spartition:insertProp(prop)
+  prop.name = "ship"
 end
 
 function createGunTools()
@@ -18,8 +19,9 @@ function createGunTools()
   cross = cprop(csprite, crossX, 0)
   gun = cprop(playerarm, gunX, armVerticalOffset)
   
-  clayer:insertProp(cross)
+  spartition:insertProp(cross)
   clayer:insertProp(gun)
+  cross.name = "gun"
 end
 
 
@@ -61,6 +63,7 @@ function startDuel(sprite, layer)
   startGuiThread()
   startShipThread()
   startWaves()
+  startPowerThread()
   addOverlay(battleOverlay, "Ok", nil)
 
 end

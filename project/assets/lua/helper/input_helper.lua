@@ -90,6 +90,15 @@ function playInput(event, idx, x, y)
   -- Button logic, only on mouse/touch down
   if(event == MOAITouchSensor.TOUCH_DOWN) then
     local gameButton = guiPartition:propForPoint( guiButtonLayer:wndToWorld(x,y) )
+    local powerButton = spartition:propForPoint(layer:wndToWorld(x, y))
+    
+    if powerButton then
+      if (powerButton.name == "ship") then
+        shipHit()
+      elseif(powerButton.name == "gun") then
+        gunHit()
+      end
+    end
     if gameButton then
       if (gameButton.name == "pause") then
         addPausePopup()

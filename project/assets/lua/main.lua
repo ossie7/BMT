@@ -1,6 +1,7 @@
 io.output( ):setvbuf("no") -- Fix for console lag
 
 -- Requires
+require 'helper/power_helper'
 require 'helper/popup_helper'
 require 'helper/save_helper'
 require 'helper/base_helper'

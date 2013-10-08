@@ -170,8 +170,12 @@ function Enemy.newEnemyBullet (self, origX, origY, angle)
 end
 
 function Enemy.enemyBulletGen(self, x, y)
-  if(userdata.mission == "chased" or self.ship == 2) then
+  if(userdata.mission == "chased" or (self.ship == 2 and not currentPower(0, 1))) then
     self.target = prop
+  end
+  
+  if(self.target == prop and currentPower(0, 1)) then
+    self.target = nil
   end
     
   if(self.target == nil) then
