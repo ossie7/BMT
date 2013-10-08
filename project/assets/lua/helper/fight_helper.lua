@@ -1,5 +1,6 @@
 waveCounter = 0
 armVerticalOffset = 5
+leftWon = nil
 
 function createProp(sprite, layer)
   prop = cprop(sprite, 0, 0)
@@ -122,7 +123,10 @@ function checkEndOfBattle()
   if((amountLeftEnemies - leftKilled == 0)) then
     timer:stop()
     if(timer2 ~= nil) then timer2:stop() end
-    if(wz > 0 and userdata.showEngineer) then userdata.warzone = wz -1 end
+    if(wz > 0 and userdata.showEngineer) then
+      userdata.warzone = wz -1
+      leftWon = false
+    end
     save_userdata()
     if(userdata.warzone == 0) then
       SetupNewUserdata()
@@ -148,7 +152,10 @@ function checkEndOfBattle()
   elseif ((amountRightEnemies - rightKilled == 0) and userdata.mission ~= "chased") then
     timer:stop()
     if(timer2 ~= nil) then timer2:stop() end
-    if(wz < 10 and userdata.showEngineer) then userdata.warzone = wz +1 end
+    if(wz < 10 and userdata.showEngineer) then
+      userdata.warzone = wz +1
+      leftWon = true
+    end
     save_userdata()
     if(userdata.warzone == 10) then
       SetupNewUserdata()

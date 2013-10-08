@@ -190,9 +190,17 @@ function loadSplashLayers()
 end
 
 function loadBaseBars()
+  
   local left = ((userdata.warzone - 0.5) / 9) * 212
   local right = ((9.5 - userdata.warzone) / 9) * -212
   local fist = ((userdata.warzone - 5) / 9 ) * 212
+  
+  local leftOld = 0
+  
+   if(leftWon ~= nil) then
+    elseif(leftWon) then
+      fistOld = (((userdata.warzone-1) - 0.5) / 9) * 212
+  end
   
   lbprop = cprop(lbsprite, -128, 38)
   basebarlayer:insertProp(lbprop)
@@ -202,14 +210,17 @@ function loadBaseBars()
   basebarlayer:insertProp(rbprop)
   rbsprite:setRect(right,-11,0,0)
   
-  lfprop = cprop(lfsprite, fist, 33)
+  lfprop = cprop(lfsprite, fistOld, 33)
   basebarlayer:insertProp(lfprop)
   
-  rfprop = cprop(rfsprite, fist, 33)
+  rfprop = cprop(rfsprite, fistOld, 33)
   basebarlayer:insertProp(rfprop)
   
   wzprop = cprop(wzSprite, 0, 0)
   basebarlayer:insertProp(wzprop)
+  
+  lfprop:moveLoc(fist, 0,3)
+  rfprop:moveLoc(fist,0,3)
 end
 
 function loadUpgradesLayers(upgradeScreenType)
