@@ -19,14 +19,6 @@ function Bullet.new(sprite, layer, x, y, partition, angle, damage)
   return self
 end
 
-function Bullet.checkIfInside(self, locX,locY)
-  if (locX < 160 and locX > -160) and (locY < 120 and locY > -120) then
-    return true
-  else
-    return false
-  end
-end
-
 function Bullet.bulletMovement(self, x, y)
   nx = x + math.cos(math.rad(self.angle)) * self.speed
   ny = y + math.sin(math.rad(self.angle)) * self.speed
@@ -38,7 +30,7 @@ function Bullet.startThread (self)
   
   function self.prop:moveBullet(layer, parent)
     local locX,locY = self:getLoc()
-    while parent:checkIfInside(locX,locY) do
+    while checkIfInside(locX,locY) do
       if(popupActive == false) then
       if(gamestate ~= "playing") then
         break
