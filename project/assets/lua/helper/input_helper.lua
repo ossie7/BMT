@@ -155,26 +155,32 @@ end
 
 function baseInput(event, idx, x, y)
   if(popupActive == false) then
-  local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
-  if hitButton and event == MOAITouchSensor.TOUCH_DOWN then
-    if (hitButton.name == "playing") then
-      thread:run(threadDuel)
-        
-      lastX, lastY = layer:wndToWorld(x, y*-1)
-        
-      loadFightLayers()
-      gamestate = "playing"
-      boolean = WAIT
-    elseif (hitButton.name == "shipUpgrades") then
-      loadUpgradesLayers("ship")
-    elseif (hitButton.name == "stationUpgrades") then
-      if(userdata.turn < 5 and showEngineer ~= true) then
-        addPopup("Architect", "You still need some more experience.\n Wait till turn 5.", "OK", nil, architectSprite)
-      else
-        loadUpgradesLayers("station")
+    if userdata.turn == 0 and userdata.seenFirstOverlay == false then
+      addOverlay(overlay1, "Ok", nil)
+      userdata.seenFirstOverlay = true
+      save_userdata()
+    else
+      local hitButton = partition:propForPoint( menuLayer:wndToWorld(x,y) )
+      if hitButton and event == MOAITouchSensor.TOUCH_DOWN then
+        if (hitButton.name == "playing") then
+          thread:run(threadDuel)
+            
+          lastX, lastY = layer:wndToWorld(x, y*-1)
+            
+          loadFightLayers()
+          gamestate = "playing"
+          boolean = WAIT
+        elseif (hitButton.name == "shipUpgrades") then
+          loadUpgradesLayers("ship")
+        elseif (hitButton.name == "stationUpgrades") then
+          if(userdata.turn < 5 and showEngineer ~= true) then
+            addPopup("Architect", "You still need some more experience.\n Wait till turn 5.", "OK", nil, architectSprite)
+          else
+            loadUpgradesLayers("station")
+          end
+        end
       end
     end
-  end
   end
 end
 

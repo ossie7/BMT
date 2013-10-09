@@ -46,7 +46,10 @@ function initTextures()
   pbsprite             = cs("resources/gui/power_bar.png",    0,     0,   0,    -12) --Power Bar
   glbsprite            = cs("resources/gui/power_blue.png",   -137,  -4,  0,    0)   --Left Bar
   grbsprite            = cs("resources/gui/power_red.png",    0,     0,   137,  -4)  --Right Bar
-  battleOverlay        = cs("resources/gui/over/battle.png",  -160,  -90, 160,  90)  --Battle Start Overlay
+  overlay1             = cs("resources/gui/over/overlay_1.png",  -160,  -90, 160,  90)  --Base overlay
+  overlay2             = cs("resources/gui/over/overlay_2.png",  -160,  -90, 160,  90)  --Battle overlay turn 0
+  overlay3             = cs("resources/gui/over/overlay_3.png",  -160,  -90, 160,  90)  --Battle overlay turn 3
+  overlay4             = cs("resources/gui/over/overlay_4.png",  -160,  -90, 160,  90)  --Battle overlay skill bought
   
   -- NPC
   engineer  = cs("resources/npc/engineer.png",  -9.5, -15, 9.5, 15) --Engineer

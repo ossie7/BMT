@@ -82,7 +82,12 @@ function startDuel(sprite, layer)
   startShipThread()
   startWaves()
   startPowerThread()
-  addOverlay(battleOverlay, "Ok", nil)
+  
+  if userdata.turn == 0 then
+    addOverlay(overlay2, "Ok", nil)
+  elseif userdata.turn == 2 then
+    addOverlay(overlay3, "Ok", nil)
+  end
 
 end
 
