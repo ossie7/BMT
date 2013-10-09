@@ -35,8 +35,18 @@ function newBullet (origX, origY, angle)
 end
 
 function bulletGen(x, y, angle)
+  local shootInterval = interval
+  
+  if currentPower(0, 2) then
+    RegenPlayerHealth(regenPowerInterval)
+  end
+  
+  if currentPower(1, 2) then
+    shootInterval = rapidFireInterval
+  end
+  
   if(gunActive) then
-    if(last + interval < clock()) then
+    if(last + shootInterval < clock()) then
       laserSound()
       newBullet(x, y, angle)
       if(currentPower(1, 1)) then
@@ -46,11 +56,15 @@ function bulletGen(x, y, angle)
       last = clock()
     end
   else
-    if(last + interval <clock()) then
-      health = health + 0.07
-      if health > maxHealth then health = maxHealth end
-      last = clock()
-    end
+    RegenPlayerHealth(interval)
+  end
+end
+
+function RegenPlayerHealth(regenInterval)
+  if(last + regenInterval <clock()) then
+    health = health + 0.07
+    if health > maxHealth then health = maxHealth end
+    last = clock()
   end
 end
 

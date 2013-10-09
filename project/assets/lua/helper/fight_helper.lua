@@ -35,6 +35,8 @@ function startTimer()
   last = clock() -- Last bullet spawn
   laste = clock() -- Last enemy spawn
   interval = 0.5 -- Bullet interval
+  regenPowerInterval = 0.05 -- regen power interval
+  rapidFireInterval = 0.2 -- rapid fire power interval
 end
 
 function startDuel(sprite, layer)
@@ -45,14 +47,12 @@ function startDuel(sprite, layer)
 
   popupGiven = false --Mission popup
   currentWaveRight = 1
-  --amountRightEnemies = math.random(7,13) + (userdata.turn * 2)
-  amountRightEnemies = 2
+  amountRightEnemies = math.random(7,13) + (userdata.turn * 2)
   totalAmountRight = 0
   rightKilled = 0
   
   currentWaveLeft = 1
-  --amountLeftEnemies = math.random(7,13) + (userdata.turn * 2) 
-  amountLeftEnemies= 2
+  amountLeftEnemies = math.random(7,13) + (userdata.turn * 2) 
   totalAmountLeft = 0
   leftKilled = 0
   

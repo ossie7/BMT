@@ -42,7 +42,7 @@ function shipHit()
   elseif(power >= (100 / 3) * 2) then -- Regen + shoot
     powerActive = true
     powerTier = 2
-    powerDrain = 5
+    powerDrain = 7
   elseif(power >= 100 / 3) then -- Sniper cloak
     powerActive = true
     powerTier = 1
@@ -61,7 +61,7 @@ function gunHit()
   elseif(power >= (100 / 3) * 2) then -- Rapid shot
     powerActive = true
     powerTier = 2
-    powerDrain = 10
+    powerDrain = 15
   elseif(power >= 100 / 3) then -- Spread shot
     powerActive = true
     powerTier = 1
