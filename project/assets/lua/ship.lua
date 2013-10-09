@@ -12,18 +12,6 @@ end
 
 
 function newBullet (origX, origY, angle)
-  local bestGunBuildIndex = 0
-  
-  if table.getn(shipUpgradesList) > 0 then
-    for i = 1, table.getn(shipUpgradesList), 1 do
-      local upgrade = shipUpgradesList[i]
-      if upgrade:IsBuild() then
-        bestGunBuildIndex = i
-      end
-    end
-  end
-  
-  local buffedBulletDamage = bulletDamage + (bulletDamage * (bestGunBuildIndex * 0.05))
   if(shipUpgradesList[1]:IsBuild()) then
       bulletDamage = bulletDamage + 100
   end
@@ -52,6 +40,12 @@ function bulletGen(x, y, angle)
       if(currentPower(1, 1)) then
         newBullet(x, y, angle+10)
         newBullet(x, y, angle-10)
+      end
+      if(currentPower(1, 3)) then
+        for i = 1, 360, 3 do
+          newBullet(x, y, i)
+        end
+        power = 0
       end
       last = clock()
     end
@@ -102,9 +96,14 @@ end
 function checkBulletCollision()
   local x,y = prop:getLoc()
   
+  local reflect = false
+  if(currentPower(0, 3)) then
+    reflect = true
+  end
+  
   --Hitbox 1
   local hobj1 = ebpartition:propListForRect(x - 24, y - 10, x + 26, y + 2)
-  CheckProps(hobj1)
+  CheckProps(hobj1, reflect)
   
   --Reflect
   local robj = ebpartition:propListForRect(x - 26, y - 8, x - 24, y + 2)
@@ -119,18 +118,32 @@ function CheckProps(props, reflect)
       for i, hit in ipairs(props) do
         if reflectHitbox == false then
           damage(hit)
-        elseif(hit.owner.source == 1) then
-          newReflectBullet(hit.owner)
-          hit.owner:reflect()
+        else
+          if currentPower(0, 3) then
+            newReflectBullet(hit.owner)
+            hit.owner:reflect()
+          else         
+            if(hit.owner.source == 1) then
+              newReflectBullet(hit.owner)
+              hit.owner:reflect()
+            end
+          end
         end
       end
     else
       if reflectHitbox == false then
         damage(props)
-      elseif(props.owner.source == 1) then
-        newReflectBullet(props.owner)
-        props.owner:reflect()
-      end
+      else
+          if currentPower(0, 3) then
+            newReflectBullet(props.owner)
+            props.owner:reflect()
+          else         
+            if(props.owner.source == 1) then
+              newReflectBullet(props.owner)
+              props.owner:reflect()
+            end
+          end
+        end
     end
   end
 end

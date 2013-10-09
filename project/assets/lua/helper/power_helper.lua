@@ -57,7 +57,7 @@ function gunHit()
   if(power >= 100) then -- Nuke
     powerActive = true
     powerTier = 3
-    powerDrain = 30
+    powerDrain = 99
   elseif(power >= (100 / 3) * 2) then -- Rapid shot
     powerActive = true
     powerTier = 2
