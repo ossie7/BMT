@@ -146,12 +146,12 @@ function Enemy.hitThread(self)
     end
     
     local sa
-    if(    self.team == 1 and self.ship == 1) then sa = {-6,  -5,  6,  5}
-    elseif(self.team == 1 and self.ship == 2) then sa = {-6,  -5,  6,  5}
-    elseif(self.team == 1 and self.ship == 3) then sa = {-6,  -5,  6,  5}
-    elseif(self.team == 2 and self.ship == 1) then sa = {-6,  -5,  6,  5}
-    elseif(self.team == 2 and self.ship == 2) then sa = {-6,  -5,  6,  5}
-    elseif(self.team == 2 and self.ship == 3) then sa = {-6,  -5,  6,  5} end
+    if(    self.team == 1 and self.ship == 1) then sa = {-8,  -7,  8,  7}
+    elseif(self.team == 1 and self.ship == 2) then sa = {-5,  -10, 5,  10}
+    elseif(self.team == 1 and self.ship == 3) then sa = {-20, -21, 27, 13}
+    elseif(self.team == 2 and self.ship == 1) then sa = {-8,  -7,  8,  7}
+    elseif(self.team == 2 and self.ship == 2) then sa = {-5,  -10, 5,  10}
+    elseif(self.team == 2 and self.ship == 3) then sa = {-18, -21, 19, 12} end
     
     local x, y = self.prop:getLoc()
     self:checkAllHits(bpartition:propListForRect(  x + sa[1], y + sa[2], x + sa[3], y + sa[4]))
@@ -271,6 +271,13 @@ end
 function Enemy.remove(self)
   elayer:removeProp(self.prop)
   elayer2:removeProp(self.prop)
+  elayer:removeProp(self.gun)
+  elayer2:removeProp(self.gun)
+  if(self.gun2 ~= nil) then
+    elayer:removeProp(self.gun2)
+    elayer2:removeProp(self.gun2)
+    self.gun2 = nil
+  end
   MOAISim.forceGarbageCollection()
   self.prop.thread:stop()
   self.thread:stop()
@@ -286,6 +293,11 @@ function Enemy.die(self)
   elayer2:removeProp(self.prop)
   elayer:removeProp(self.gun)
   elayer2:removeProp(self.gun)
+  if(self.gun2 ~= nil) then
+    elayer:removeProp(self.gun2)
+    elayer2:removeProp(self.gun2)
+    self.gun2 = nil
+  end
   
   if(self.team == 1) then
     leftKilled = leftKilled + 1

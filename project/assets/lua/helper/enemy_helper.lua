@@ -65,7 +65,7 @@ function GetEnemyAnimationProp(team, ship)
   elseif team == 2 and ship == 1 then
     prop:setDeck(redDroneTileLib)
   elseif team == 2 and ship == 2 then
-    prop:setDeck(redSniperTileLib)
+    prop:setDeck(redSniper)
   elseif team == 2 and ship == 3 then
     prop:setDeck(redTank)
   end
@@ -76,6 +76,7 @@ end
 
 function GetEnemyAnimation(prop, team, ship)
   local frames;
+  local delay = 0.05
   local curve = MOAIAnimCurve.new()
   
   if team == 1 and ship == 1 then
@@ -85,25 +86,26 @@ function GetEnemyAnimation(prop, team, ship)
   elseif team == 1 and ship == 3 then
     frames = 3
   elseif team == 2 and ship == 1 then
-    frames = 13
+    frames = 8
+    delay = 0.15
   elseif team == 2 and ship == 2 then
     frames = 1
   elseif team == 2 and ship == 3 then
-    frames = 3
+    frames = 1
   end
   
   curve:reserveKeys(frames)
   
   for i = 1, frames, 1 do
     -- index, time, hoeveelste plaatje
-    curve:setKey(i, 0.05 * i, i)
+    curve:setKey(i, delay * i, i)
   end
   
   local anim = MOAIAnim.new()
   anim:reserveLinks(1) -- aantal curves
   anim:setLink(1, curve, prop, MOAIProp2D.ATTR_INDEX)
   anim:setMode(MOAITimer.LOOP)
-  anim:setSpan(frames * 0.05)
+  anim:setSpan(frames * delay)
   
   return anim
 end
@@ -112,13 +114,13 @@ function GetEnemyGun(team, ship, x, y, c)
   local gun = MOAIProp2D.new()
   
   if team == 1 and ship == 1 then
-    gun:setDeck(blueDroneGun)
+    gun:setDeck(invisGun)
   elseif team == 1 and ship == 2 then
     gun:setDeck(blueSniperGun)
   elseif team == 1 and ship == 3 then
     gun:setDeck(blueTankGun)
   elseif team == 2 and ship == 1 then
-    gun:setDeck(redDroneGun)
+    gun:setDeck(invisGun)
   elseif team == 2 and ship == 2 then
     gun:setDeck(redSniperGun)
   elseif team == 2 and ship == 3 and c == 1 then
@@ -157,17 +159,14 @@ function GetEnemyGunOffset(team, ship, c)
   local offsetX = 0
   local offsetY = 0
   
-  if team == 1 and ship == 1 then
-    offsetY = -5
-  elseif team == 1 and ship == 2 then
+  if team == 1 and ship == 2 then
     offsetX = 5
   elseif team == 1 and ship == 3 then
     offsetX = 3
     offsetY = -7
-  elseif team == 2 and ship == 1 then
-    offsetY = -5
   elseif team == 2 and ship == 2 then
-    offsetX = -5
+    offsetX = -1
+    offsetY = 2
   elseif team == 2 and ship == 3 and c == 1 then
     offsetX = 0
     offsetY = 17

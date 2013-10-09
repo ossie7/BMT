@@ -56,14 +56,14 @@ function initTextures()
   battleOverlay  = cs("resources/battle_overlay.png", -160, -90, 160, 90) -- Battle start overlay
   
   --Enemies
-  blueDroneGun   = cs("resources/drone_gun.png",      -5,     -2.5,   5,    2.5)
   blueSniperGun  = cs("resources/sniper_gun.png",     -10.5,  -2.5,   10.5, 2.5)
   blueTankGun    = cs("resources/tank_gun.png",       -8.5,   -6,     8.5,  6)
-  redDroneGun   = cs("resources/drone_gun.png",      -5,     -2.5,   5,    2.5)
-  redSniperGun  = cs("resources/sniper_gun.png",     -10.5,  -2.5,   10.5, 2.5)
+  redSniper = cs("resources/sniper_main_red.png", -16, -16, 16, 16)
+  redSniperGun  = cs("resources/sniper_gun_red.png",     -16,  -16,   16, 16)
   redTank = cs("resources/tank_main.png", -32, -32, 32, 32)
   redTankGun1    = cs("resources/tank_general_gun.png", -32, -32, 32, 32)
   redTankGun2    = cs("resources/tank_bottom_gun.png", -32, -32, 32, 32)
+  invisGun = cs("resources/invis_gun.png", -1, -1, 1, 1)
   
   
   
@@ -89,19 +89,9 @@ function initTextures()
   blueTankTileLib:setRect(-32, -32, 32, 32)
   
   redDroneTileLib = MOAITileDeck2D.new()
-  redDroneTileLib:setTexture("resources/drone_sprite.png")
-  redDroneTileLib:setSize(5, 3)
+  redDroneTileLib:setTexture("resources/drone_sprite_red.png")
+  redDroneTileLib:setSize(4, 2)
   redDroneTileLib:setRect(-16, -16, 16, 16)
-  
-  redSniperTileLib = MOAITileDeck2D.new()
-  redSniperTileLib:setTexture("resources/sniper_main.png")
-  redSniperTileLib:setSize(1, 1)
-  redSniperTileLib:setRect(-16, -16, 16, 16)
-  
-  redTankTileLib = MOAITileDeck2D.new()
-  redTankTileLib:setTexture("resources/tank_sprite.png")
-  redTankTileLib:setSize(3, 1)
-  redTankTileLib:setRect(-32, -32, 32, 32)
   
   guiDigits = MOAIImage.new()
   guiDigits:load("resources/digits_sprite.png")
