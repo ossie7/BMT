@@ -60,13 +60,20 @@ function initTextures()
   waterModuleSprite = cs("resources/others/waterchip.png", -25, -19, 25, 19) --Water Module
   
   -- Ship
-  player    = cs("resources/ship/ship.png",   -32, -32, 32, 32) --Ship
-  playerarm = cs("resources/ship/arm.png",    0,   0,   12, 4)  --Ship Arm
-  bsprite   = cs("resources/ship/bullet.png", -2,  -2,  2,  2)  --Bullet
-  csprite   = cs("resources/ship/target.png", -8,  -8,  8,  8)  --Crosshair
+  playerSingle = cs("resources/ship/ship.png",   -32, -32, 32, 32) --Ship
+  playerarm    = cs("resources/ship/arm.png",    0,   0,   12, 4)  --Ship Arm
+  bsprite      = cs("resources/ship/bullet.png", -2,  -2,  2,  2)  --Bullet
+  csprite      = cs("resources/ship/target.png", -8,  -8,  8,  8)  --Crosshair
   
   
   -- Animations
+  playerSprite = MOAIImage.new()
+  playerSprite:load("resources/ship/ship.png")
+  player = MOAITileDeck2D.new()
+  player:setTexture(playerSprite)
+  player:setSize(4 , 3)
+  player:setRect(-32, -32, 32, 32)
+  
   eximage = MOAIImage.new()
   eximage:load("resources/others/explosion.png")
   tileLib = MOAITileDeck2D.new()

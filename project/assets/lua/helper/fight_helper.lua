@@ -6,6 +6,23 @@ function createProp(sprite, layer)
   prop = cprop(sprite, 0, 0)
   spartition:insertProp(prop)
   prop.name = "ship"
+  
+  shipFrames = 11
+  shipDelay = 0.09
+  shipCurve = MOAIAnimCurve.new()
+  
+  shipCurve:reserveKeys(shipFrames-1)
+  
+  for i = 1, shipFrames, 1 do
+    shipCurve:setKey(i, shipDelay * i, i)
+  end
+  
+  shipAnim = MOAIAnim.new()
+  shipAnim:reserveLinks(1)
+  shipAnim:setLink(1, shipCurve, prop, MOAIProp2D.ATTR_INDEX)
+  shipAnim:setMode(MOAITimer.LOOP)
+  shipAnim:setSpan(shipFrames * shipDelay)
+  shipAnim:start()
 end
 
 function createGunTools()
