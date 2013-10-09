@@ -195,20 +195,33 @@ function loadBaseBars()
   local left = ((userdata.warzone - 0.5) / 9) * 212
   local right = ((9.5 - userdata.warzone) / 9) * -212
   local fist = ((userdata.warzone - 5) / 9 ) * 212
-  leftOld = ((userdata.warzone - 0.5) / 9) * 212
-  rightOld = ((9.5 - userdata.warzone) / 9) * -212
-  local fistOld = 0
 
+  --[[
+  if(leftWon ~= nil) then
+    --leftOld = ((userdata.warzone - 0.5) / 9) * 212
+    --rightOld = ((9.5 - userdata.warzone) / 9) * -212
+  else
+    leftOld = ((userdata.warzone - 0.5) / 9) * 212
+    rightOld = (( 9.5 - userdata.warzone) / 9) * -212
+    fistOld = ((userdata.warzone - 5) / 9) * 212
+  end--]]
+  --leftWon = false
    if(leftWon ~= nil) then
      if(leftWon) then
+       --print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
       leftOld = ((userdata.warzone - 1) / 9) * 212
       fistOld = ((userdata.warzone - 6) / 9) * 212
       rightOld = ((10.85 - userdata.warzone) / 9) * -212
-    else
-      leftOld = ((userdata.warzone - 1) / 9) * 212
-      fistOld = ((userdata.warzone - 6) / 9) * 212
-      rightOld = ((11 - userdata.warzone) / 9) * -212
-      end
+    elseif(leftWon == false) then
+      leftOld = (((userdata.warzone - 1) / 9) * 212) + 40
+      fistOld = (((userdata.warzone - 6) / 9) * 212) + 40
+      rightOld = (((11 - userdata.warzone) / 9) * -212)  +50
+      print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+    end
+  else
+    fistOld = fist
+    leftOld = left
+    rightOld = right 
   end
   
   lbprop = cprop(lbsprite, -128, 38)
@@ -229,8 +242,7 @@ function loadBaseBars()
   basebarlayer:insertProp(wzprop)
   
   if(leftWon == false) then
-        left = left - 30
-        
+        --left = left - 30 
       end
   
   local fistTimer = MOAITimer.new()
@@ -238,7 +250,6 @@ function loadBaseBars()
   fistTimer:setSpan(0.1)
   fistTimer:setListener(MOAITimer.EVENT_TIMER_LOOP ,
     function()
-      
       
       local distance = left - leftOld
       if(math.floor(leftOld) ~= math.floor(left)) then
@@ -251,7 +262,7 @@ function loadBaseBars()
           elseif(leftWon == false) then
             leftOld = leftOld - 1
             lbsprite:setRect(0,0,leftOld,-11)
-            print("dfsf"..leftOld.."ddfsfds"..left)
+            --print("dfsf"..leftOld.."ddfsfds"..left)
             rightOld = rightOld - 1
             rbsprite:setRect(rightOld,-11,0,0)
           end
@@ -267,8 +278,8 @@ function loadBaseBars()
     lfprop:moveLoc(fist-fistOld, 0,3)
     rfprop:moveLoc(fist-fistOld, 0,3)
   else
-    lfprop:moveLoc(fistOld-fist, 0,3)
-    rfprop:moveLoc(fistOld-fist, 0,3)
+    lfprop:moveLoc((fist-fistOld), 0,3)
+    rfprop:moveLoc((fist-fistOld), 0,3)
   end
   end
 end
