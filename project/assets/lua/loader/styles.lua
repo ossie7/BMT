@@ -39,3 +39,14 @@ chatboxstyle:setSize(8)
 function SetTextboxColor(textbox, r, g, b, a)
   textbox:setColor(r, g, b, a)
 end
+
+function CreateTextBox(x, y, width, height, textStyle, text)
+  local textbox = MOAITextBox.new()
+	textbox:setStyle(textStyle)
+	textbox:setRect(-(width / 2), -(height / 2), width / 2, height / 2)
+  textbox:setLoc(x, y)
+	textbox:setYFlip(true)
+  textbox:setString(text)
+  
+  return textbox
+end
