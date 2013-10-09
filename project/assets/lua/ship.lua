@@ -98,7 +98,10 @@ function checkBulletCollision()
   
   local reflect = false
   if(currentPower(0, 3)) then
+    SetShipColor(0, 0.5, 0.5, 1)
     reflect = true
+  else
+    SetShipColor(1, 1, 1, 1)
   end
   
   --Hitbox 1
