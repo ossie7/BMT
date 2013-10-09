@@ -139,10 +139,9 @@ function loadMenuLayers()
       Popup.new("Architect", "Hello, I am the architect.\n I can build the station,\n but you will need \n more experience for that.", "Next", nil, architectSprite),
       Popup.new("Architect", "Speak to me later.", "OK", nil, architectSprite),
     })
-  userdata.isFirstTime = false
-  save_userdata()
+    userdata.isFirstTime = false
+    save_userdata()
   end
-        
   
   engineerprop = cprop(engineer, -65,-50)
   engineerprop.name = "shipUpgrades"

@@ -85,6 +85,7 @@ function GetEnemyAnimation(prop, team, ship)
     frames = 1
   elseif team == 1 and ship == 3 then
     frames = 3
+    delay = 0.20
   elseif team == 2 and ship == 1 then
     frames = 8
     delay = 0.15

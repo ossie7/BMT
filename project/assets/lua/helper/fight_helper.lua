@@ -162,8 +162,8 @@ function checkEndOfBattle()
       userdata.turn = userdata.turn + 1
       save_userdata()
       queuePopup({
-        Popup.new("Mission Passed", "You saved the engineer!\n He can improve your ship.", "OK", nil),
-        Popup.new("Mission Passed", "You can find him\nat your base.", "OK", "loadMenuLayers")
+        Popup.new("Mission Passed", "Hello, I am the\n engineer!\n Thanks for saving me.", "OK", nil, engineerSprite),
+        Popup.new("Mission Passed", "Visit me in your base\n and I will give you\n a weapon.", "OK", "loadMenuLayers", engineerSprite)
       })
      elseif(userdata.showEngineer or userdata.turn == 0) then
       userdata.metal = userdata.metal + earnedLoot
