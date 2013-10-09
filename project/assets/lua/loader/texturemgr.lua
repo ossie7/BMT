@@ -61,7 +61,10 @@ function initTextures()
   blueTankGun    = cs("resources/tank_gun.png",       -8.5,   -6,     8.5,  6)
   redDroneGun   = cs("resources/drone_gun.png",      -5,     -2.5,   5,    2.5)
   redSniperGun  = cs("resources/sniper_gun.png",     -10.5,  -2.5,   10.5, 2.5)
-  redTankGun    = cs("resources/tank_gun.png",       -8.5,   -6,     8.5,  6)
+  redTank = cs("resources/tank_main.png", -32, -32, 32, 32)
+  redTankGun1    = cs("resources/tank_general_gun.png", -32, -32, 32, 32)
+  redTankGun2    = cs("resources/tank_bottom_gun.png", -32, -32, 32, 32)
+  
   
   
   tileLib = MOAITileDeck2D.new()

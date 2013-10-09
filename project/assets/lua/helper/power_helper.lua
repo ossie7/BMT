@@ -26,7 +26,6 @@ function powerThread()
           if(power < 0) then power = 0 end
         end
       end
-      print(power)
     end
     coroutine.yield()
   end

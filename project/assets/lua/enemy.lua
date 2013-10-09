@@ -13,7 +13,7 @@ function Enemy.new(x, y, team, ship)
   elseif(team == 1 and ship == 3) then self:stats(600,  200, 1.5)
   elseif(team == 2 and ship == 1) then self:stats(100,  200, 1.2)
   elseif(team == 2 and ship == 2) then self:stats(100,  600, 3)
-  elseif(team == 2 and ship == 3) then self:stats(1200, 400, 3) end
+  elseif(team == 2 and ship == 3) then self:stats(1200, 200, 3) end
   
   self.isArrived = false
   self.enemyLast = clock() + math.random()
@@ -30,10 +30,18 @@ function Enemy.new(x, y, team, ship)
   self.animation = GetEnemyAnimation(self.prop, team, ship)
   self.animation:start()
   
-  self.gun = GetEnemyGun(team, ship, x, y)
-  local offsetX, offsetY = GetEnemyGunOffset(team, ship)
+  self.gun = GetEnemyGun(team, ship, x, y, 1)
+  local offsetX, offsetY = GetEnemyGunOffset(team, ship, 1)
   self.gunOffsetX = offsetX 
   self.gunOffsetY = offsetY
+  
+  if(self.team == 2 and self.ship == 3) then
+    self.gun2 = GetEnemyGun(team, ship, x, y, 2)
+    local offsetX, offsetY = GetEnemyGunOffset(team, ship, 2)
+    self.gunOffsetX2 = offsetX
+    self.gunOffsetY2 = offsetY
+    self.gun2.owener = self
+  end
   
   self.prop.owner = self
   self.gun.owner = self
@@ -149,7 +157,7 @@ function Enemy.hitThread(self)
     self:checkAllHits(bpartition:propListForRect(  x + sa[1], y + sa[2], x + sa[3], y + sa[4]))
     self:checkAllHits(ebpartition:propListForRect( x + sa[1], y + sa[2], x + sa[3], y + sa[4]))
     self:checkAllHits(ebrpartition:propListForRect(x + sa[1], y + sa[2], x + sa[3], y + sa[4]))
-    self:enemyBulletGen(x, y)
+    self:enemyBulletGen()
     end
     coroutine.yield()
   end
@@ -169,7 +177,7 @@ function Enemy.newEnemyBullet (self, origX, origY, angle)
   enemyBullet = nil
 end
 
-function Enemy.enemyBulletGen(self, x, y)
+function Enemy.enemyBulletGen(self)
   if(userdata.mission == "chased" or (self.ship == 2 and not currentPower(0, 1))) then
     self.target = prop
   end
@@ -183,8 +191,14 @@ function Enemy.enemyBulletGen(self, x, y)
   elseif(self.target == prop or self.target.owner.health > 0) then
     if(self.enemyLast+self.enemyInterval < clock()) then
       local tx, ty = self.target:getLoc()
+      local x, y = self.gun:getLoc()
       local angle = calcAngle(x, y, tx, math.random(ty - 10, ty + 10))
       self:newEnemyBullet(x, y, angle)
+      if(self.gun2 ~= nil) then
+        local x, y = self.gun2:getLoc()
+        local angle = calcAngle(x, y, tx, math.random(ty - 10, ty + 10))
+        self:newEnemyBullet(x, y, angle)
+      end
       self.enemyLast = clock()
     end
   else
@@ -198,9 +212,26 @@ function Enemy.rotGun(self)
     local cx, cy = self.target:getLoc()
     self.gun:setRot(calcAngle(gx,gy,cx,cy))
   else
-    self.gun:setRot(0)
+    if(self.team == 2) then
+        self.gun:setRot(180)
+      else
+        self.gun:setRot(0)
+      end
   end
   self.gun:setLoc(gx + self.gunOffsetX, gy + self.gunOffsetY)
+  if(self.gun2 ~= nil) then
+    if(self.target ~= nil) then
+      local cx, cy = self.target:getLoc()
+      self.gun2:setRot(calcAngle(gx,gy,cx,cy))
+    else
+      if(self.team == 2) then
+        self.gun2:setRot(180)
+      else
+        self.gun2:setRot(0)
+      end
+    end
+    self.gun2:setLoc(gx + self.gunOffsetX2, gy + self.gunOffsetY2)
+  end
 end
 
 function Enemy.checkAllHits(self, objs)

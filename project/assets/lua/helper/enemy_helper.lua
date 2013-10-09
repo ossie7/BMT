@@ -67,9 +67,10 @@ function GetEnemyAnimationProp(team, ship)
   elseif team == 2 and ship == 2 then
     prop:setDeck(redSniperTileLib)
   elseif team == 2 and ship == 3 then
-    prop:setDeck(redTankTileLib)
+    prop:setDeck(redTank)
   end
   
+  prop:setBlendMode(MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA)
   return prop
 end
 
@@ -107,7 +108,7 @@ function GetEnemyAnimation(prop, team, ship)
   return anim
 end
 
-function GetEnemyGun(team, ship, x, y)
+function GetEnemyGun(team, ship, x, y, c)
   local gun = MOAIProp2D.new()
   
   if team == 1 and ship == 1 then
@@ -120,8 +121,10 @@ function GetEnemyGun(team, ship, x, y)
     gun:setDeck(redDroneGun)
   elseif team == 2 and ship == 2 then
     gun:setDeck(redSniperGun)
-  elseif team == 2 and ship == 3 then
-    gun:setDeck(redTankGun)
+  elseif team == 2 and ship == 3 and c == 1 then
+    gun:setDeck(redTankGun1)
+  elseif team == 2 and ship == 3 and c == 2 then
+    gun:setDeck(redTankGun2)
   else
     gun:setDeck(gunsprite)
   end
@@ -150,7 +153,7 @@ function newTarget(team)
   end
 end
   
-function GetEnemyGunOffset(team, ship)
+function GetEnemyGunOffset(team, ship, c)
   local offsetX = 0
   local offsetY = 0
   
@@ -165,9 +168,12 @@ function GetEnemyGunOffset(team, ship)
     offsetY = -5
   elseif team == 2 and ship == 2 then
     offsetX = -5
-  elseif team == 2 and ship == 3 then
-    offsetX = -3
-    offsetY = -7
+  elseif team == 2 and ship == 3 and c == 1 then
+    offsetX = 0
+    offsetY = 17
+  elseif team == 2 and ship == 3 and c == 2 then
+    offsetX = 4
+    offsetY = -8
   end
   
   return offsetX, offsetY

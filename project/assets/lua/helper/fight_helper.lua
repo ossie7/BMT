@@ -195,6 +195,9 @@ function newEnemy (team)
   else
     epartition2:insertProp(newEnemy.prop)
     elayer2:insertProp(newEnemy.gun)
+    if(newEnemy.gun2 ~= nil) then
+      elayer2:insertProp(newEnemy.gun2)
+    end
   end
   newEnemy:startThread()
   newEnemy = nil
