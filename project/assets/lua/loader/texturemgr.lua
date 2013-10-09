@@ -29,6 +29,7 @@ function initTextures()
   wzSprite             = cs("resources/gui/warzones.png",     -160,  -90, 160,  90)  --Warzones
   popupSprite          = cs("resources/gui/popup.png",        -152,  -72, 152,  73)  --Popup Background
   popupButtonSprite    = cs("resources/gui/popup_button.png", -24,   -10, 25,   11)  --Popup Button
+  popupButtonLrgSprite = cs("resources/gui/popup_btn_lrg.png",-39,   -10, 40,   11)  --Popup Button large
   spritePauseButton    = cs("resources/gui/back_button.png",  -14,   -10, 14,   10)  --Pause button
   chatboxShipSprite    = cs("resources/gui/ship_chat.png",    -66,   -24, 66,   24)  --Ship Upgrade Chat
   chatboxStationSprite = cs("resources/gui/station_chat.png", -66,   -24, 66,   24)  --Station Upgrade Chat

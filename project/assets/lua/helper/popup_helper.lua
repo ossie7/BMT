@@ -67,8 +67,8 @@ function addPausePopup()
   popupAction = "loadMenuLayers"
   
   local popupProp = cprop(popupSprite, 0, 0)
-  local popupButtonProp1 = cprop(popupButtonSprite, -80, -50)
-  local popupButtonProp2 = cprop(popupButtonSprite, 80, -50)
+  local popupButtonProp1 = cprop(popupButtonLrgSprite, -80, -50)
+  local popupButtonProp2 = cprop(popupButtonLrgSprite, 80, -50)
   popupButtonProp2.action = "continue"
   local popupFaceProp
   
