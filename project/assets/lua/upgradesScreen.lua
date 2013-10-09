@@ -6,9 +6,9 @@ lastTappedUpgrade = 1
 upgradeOffset = 90
 
 function CreateShipUpgradesList()
-  local upgradeItem1 = UpgradeItem.new(gunsprite, "Strider", 0, 0, 0)
-  local upgradeItem2 = UpgradeItem.new(gunsprite, "Fixer", 50, 500, 2)
-  local upgradeItem3 = UpgradeItem.new(gunsprite, "Shocker", 100, 1000, 4)
+  local upgradeItem1 = UpgradeItem.new(playerarm, "Strider", 0, 0, 0)
+  local upgradeItem2 = UpgradeItem.new(playerarm, "Fixer", 50, 500, 2)
+  local upgradeItem3 = UpgradeItem.new(playerarm, "Shocker", 100, 1000, 4)
   
   table.insert(shipUpgradesList, upgradeItem1)
   table.insert(shipUpgradesList, upgradeItem2)

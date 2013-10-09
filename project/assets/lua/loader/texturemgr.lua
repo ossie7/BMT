@@ -1,100 +1,102 @@
 function initTextures()
-  --name          path                         x1    y1   x2   y2
-  sprite       = cs("resources/ship.png",        -16,  -16, 16,  16) --Player
-  player       = cs("resources/ship2.png",       -32,  -32, 32,  32) --new player ship
-  playerarm    = cs("resources/arm.png",         0,    0,   12,  4) --new player ship arm
-  bsprite      = cs("resources/bullet_1.png",    -2,   -2,  2,   2)  --Bullet
-  eb1sprite    = cs("resources/bullet_2.png",    -2,   -2,  2,   2)  --Enemy Bullet Left
-  eb2sprite    = cs("resources/bullet_3.png",    -2,   -2,  2,   2)  --Enemy Bullet Right
-  e1sprite     = cs("resources/left_small.png",  -12,  -12, 12,  12) --Enemy Left
-  e2sprite     = cs("resources/right_small.png", -12,  -12, 12,  12) --Enemy Right
-  csprite      = cs("resources/target.png",      -8,   -8,  8,   8)  --Crosshair
-  gunsprite    = cs("resources/weapons.png",     -16,  -16, 16,  16) --Gun
-  basesprite   = cs("resources/base_empty_proper.png",        -160, -90, 160, 90) --Base Background
-  engineer     = cs("resources/engineer.png",    -9.5,  -15,  9.5,  15) --engineer
-  architect    = cs("resources/architect.png",    -5.5,  -14,  5.5,  14) --engineer
-  captain      = cs("resources/captain.png",    -8.5,  -16,  8.5,  16) --engineer
-  lbsprite     = cs("resources/blue_bar.png",    0,    0,   150, -4) --Left Bar
-  rbsprite     = cs("resources/red_bar.png",     -150, -4,  0,   0)  --Right Bar
-  lfsprite     = cs("resources/blue_fist.png",   -22,  -11, 0,   11) --Left Fist
-  rfsprite     = cs("resources/red_fist.png",    0,    -11, 22,  11) --Right Fist
-  metalSprite  = cs("resources/metal.png",       -4,   -4,  4,   4)  --Metal Icon
-  plasmaSprite = cs("resources/energy.png",      -4,   -4,  4,   4)  --Energy Icon
-  wzSprite     = cs("resources/warzones.png",    -160, -90, 160, 90) --Warzones
-  popupSprite  = cs("resources/popup.png",       -152, -72, 152, 73) --Popup Background
-  engineerSprite  = cs("resources/engineer_portrait.png",       -36, -49, 36, 49) --Engineer portrait
-  architectSprite  = cs("resources/architect_portrait.png",       -36, -49, 36, 49) --Engineer portrait
-  captainSprite  = cs("resources/captain_portrait.png",       -36, -49, 36, 49) --Engineer portrait
 
-  popupButtonSprite           = cs("resources/popup_button.png",    -24,  -10,  25,  11)   --Popup Button
-  shipUpgradeScreenSprite     = cs("resources/ship_upgrade.png",    -160, -90,  160, 90) -- shipupgrades background
-  stationUpgradeScreenSprite  = cs("resources/station_upgrade.png", -160, -90,  160, 90) -- stationupgrades background
-	spritePauseButton           = cs("resources/back_button.png",     -14,  -10,  14,  10)   --Pause button
-  waterModuleSprite           = cs("resources/waterchip_module.png",-25,  -19,  25,  19)
-  chatboxShipSprite           = cs("resources/ship_chatbox.png",    -66,  -24,  66,  24)
-  chatboxStationSprite        = cs("resources/station_chatbox.png", -66,  -24,  66,  24)
-  backButtonSprite            = cs("resources/back_button.png",    -10.5, -10, 10.5, 10)
-  buildButtonSprite          = cs("resources/build_button.png",   -10, -10, 10, 10)
+  -- Backgrounds
+  basesprite = cs("resources/backgrounds/base_empty_proper.png", -160, -90, 160, 90) --Base Background
+  shipUpgradeScreenSprite    = cs("resources/backgrounds/ship_upgrade.png",    -160, -90,  160, 90) -- Shipupgrades background
+  stationUpgradeScreenSprite = cs("resources/backgrounds/station_upgrade.png", -160, -90,  160, 90) -- Stationupgrades background
   
-  --GUI
-  guiBaseSprite  = cs("resources/GUI_base.png",       -15, 0,   16, 16) --Control Base
-  guiLifeSprite  = cs("resources/GUI_life.png",       -20, 0,   20, 16) --Life Base
-  guiAutoSprite  = cs("resources/icon_auto_fire.png", -11, 0,   11, 23) --Auto-fire Button
-  guiRegenSprite = cs("resources/icon_regen.png",     -11, 0,   11, 23) --Regen Button
-  guiStickSprite = cs("resources/stick.png",          -34, 0,   35, 37) --Control Stick
-  guiStickSmallSprite = cs("resources/stick_small.png", -24.5, 0, 24.5, 34) --Control Stick
-  powerMainSprite = cs("resources/power_main.png", -160, -90, 160, 90) -- Power Main
-  powerSplitSprite = cs("resources/power_indicator.png", -15, -6, 15, 6) -- Power Indicator
-  pbsprite = cs("resources/power_bar.png", 0, 0, 0, -12)
-  glbsprite     = cs("resources/power_blue.png",    -137, -4,   0, 0) --Left Bar
-  grbsprite     = cs("resources/power_red.png",     0, 0,  137,   -4)  --Right Bar
-  
-  --splash
-  splashLogo     = cs("resources/icon.png",           -48, -48, 48, 48) -- splash logo
-  
-  --Overlays
-  battleOverlay  = cs("resources/battle_overlay.png", -160, -90, 160, 90) -- Battle start overlay
-  
-  --Enemies
-  blueSniperGun  = cs("resources/sniper_gun.png",     -10.5,  -2.5,   10.5, 2.5)
-  blueTankGun    = cs("resources/tank_gun.png",       -8.5,   -6,     8.5,  6)
-  redSniper = cs("resources/sniper_main_red.png", -16, -16, 16, 16)
-  redSniperGun  = cs("resources/sniper_gun_red.png",     -16,  -16,   16, 16)
-  redTank = cs("resources/tank_main.png", -32, -32, 32, 32)
-  redTankGun1    = cs("resources/tank_general_gun.png", -32, -32, 32, 32)
-  redTankGun2    = cs("resources/tank_bottom_gun.png", -32, -32, 32, 32)
-  invisGun = cs("resources/invis_gun.png", -1, -1, 1, 1)
+  -- Enemies
+  blueSniper    = cs("resources/enemies/blue/sniper.png",     -16,   -16,  16,   16)  --Blue Sniper
+  blueSniperGun = cs("resources/enemies/blue/sniper_gun.png", -10.5, -2.5, 10.5, 2.5) --Blue Sniper Gun
+  blueTankGun   = cs("resources/enemies/blue/tank_gun.png",   -8.5,  -6,   8.5,  6)   --Blue Tank Gun
+  eb1sprite     = cs("resources/enemies/blue/bullet.png",     -2,    -2,   2,    2)   --Enemy Bullet Left
+  redSniper     = cs("resources/enemies/red/sniper.png",      -16,   -16,  16,   16)  --Red Sniper
+  redSniperGun  = cs("resources/enemies/red/sniper_gun.png",  -16,   -16,  16,   16)  --Red Sniper Gun
+  redTank       = cs("resources/enemies/red/tank.png",        -32,   -32,  32,   32)  --Red Tank
+  redTankGun1   = cs("resources/enemies/red/tank_gun.png",    -32,   -32,  32,   32)  --Red Tank Gun 1
+  redTankGun2   = cs("resources/enemies/red/tank_gun_b.png",  -32,   -32,  32,   32)  --Red Tank Gun 2
+  eb2sprite     = cs("resources/enemies/red/bullet.png",      -2,    -2,   2,    2)   --Enemy Bullet Right
+  invisGun      = cs("resources/enemies/invis_gun.png",       -1,    -1,   1,    1)   --Invisible Gun
   
   
+  -- GUI
+  lbsprite             = cs("resources/gui/blue_bar.png",     0,     0,   150,  -4)  --Left Base Bar
+  rbsprite             = cs("resources/gui/red_bar.png",      -150,  -4,  0,    0)   --Right Base Bar
+  lfsprite             = cs("resources/gui/blue_fist.png",    -22,   -11, 0,    11)  --Left Base Fist
+  rfsprite             = cs("resources/gui/red_fist.png",     0,     -11, 22,   11)  --Right Base Fist
+  metalSprite          = cs("resources/gui/metal.png",        -4,    -4,  4,    4)   --Metal Icon
+  plasmaSprite         = cs("resources/gui/energy.png",       -4,    -4,  4,    4)   --Energy Icon
+  wzSprite             = cs("resources/gui/warzones.png",     -160,  -90, 160,  90)  --Warzones
+  popupSprite          = cs("resources/gui/popup.png",        -152,  -72, 152,  73)  --Popup Background
+  popupButtonSprite    = cs("resources/gui/popup_button.png", -24,   -10, 25,   11)  --Popup Button
+  spritePauseButton    = cs("resources/gui/back_button.png",  -14,   -10, 14,   10)  --Pause button
+  chatboxShipSprite    = cs("resources/gui/ship_chat.png",    -66,   -24, 66,   24)  --Ship Upgrade Chat
+  chatboxStationSprite = cs("resources/gui/station_chat.png", -66,   -24, 66,   24)  --Station Upgrade Chat
+  backButtonSprite     = cs("resources/gui/back_button.png",  -10.5, -10, 10.5, 10)  --Back Button
+  buildButtonSprite    = cs("resources/gui/build_button.png", -10,   -10, 10,   10)  --Build Button
+  guiBaseSprite        = cs("resources/gui/GUI_base.png",     -15,   0,   16,   16)  --Control Base
+  guiLifeSprite        = cs("resources/gui/GUI_life.png",     -20,   0,   20,   16)  --Life Base
+  guiAutoSprite        = cs("resources/gui/auto_fire.png",    -11,   0,   11,   23)  --Auto-fire Button
+  guiRegenSprite       = cs("resources/gui/regen.png",        -11,   0,   11,   23)  --Regen Button
+  guiStickSprite       = cs("resources/gui/stick.png",        -34,   0,   35,   37)  --Control Stick
+  guiStickSmallSprite  = cs("resources/gui/stick.png",        -24.5, 0,   24.5, 34)  --Control Stick
+  powerMainSprite      = cs("resources/gui/power_main.png",   -160,  -90, 160,  90)  --Power Main
+  powerSplitSprite     = cs("resources/gui/power_meter.png",  -15,   -6,  15,   6)   --Power Indicator
+  pbsprite             = cs("resources/gui/power_bar.png",    0,     0,   0,    -12) --Power Bar
+  glbsprite            = cs("resources/gui/power_blue.png",   -137,  -4,  0,    0)   --Left Bar
+  grbsprite            = cs("resources/gui/power_red.png",    0,     0,   137,  -4)  --Right Bar
+  battleOverlay        = cs("resources/gui/over/battle.png",  -160,  -90, 160,  90)  --Battle Start Overlay
   
+  -- NPC
+  engineer  = cs("resources/npc/engineer.png",  -9.5, -15, 9.5, 15) --Engineer
+  architect = cs("resources/npc/architect.png", -5.5, -14, 5.5, 14) --Architect
+  captain   = cs("resources/npc/captain.png",   -8.5, -16, 8.5, 16) --Captain
+  engineerSprite  = cs("resources/npc/engineer_portrait.png",  -36, -49, 36, 49) --Engineer portrait
+  architectSprite = cs("resources/npc/architect_portrait.png", -36, -49, 36, 49) --Architect portrait
+  captainSprite   = cs("resources/npc/captain_portrait.png",   -36, -49, 36, 49) --Captain portrait
+  
+  -- Others
+  splashLogo        = cs("resources/others/icon.png",      -48, -48, 48, 48) --Game Logo
+  waterModuleSprite = cs("resources/others/waterchip.png", -25, -19, 25, 19) --Water Module
+  
+  -- Ship
+  player    = cs("resources/ship/ship.png",   -32, -32, 32, 32) --Ship
+  playerarm = cs("resources/ship/arm.png",    0,   0,   12, 4)  --Ship Arm
+  bsprite   = cs("resources/ship/bullet.png", -2,  -2,  2,  2)  --Bullet
+  csprite   = cs("resources/ship/target.png", -8,  -8,  8,  8)  --Crosshair
+  
+  
+  -- Animations
+  eximage = MOAIImage.new()
+  eximage:load("resources/others/explosion.png")
   tileLib = MOAITileDeck2D.new()
-  tileLib:setTexture("resources/explo_sprite.png")
-  -- aantal afbeeldingen h*b
+  tileLib:setTexture(eximage)
   tileLib:setSize(4 , 2)
-  tileLib:setRect(-16,-16,16,16)
+  tileLib:setRect(-16, -16, 16, 16)
   
+  bdtimage = MOAIImage.new()
+  bdtimage:load("resources/enemies/blue/drone.png")
   blueDroneTileLib = MOAITileDeck2D.new()
-  blueDroneTileLib:setTexture("resources/drone_sprite.png")
+  blueDroneTileLib:setTexture(bdtimage)
   blueDroneTileLib:setSize(5, 3)
   blueDroneTileLib:setRect(-16, -16, 16, 16)
   
-  blueSniperTileLib = MOAITileDeck2D.new()
-  blueSniperTileLib:setTexture("resources/sniper_main.png")
-  blueSniperTileLib:setSize(1, 1)
-  blueSniperTileLib:setRect(-16, -16, 16, 16)
-  
+  bttimage = MOAIImage.new()
+  bttimage:load("resources/enemies/blue/tank.png")
   blueTankTileLib = MOAITileDeck2D.new()
-  blueTankTileLib:setTexture("resources/tank_sprite.png")
+  blueTankTileLib:setTexture(bttimage)
   blueTankTileLib:setSize(3, 1)
   blueTankTileLib:setRect(-32, -32, 32, 32)
   
+  rdtimage = MOAIImage.new()
+  rdtimage:load("resources/enemies/red/drone.png")
   redDroneTileLib = MOAITileDeck2D.new()
-  redDroneTileLib:setTexture("resources/drone_sprite_red.png")
+  redDroneTileLib:setTexture(rdtimage)
   redDroneTileLib:setSize(4, 2)
   redDroneTileLib:setRect(-16, -16, 16, 16)
   
   guiDigits = MOAIImage.new()
-  guiDigits:load("resources/digits_sprite.png")
+  guiDigits:load("resources/fonts/digits.png")
   digits = MOAITileDeck2D.new()
   digits:setTexture(guiDigits)
   digits:setSize(5, 2)

@@ -334,6 +334,7 @@ function runExplosion(xDie, yDie)
   anim:setMode(MOAITimer.NORMAL)
   anim:setSpan(9 * 0.05)
   anim:start()
+  propExplosion:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
   propExplosion:setLoc(xDie, yDie)
   exlayer:insertProp(propExplosion)
 

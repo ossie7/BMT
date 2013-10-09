@@ -1,5 +1,5 @@
 universeImage = MOAIImage.new()
-universeImage:load("resources/space_flat.png")
+universeImage:load("resources/backgrounds/space_flat.png")
 
 universeSprite = MOAIGfxQuad2D.new()
 universeSprite:setTexture(universeImage)

@@ -1,6 +1,6 @@
 -- 4. Font.1 nieuwe font aanmaken
 font = MOAIFont.new()
-font:load("resources/8bitoperator.ttf")
+font:load("resources/fonts/8bitoperator.ttf")
 
  
 charcodes = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,!?"

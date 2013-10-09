@@ -318,7 +318,7 @@ function loadUpgradesLayers(upgradeScreenType)
   end
   propBackButton = cprop(backButtonSprite, -132, -62)
   propBuildButton = cprop(buildButtonSprite, 133, -62)
-  propPlayerShip = cprop(sprite, 0, 5, 2)
+  propPlayerShip = cprop(player, 0, 5, 2)
   
   upgradePartition:insertProp(propBuildButton)
   upgradePartition:insertProp(propBackButton)

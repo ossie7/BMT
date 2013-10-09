@@ -59,7 +59,7 @@ function GetEnemyAnimationProp(team, ship)
   if team == 1 and ship == 1 then
     prop:setDeck(blueDroneTileLib)
   elseif team == 1 and ship == 2 then
-    prop:setDeck(blueSniperTileLib)
+    prop:setDeck(blueSniper)
   elseif team == 1 and ship == 3 then
     prop:setDeck(blueTankTileLib)
   elseif team == 2 and ship == 1 then
