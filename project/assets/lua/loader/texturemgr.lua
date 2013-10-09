@@ -60,7 +60,7 @@ function initTextures()
   waterModuleSprite = cs("resources/others/waterchip.png", -25, -19, 25, 19) --Water Module
   
   -- Ship
-  playerSingle = cs("resources/ship/ship.png",   -32, -32, 32, 32) --Ship
+  playerSingle = cs("resources/ship/ship_single.png",   -32, -32, 32, 32) --Ship
   playerarm    = cs("resources/ship/arm.png",    0,   0,   12, 4)  --Ship Arm
   bsprite      = cs("resources/ship/bullet.png", -2,  -2,  2,  2)  --Bullet
   csprite      = cs("resources/ship/target.png", -8,  -8,  8,  8)  --Crosshair

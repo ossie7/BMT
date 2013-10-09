@@ -26,16 +26,6 @@ function EnemyBullet.setScl(self, scale)
   self.prop:setScl(scale)
 end
 
-function EnemyBullet.checkIfInside(self, locX,locY)
-  if (locX < 160 and locX > -160) and (locY < 90 and locY > -90) then
-    return true
-  else
-    self.layer:removeProp(self.prop)
-    self.prop.thread:stop()
-    return false
-  end
-end
-
 function EnemyBullet.bulletMovement(self, x, y)
   nx = x + math.cos(math.rad(self.angle)) * self.speed
   ny = y + math.sin(math.rad(self.angle)) * self.speed
@@ -67,7 +57,7 @@ function EnemyBullet.startThread (self)
   function self.prop:moveEnemyBullet(parent)
     local locX,locY = self:getLoc()
     
-    while parent:checkIfInside(locX,locY) do
+    while checkIfInside(locX,locY) do
       if(popupActive == false) then
       if(gamestate ~= "playing") then
         break
@@ -77,7 +67,7 @@ function EnemyBullet.startThread (self)
       end
       coroutine.yield()
     end
-    self.thread:stop()
+    parent:die()
   end
 
   self.prop.thread = MOAICoroutine.new()

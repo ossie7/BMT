@@ -2,14 +2,10 @@ health = 50
 maxHealth = 50
 bulletDamage = 100
 gunActive = false
+armVerticalOffset = 5
 if(userdata.mission ~= "chased") then
   gunActive = true
 end
-
-function checkHealth() 
-  return health
-end
-
 
 function newBullet (origX, origY, angle)
   if(shipUpgradesList[1]:IsBuild()) then

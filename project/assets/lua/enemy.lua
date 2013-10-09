@@ -325,23 +325,3 @@ function Enemy.die(self)
   self.gun = nil
   self = nil
 end
-
-function runExplosion(xDie, yDie)
-  
-  local anim = MOAIAnim.new()
-  anim:reserveLinks(1) -- aantal curves
-  anim:setLink(1, curve, propExplosion, MOAIProp2D.ATTR_INDEX )
-  anim:setMode(MOAITimer.NORMAL)
-  anim:setSpan(9 * 0.05)
-  anim:start()
-  propExplosion:setBlendMode( MOAIProp.GL_SRC_ALPHA, MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
-  propExplosion:setLoc(xDie, yDie)
-  exlayer:insertProp(propExplosion)
-
-  local explTimer = MOAITimer.new()
-  explTimer:setMode(MOAITimer.NORMAL)
-  explTimer:setSpan(anim:getLength())
-  explTimer:setListener(MOAITimer.EVENT_TIMER_END_SPAN, function() exlayer:removeProp(propExplosion) end)
-  explTimer:start()
-
-end

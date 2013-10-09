@@ -1,5 +1,4 @@
 waveCounter = 0
-armVerticalOffset = 5
 leftWon = nil
 
 function createProp(sprite, layer)

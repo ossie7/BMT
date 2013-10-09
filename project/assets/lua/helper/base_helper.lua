@@ -53,7 +53,7 @@ function UpdateUpgradesPositions(deltaX, deltaY, index)
   lastTappedUpgrade = index
 end
 
-function UpdateShipUpgradesPositionsBySwipe(deltaX, deltaY)
+function UpdateBySwipe(deltaX, deltaY)
   for i = 1, table.getn(shipUpgradesList), 1 do
     local upgrade = shipUpgradesList[i]
     
@@ -87,5 +87,5 @@ function SnapToClosestUpgrade()
   local closestUpgrade = shipUpgradesList[closestIndex]    
   local closestX, closestY = closestUpgrade:GetProp():getLoc()
   
-  UpdateShipUpgradesPositionsBySwipe(0 - closestX, 0)
+  UpdateBySwipe(0 - closestX, 0)
 end
