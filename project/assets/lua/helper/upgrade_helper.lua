@@ -18,7 +18,6 @@ function BuildUpgrade()
       upgrade:Build(true)
       if(upgradeType == "station") then
         userdata.stationBuild = true
-        print("You bought "..upgrade.name.."it will be ready in "..upgrade.requiredTime.." turns.")
       end
       
       buySound:play()

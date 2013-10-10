@@ -19,13 +19,11 @@ function save_userdata()
   local userdata_Str = serializer:exportToString()
   local userdata_file = io.open(userdata_path, 'wb')
   
-  print("Writing User Data: ", userdata_path)
   -- attempt to save the file ..
   if (userdata_file ~= nil) then
     userdata_file:write(userdata_Str)
     userdata_file:close()
   end
-  print("User Data Written")
   
 end
 

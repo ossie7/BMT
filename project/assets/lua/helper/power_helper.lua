@@ -33,7 +33,6 @@ end
 
 function shipHit()
   if(powerActive) then return end
-  print("Ship hit")
   powerType = 0
   if(power >= 100 and shipUpgradesList[3]:IsBuild()) then -- Full reflect
     powerActive = true
@@ -55,7 +54,6 @@ end
 
 function gunHit()
   if(powerActive) then return end
-  print("Gun hit")
   powerType = 1
   if(power >= 100 and shipUpgradesList[3]:IsBuild()) then -- Nuke
     powerActive = true

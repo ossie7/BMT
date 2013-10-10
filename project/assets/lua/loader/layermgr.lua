@@ -222,7 +222,6 @@ function loadBaseBars()
   --leftWon = false
    if(leftWon ~= nil) then
      if(leftWon) then
-       --print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
       leftOld = ((userdata.warzone - 1) / 9) * 212
       fistOld = ((userdata.warzone - 6) / 9) * 212
       rightOld = ((10.85 - userdata.warzone) / 9) * -212
@@ -230,7 +229,6 @@ function loadBaseBars()
       leftOld = (((userdata.warzone - 1) / 9) * 212) + 40
       fistOld = (((userdata.warzone - 6) / 9) * 212) + 40
       rightOld = (((11 - userdata.warzone) / 9) * -212)  +50
-      print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
     end
   else
     fistOld = fist
@@ -276,7 +274,6 @@ function loadBaseBars()
           elseif(leftWon == false) then
             leftOld = leftOld - 1
             lbsprite:setRect(0,0,leftOld,-11)
-            --print("dfsf"..leftOld.."ddfsfds"..left)
             rightOld = rightOld - 1
             rbsprite:setRect(rightOld,-11,0,0)
           end
