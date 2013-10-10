@@ -43,6 +43,7 @@ function SetupNewUserdata()
   userdata.showEngineer = false
   userdata.firstTimeStation = true
   userdata.seenFirstOverlay = false
+  userdata.seenShipUpgradesOverlay = false
   
 end
 
@@ -75,6 +76,7 @@ if (userdata_f ~= nil) then
   if(userdata.showEngineer == nil) then userdata.showEngineer = false end
   if(userdata.firstTimeStation == nil) then userdata.firstTimeStation = true end
   if(userdata.seenFirstOverlay == nil) then userdata.seenFirstOverlay = false end
+  if(userdata.seenShipUpgradesOverlay == nil) then userdata.seenShipUpgradesOverlay = false end
 else
   SetupNewUserdata()
 end

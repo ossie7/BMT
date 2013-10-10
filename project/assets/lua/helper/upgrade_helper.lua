@@ -55,3 +55,17 @@ function SetBuildButtonVisibility(upgrade)
     end
   end
 end
+
+function AmountOfShipUpgradesBought()
+  local amount = 0
+  
+  if table.getn(shipUpgradesList) > 0 then
+    for i = 1, table.getn(shipUpgradesList), 1 do
+      if shipUpgradesList[i]:IsBuild() then
+        amount = amount + 1
+      end
+    end
+  end
+  
+  return amount
+end

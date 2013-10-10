@@ -115,40 +115,48 @@ function playInput(event, idx, x, y)
 end
 
 function upgradeInput(event, idx, x, y)
-  local pickedProp = upgradePartition:propForPoint( upgradeLayer:wndToWorld(x,y) )
-  if pickedProp and event == MOAITouchSensor.TOUCH_DOWN then 
-    if (pickedProp.name == "leaveUpgradeScreen") then
-      if upgradeType == "ship" then
-        shipUpgradesList = currentUpgradesList
-      elseif upgradeType == "station" then
-        stationUpgradesList = currentUpgradesList
-      end
-      
-      loadMenuLayers()
-    elseif (pickedProp.name == "upgradeItem") then
-      for i = 1, table.getn(currentUpgradesList), 1 do
-        local upgrade = currentUpgradesList[i]
-        if pickedProp == upgrade:GetProp() then
-          local deltaX, deltaY
-          local propX, propY = pickedProp:getLoc()
-          deltaX = 0 - propX
-          deltaY = 5 - propY
-           
-          UpdateUpgradesPositions(deltaX, deltaY, i)
-          SetUpgradeScreenInfo(upgrade)
-          if(upgradeType == "ship") then
-            textboxChatBox:setString("This is the "..upgrade.name..". \n It improves your damage.")
-          elseif(upgradeType == "station") then
-            -- add upgrade time
-            textboxChatBox:setString("This is the "..upgrade.name..".")
+  if(popupActive == false) then
+    if userdata.seenShipUpgradesOverlay == false and AmountOfShipUpgradesBought() >= 1 then
+      addOverlay(overlay4, "Ok", nil)
+      userdata.seenShipUpgradesOverlay = true
+      save_userdata()
+    else
+      local pickedProp = upgradePartition:propForPoint( upgradeLayer:wndToWorld(x,y) )
+      if pickedProp and event == MOAITouchSensor.TOUCH_DOWN then 
+        if (pickedProp.name == "leaveUpgradeScreen") then
+          if upgradeType == "ship" then
+            shipUpgradesList = currentUpgradesList
+          elseif upgradeType == "station" then
+            stationUpgradesList = currentUpgradesList
           end
+          
+          loadMenuLayers()
+        elseif (pickedProp.name == "upgradeItem") then
+          for i = 1, table.getn(currentUpgradesList), 1 do
+            local upgrade = currentUpgradesList[i]
+            if pickedProp == upgrade:GetProp() then
+              local deltaX, deltaY
+              local propX, propY = pickedProp:getLoc()
+              deltaX = 0 - propX
+              deltaY = 5 - propY
+               
+              UpdateUpgradesPositions(deltaX, deltaY, i)
+              SetUpgradeScreenInfo(upgrade)
+              if(upgradeType == "ship") then
+                textboxChatBox:setString("This is the "..upgrade.name..". \n It improves your damage.")
+              elseif(upgradeType == "station") then
+                -- add upgrade time
+                textboxChatBox:setString("This is the "..upgrade.name..".")
+              end
 
+              SetBuildButtonVisibility(upgrade)
+            end
+          end
+        elseif (pickedProp.name == "buildUpgrade") then
+          local upgrade = BuildUpgrade()
           SetBuildButtonVisibility(upgrade)
         end
       end
-    elseif (pickedProp.name == "buildUpgrade") then
-      local upgrade = BuildUpgrade()
-      SetBuildButtonVisibility(upgrade)
     end
   end
 end
