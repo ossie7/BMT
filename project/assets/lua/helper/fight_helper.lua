@@ -7,12 +7,12 @@ function createProp(sprite, layer)
   prop.name = "ship"
   
   shipFrames = 11
-  shipDelay = 0.09
+  shipDelay = 0.05
   shipCurve = MOAIAnimCurve.new()
   
   shipCurve:reserveKeys(shipFrames-1)
   
-  for i = 1, shipFrames, 1 do
+  for i = 1, shipFrames-1, 1 do
     shipCurve:setKey(i, shipDelay * i, i)
   end
   

@@ -1,6 +1,7 @@
 function initTextures()
 
   -- Backgrounds
+  splash = cs("resources/backgrounds/splash.png", -160, -90, 160, 90)
   basesprite = cs("resources/backgrounds/base_empty_proper.png", -160, -90, 160, 90) --Base Background
   shipUpgradeScreenSprite    = cs("resources/backgrounds/ship_upgrade.png",    -160, -90,  160, 90) -- Shipupgrades background
   stationUpgradeScreenSprite = cs("resources/backgrounds/station_upgrade.png", -160, -90,  160, 90) -- Stationupgrades background

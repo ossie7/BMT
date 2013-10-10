@@ -177,14 +177,29 @@ function loadSplashLayers()
 	
   backgroundSound(menuMusic)
 
-  background = cprop(universeSprite, 0, 0)
-  splashLogo = cprop(splashLogo, 0, 20)
-  textbox = CreateTextBox(0, -60, 200, 30, style15, "Touch to Continue")
-  textbox:setAlignment(MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY)
+  splashBg = cprop(splash, 0, 0)
+  splashPlayer = cprop(player, 53, 50)
   
-  baselayer:insertProp(background)
-  baselayer:insertProp(splashLogo)
-  baselayer:insertProp(textbox)
+  splashFrames = 11
+  splashDelay = 0.05
+  splashCurve = MOAIAnimCurve.new()
+  
+  splashCurve:reserveKeys(splashFrames-1)
+  
+  for i = 1, splashFrames-1, 1 do
+    splashCurve:setKey(i, splashDelay * i, i)
+  end
+  
+  splashAnim = MOAIAnim.new()
+  splashAnim:reserveLinks(1)
+  splashAnim:setLink(1, splashCurve, splashPlayer, MOAIProp2D.ATTR_INDEX)
+  splashAnim:setMode(MOAITimer.LOOP)
+  splashAnim:setSpan(splashFrames * splashDelay)
+  splashAnim:start()
+
+  
+  baselayer:insertProp(splashBg)
+  baselayer:insertProp(splashPlayer)
   
 	gamestate = "splash"
 end
