@@ -35,15 +35,15 @@ function shipHit()
   if(powerActive) then return end
   print("Ship hit")
   powerType = 0
-  if(power >= 100) then -- Full reflect
+  if(power >= 100 and shipUpgradesList[3]:IsBuild()) then -- Full reflect
     powerActive = true
     powerTier = 3
     powerDrain = 10
-  elseif(power >= (100 / 3) * 2) then -- Regen + shoot
+  elseif((power >= (100 / 3) * 2) and shipUpgradesList[2]:IsBuild()) then -- Regen + shoot
     powerActive = true
     powerTier = 2
     powerDrain = 7
-  elseif(power >= 100 / 3) then -- Sniper cloak
+  elseif((power >= 100 / 3) and shipUpgradesList[1]:IsBuild()) then -- Sniper cloak
     powerActive = true
     powerTier = 1
     powerDrain = 4
@@ -54,15 +54,15 @@ function gunHit()
   if(powerActive) then return end
   print("Gun hit")
   powerType = 1
-  if(power >= 100) then -- Nuke
+  if(power >= 100 and shipUpgradesList[3]:IsBuild()) then -- Nuke
     powerActive = true
     powerTier = 3
     powerDrain = 99
-  elseif(power >= (100 / 3) * 2) then -- Rapid shot
+  elseif((power >= (100 / 3) * 2) and shipUpgradesList[2]:IsBuild()) then -- Rapid shot
     powerActive = true
     powerTier = 2
     powerDrain = 15
-  elseif(power >= 100 / 3) then -- Spread shot
+  elseif((power >= 100 / 3) and shipUpgradesList[1]:IsBuild()) then -- Spread shot
     powerActive = true
     powerTier = 1
     powerDrain = 5
