@@ -170,7 +170,7 @@ function GetEnemyGunOffset(team, ship, c)
     offsetY = 2
   elseif team == 2 and ship == 3 and c == 1 then
     offsetX = 0
-    offsetY = 17
+    offsetY = 19
   elseif team == 2 and ship == 3 and c == 2 then
     offsetX = 4
     offsetY = -8

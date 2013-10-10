@@ -12,8 +12,8 @@ if MOAIEnvironment.OS_BRAND_ANDROID then
 end
 print("Starting up on:" .. MOAIEnvironment.osBrand  .. " version:" .. MOAIEnvironment.osVersion)
 
-if screenWidth  == nil or screenWidth  == 0 then screenWidth  = 640 end
-if screenHeight == nil or screenHeight == 0 then screenHeight = 360 end
+if screenWidth  == nil or screenWidth  == 0 then screenWidth  = 1280 end
+if screenHeight == nil or screenHeight == 0 then screenHeight = 720 end
 
 MOAISim.openWindow("\"THE THIRD\"",screenWidth,screenHeight)
 

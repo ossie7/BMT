@@ -119,10 +119,12 @@ function CheckProps(props, reflect)
           damage(hit)
         else
           if currentPower(0, 3) then
+            reflectSound:play()
             newReflectBullet(hit.owner)
             hit.owner:reflect()
           else         
             if(hit.owner.source == 1) then
+              reflectSound:play()
               newReflectBullet(hit.owner)
               hit.owner:reflect()
             end
@@ -134,10 +136,12 @@ function CheckProps(props, reflect)
         damage(props)
       else
           if currentPower(0, 3) then
+            reflectSound:play()
             newReflectBullet(props.owner)
             props.owner:reflect()
           else         
             if(props.owner.source == 1) then
+              reflectSound:play()
               newReflectBullet(props.owner)
               props.owner:reflect()
             end
@@ -158,6 +162,7 @@ function newReflectBullet(obullet)
 end
 
 function damage(obj)
+  hitSound:play()
   obj.thread:stop()
   ebpartition:removeProp(obj)
   ebrpartition:removeProp(obj)

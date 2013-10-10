@@ -103,6 +103,7 @@ function playInput(event, idx, x, y)
       if (gameButton.name == "pause") then
         addPausePopup()
       elseif(gameButton.name == "gunToggle") then
+        regenSound:play()
         gunActive = not gunActive
         if(gunActive) then
           gameButton:setDeck(guiAutoSprite)

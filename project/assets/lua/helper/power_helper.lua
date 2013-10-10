@@ -39,14 +39,17 @@ function shipHit()
     powerActive = true
     powerTier = 3
     powerDrain = 10
+    fullReflectSound:play()
   elseif((power >= (100 / 3) * 2) and shipUpgradesList[2]:IsBuild()) then -- Regen + shoot
     powerActive = true
     powerTier = 2
     powerDrain = 7
+    regenPowerSound:play()
   elseif((power >= 100 / 3) and shipUpgradesList[1]:IsBuild()) then -- Sniper cloak
     powerActive = true
     powerTier = 1
     powerDrain = 4
+    cloakSound:play()
   end
 end
 
@@ -58,6 +61,7 @@ function gunHit()
     powerActive = true
     powerTier = 3
     powerDrain = 99
+    nukeSound:play()
   elseif((power >= (100 / 3) * 2) and shipUpgradesList[2]:IsBuild()) then -- Rapid shot
     powerActive = true
     powerTier = 2

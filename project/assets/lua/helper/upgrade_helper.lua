@@ -21,6 +21,7 @@ function BuildUpgrade()
         print("You bought "..upgrade.name.."it will be ready in "..upgrade.requiredTime.." turns.")
       end
       
+      buySound:play()
       textboxChatBox:setString("You bought a "..upgrade.name..".")
       
       save_userdata()

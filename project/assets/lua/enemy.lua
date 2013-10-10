@@ -251,6 +251,7 @@ function Enemy.checkAllHits(self, objs)
 end
 
 function Enemy.damageTaken(self, obj)
+  hitSound:play()
   local damage = obj.owner.damage
   bpartition:removeProp(obj)
   ebpartition:removeProp(obj)
